@@ -40,17 +40,27 @@ CREATE TABLE user(
     email VARCHAR(40),
     phone_number CHAR(11),
     shipping_address VARCHAR(40) NOT NULL,
+    is_manger BOOLEAN NOT NULL DEFAULT false, 
     PRIMARY KEY(username)
 );
 
 CREATE TABLE cart(
-    username VARCHAR(40),
+	cart_id INT AUTO_INCREMENT,
+    username VARCHAR(40) NOT NULL,
+    total_price INT,
+    state enum('purchased','not purchased'),
+    PRIMARY KEY(cart_id),
+    FOREIGN KEY(username) REFERENCES user (username)
+);
+
+CREATE TABLE cart_book(
+	cart_id INT,
     ISBN CHAR(13) NOT NULL,
-    amount INT,
-    PRIMARY KEY(username, ISBN),
-    FOREIGN KEY(username) REFERENCES user (username),
+	PRIMARY KEY(cart_id,ISBN),
+    FOREIGN KEY(cart_id) REFERENCES cart (cart_id),
     FOREIGN KEY(ISBN) REFERENCES book (ISBN)
 );
+
 
 CREATE TABLE sale(
     saleId INT,
@@ -65,7 +75,7 @@ CREATE TABLE sale(
 );
 
 CREATE TABLE book_order(
-    orderId INT NOT NULL AUTO_INCREMENT,
+    orderId INT AUTO_INCREMENT,
     ISBN CHAR(13) NOT NULL,
     quantity INT NOT NULL,
     publisher VARCHAR(30) NOT NULL,
