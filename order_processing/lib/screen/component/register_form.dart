@@ -47,7 +47,7 @@ class RegisterForm extends StatelessWidget {
                       height: 175,
                       width: 175,
                       child: const Image(
-                          image: AssetImage('assets/booklogo.PNG'))),
+                          image: AssetImage('assets/booklogo.png'))),
 
                   SizedBox(height: 40),
 
