@@ -5,10 +5,14 @@ import 'package:order_processing/modules/orders/cubit/OrdersStates.dart';
 
 class OrdersScreen extends StatelessWidget {
   int total = 50;
+  var kPrimaryColor = Color(0XFFBA68C8);
+  var kBackgroundColor = Color(0XFFE5E5E5);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor,
+      ),
       body: BlocProvider(
         create: (BuildContext context) => OrdersCubit(),
         child: BlocConsumer<OrdersCubit, OrdersStates>(
@@ -56,7 +60,7 @@ class OrdersScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color:  Color.fromRGBO(197, 195, 195, 0.15)
+        color:  Color.fromRGBO(210, 55, 210, 0.14901960784313725)
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
