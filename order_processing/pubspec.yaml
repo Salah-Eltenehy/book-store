@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   credit_card_validator: ^2.0.1
   flutter_bloc: ^8.1.1
+  #credit_card_input_form: ^2.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
