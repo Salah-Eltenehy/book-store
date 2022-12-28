@@ -120,6 +120,11 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: kPrimaryColor,
+        child: const Icon(Icons.add, size: 35),
+          onPressed: () =>{}
+      ),
       bottomNavigationBar:
       BottomNavigationBar(
         backgroundColor: kPrimaryColor,
