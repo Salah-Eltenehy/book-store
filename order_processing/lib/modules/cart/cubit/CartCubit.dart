@@ -9,7 +9,7 @@ class CartCubit extends Cubit<CartStates> {
   TextEditingController cardNumberController = TextEditingController();
   TextEditingController ccvController = TextEditingController();
   TextEditingController expDateController = TextEditingController();
-
+  double totalPrice  = 0;
   CartCubit() : super(InitialCartStates());
 
   void initState() {
@@ -32,6 +32,14 @@ class CartCubit extends Cubit<CartStates> {
   List<Map<String, dynamic>> books = [];
   List<bool> isExpanded = [];
 
+  void calculatePrice() {
+    for(Map<String, dynamic> book in books) {
+      double p = book['unitPrice'] as double;
+      int q = book['reqQuantity'] as int;
+      totalPrice = totalPrice + p*q;
+    }
+    emit(CalculateTotalPriceState());
+  }
   void generateData(int total) {
     for (int i = 0; i < total; i++) {
       Map<String, dynamic> temp = {
@@ -40,6 +48,7 @@ class CartCubit extends Cubit<CartStates> {
         "author": "Salah  Ahmed",
         "avaQuantity": i * 10 + 3,
         "date": DateTime.now(),
+        "unitPrice": i*5+20.0
       };
       books.add(temp);
       isExpanded.add(false);
@@ -71,6 +80,37 @@ class CartCubit extends Cubit<CartStates> {
         emit(ChangeCardTypeState());
       }
     }
+  }
+
+  void increaseOrders
+  ({
+    required int index
+  })
+  {
+    int ava = books[index]['avaQuantity'] as int;
+    int req = books[index]['reqQuantity'] as int;
+    if(req >= ava)
+      return;
+    books[index]['reqQuantity'] = req+1;
+    double price = books[index]['unitPrice'] as double;
+    totalPrice = totalPrice + price;
+    emit(IncreaseOrdersState());
+  }
+
+  void decreaseOrders
+      ({
+    required int index
+  })
+  {
+    int req = books[index]['reqQuantity'] as int;
+    if(req <= 1) {
+      deleteBook(index);
+      return;
+    }
+    books[index]['reqQuantity'] = req-1;
+    double price = books[index]['unitPrice'] as double;
+    totalPrice = totalPrice - price;
+    emit(DecreaseOrdersState());
   }
 
 }

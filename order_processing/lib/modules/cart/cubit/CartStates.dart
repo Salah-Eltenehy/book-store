@@ -15,3 +15,9 @@ class ChangeCardTypeState  extends CartStates {}
 class AddListenerCardState extends CartStates {}
 
 class CardDisposeState extends CartStates {}
+
+class CalculateTotalPriceState extends CartStates {}
+
+class IncreaseOrdersState extends CartStates {}
+
+class DecreaseOrdersState extends CartStates {}
