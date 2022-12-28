@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:order_processing/modules/auth_screen.dart';
+import 'modules/constants.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,8 +25,16 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.white38,
+          border: InputBorder.none,
+          hintStyle: TextStyle(color: Colors.white),
+          contentPadding: EdgeInsets.symmetric(vertical: defaultPadding * 1.2 ,horizontal: defaultPadding),
+
+        )
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: AuthScreen(),
     );
   }
 }
