@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:order_processing/screen/data/book.dart';
-
+import 'package:order_processing/component/isadmin.dart';
 Widget newbook(BookData book)
 {
   return Container(
@@ -58,6 +58,7 @@ Widget newbook(BookData book)
             )
         ),
         Icon(Icons.shopping_cart),
+        Icon(Icons.edit),
       ],
     ),
   );

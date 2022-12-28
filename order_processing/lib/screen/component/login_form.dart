@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../component/isadmin.dart';
 import '../../component/rounded_button.dart';
 import '../../component/rounded_input.dart';
 import '../../component/rounded_password_input.dart';
@@ -44,6 +45,8 @@ class LoginForm extends StatelessWidget {
                 SizedBox(height: 40),
                 RoundedInput(icon: Icons.mail, hint: 'Username'),
                 RoundedPasswordInput(),
+                SizedBox(height: 10),
+                isadmin(),
                 SizedBox(height: 10),
                 RoundedButton(title: 'LOGIN'),
                 SizedBox(height: 10),
