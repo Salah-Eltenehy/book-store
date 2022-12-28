@@ -1,9 +1,13 @@
 package com.example.demo.services;
 
+import org.springframework.stereotype.Service;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
+@Service
 public class DBAgent
 {
     private Connection connection;
@@ -33,5 +37,13 @@ public class DBAgent
         {
             System.out.println(e.getMessage());
         }
+    }
+    public Statement getStatement() throws SQLException
+    {
+        if (!connection.isValid(5000))
+        {
+            connect();
+        }
+        return connection.createStatement();
     }
 }

@@ -9,6 +9,8 @@ public class DemoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
+        String title ="of";
+        System.out.println();
 //        DBAgent dbAgent = DBAgent.getInstance();
 //        System.out.println("db created");
 //        dbAgent.con
