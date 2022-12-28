@@ -30,6 +30,7 @@ public class DBAgent
     {
         try
         {
+//            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookstore", "root", "pass");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "csed2024");
             System.out.println("db connected");
         }
