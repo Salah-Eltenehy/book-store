@@ -30,11 +30,13 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: kPrimaryColor,
         centerTitle: true,
         title: Text("BookStore"),
-        leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
-          Navigator.push(context,  MaterialPageRoute(builder: (context) =>  LoginScreen()));
+        leading: IconButton(icon: Icon(Icons.book),onPressed: (){
+
         },),
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.person))
+          IconButton(onPressed: (){
+            Navigator.push(context,  MaterialPageRoute(builder: (context) =>  LoginScreen()));
+          }, icon: Icon(Icons.logout))
         ],
       ),
       body: SingleChildScrollView(
@@ -130,6 +132,11 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: kPrimaryColor,
         unselectedItemColor: Colors.white,
         selectedItemColor: Colors.white,
+        onTap: (value) {
+          // if (value == 0) Navigator.of(context).push(...);
+          // if (value == 1) Navigator.of(context).push(...);
+          // if (value == 2) Navigator.of(context).push(...);
+        },
         items: [
         BottomNavigationBarItem(
           backgroundColor: kPrimaryColor,
@@ -137,12 +144,8 @@ class _SearchScreenState extends State<SearchScreen> {
           label: "Home"
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.library_books),
-            label: "my library"
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-            label: "my favourite"
+          icon: Icon(Icons.shopping_cart),
+            label: "Chart"
         ),
           BottomNavigationBarItem(
               icon: Icon(Icons.person),
