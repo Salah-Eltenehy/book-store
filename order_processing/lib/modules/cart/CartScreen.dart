@@ -10,7 +10,7 @@ import '../CardUtils/CardMonthInputFormatter.dart';
 import '../CardUtils/CardNumberInputFormatter.dart';
 import '../CardUtils/CardUtils.dart';
 class CartScreen extends StatelessWidget {
-  int total = 30;
+  int total = 5;
   var scaffoldKey = GlobalKey<ScaffoldState>();
   var formKey = GlobalKey<FormState>();
 

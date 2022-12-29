@@ -12,7 +12,7 @@ class MainApp extends StatefulWidget {
   static int currentPage = 0;
   static int cartItems = 5;
   static int orders = 1;
-  static bool Manger = false;
+  static bool Manger = true;
   static List<Book> books = [
     new Book(
         "0123456789012",
@@ -61,45 +61,69 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  List<BottomNavigationBarItem> bottomBarButtons =[
-  BottomNavigationBarItem(
-  backgroundColor: kPrimaryColor,
-  icon: Icon(Icons.home),
-  label: "Home"),
-  BottomNavigationBarItem(
-  icon: MainApp.cartItems != 0
-  ? Badge(
-  showBadge: true,
-  badgeContent: Text("${MainApp.cartItems}",
-  style: const TextStyle(color: Colors.white)),
-  animationType: BadgeAnimationType.scale,
-  shape: BadgeShape.circle,
-  //position: BadgePosition.center(),
-  child: const Icon(Icons.shopping_cart),
-  )
-      : const Icon(Icons.shopping_cart),
-  label: "Cart"),
-  BottomNavigationBarItem(
-  icon: Icon(Icons.person), label: "my Account"),
-  ];
-
+  late List<BottomNavigationBarItem> bottomBarButtons;
   @override
   Widget build(BuildContext context) {
     if (MainApp.Manger){
-      bottomBarButtons.add(  BottomNavigationBarItem(
-          icon: MainApp.orders != 0
-              ? Badge(
-            showBadge: true,
-            badgeContent: Text("${MainApp.orders}",
-                style: const TextStyle(color: Colors.white)),
-            animationType: BadgeAnimationType.scale,
-            shape: BadgeShape.circle,
-            //position: BadgePosition.center(),
-            child: const Icon(Icons.menu_book_sharp),
-          )
-              : const Icon(Icons.menu_book_sharp),
-          label: "Orders"),
-      );
+      bottomBarButtons =[
+        BottomNavigationBarItem(
+            backgroundColor: kPrimaryColor,
+            icon: Icon(Icons.home),
+            label: "Home"),
+        BottomNavigationBarItem(
+            icon: MainApp.cartItems != 0
+                ? Badge(
+              showBadge: true,
+              badgeContent: Text("${MainApp.cartItems}",
+                  style: const TextStyle(color: Colors.white)),
+              animationType: BadgeAnimationType.scale,
+              shape: BadgeShape.circle,
+              //position: BadgePosition.center(),
+              child: const Icon(Icons.shopping_cart),
+            )
+                : const Icon(Icons.shopping_cart),
+            label: "Cart"),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person), label: "my Account"),
+        BottomNavigationBarItem(
+            icon: MainApp.orders != 0
+                ? Badge(
+              showBadge: true,
+              badgeContent: Text("${MainApp.orders}",
+                  style: const TextStyle(color: Colors.white)),
+              animationType: BadgeAnimationType.scale,
+              shape: BadgeShape.circle,
+              //position: BadgePosition.center(),
+              child: const Icon(Icons.menu_book_sharp),
+            )
+                : const Icon(Icons.menu_book_sharp),
+            label: "Orders"),
+      ];
+
+    }
+    else{
+      bottomBarButtons =[
+        BottomNavigationBarItem(
+            backgroundColor: kPrimaryColor,
+            icon: Icon(Icons.home),
+            label: "Home"),
+        BottomNavigationBarItem(
+            icon: MainApp.cartItems != 0
+                ? Badge(
+              showBadge: true,
+              badgeContent: Text("${MainApp.cartItems}",
+                  style: const TextStyle(color: Colors.white)),
+              animationType: BadgeAnimationType.scale,
+              shape: BadgeShape.circle,
+              //position: BadgePosition.center(),
+              child: const Icon(Icons.shopping_cart),
+            )
+                : const Icon(Icons.shopping_cart),
+            label: "Cart"),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person), label: "my Account"),
+
+      ];
     }
     return Scaffold(
       appBar: AppBar(
@@ -121,10 +145,7 @@ class _MainAppState extends State<MainApp> {
               ? CartScreen()
               : (MainApp.currentPage == 2)
                   ? Account()
-                  : MainApp.Manger
-                    ?OrdersScreen()
-                    :null,
-
+                  : OrdersScreen(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: kPrimaryColor,
         unselectedItemColor: Colors.white,
