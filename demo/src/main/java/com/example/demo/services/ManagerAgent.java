@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.model.Book;
+import com.example.demo.model.BookOrder;
 import com.example.demo.services.interfaces.IManagerAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class ManagerAgent implements IManagerAgent {
         System.out.println(query);
         try {
             int result = this.dbAgent.getStatement().executeUpdate(query);
-            return result == 1;
+            return result != 0;
         }catch (Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -45,6 +46,17 @@ public class ManagerAgent implements IManagerAgent {
                              "SET STOCK = STOCK + " + quantityDifference +
                              " WHERE ISBN = "+ toSQLString(iSBN) + ";";
         return executeQuery(updateQuery);
+    }
+
+    @Override
+    public boolean placeBookOrder(BookOrder bookOrder) {
+        String query = "INSERT INTO BOOK_ORDER(ISBN, quantity, publisher) VALUES " +
+                "(" +
+                toSQLString(bookOrder.getISBN()) + ", " +
+                bookOrder.getQuantity() + ", " +
+                toSQLString(bookOrder.getPublisher())
+                + ");";
+        return executeQuery(query);
     }
 
     @Override

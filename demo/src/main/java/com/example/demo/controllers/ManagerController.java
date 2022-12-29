@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.model.Book;
+import com.example.demo.model.BookOrder;
 import com.example.demo.services.interfaces.IManagerAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,13 @@ public class ManagerController {
         boolean status = this.managerAgent.modifyBookQuantity(iSBN, quantityToAdd);
         if(status) return ResponseEntity.status(HttpStatus.OK).body("Book Quantity modified successfully");
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body("Failed to Modify Book Quantity");
+    }
+    @PostMapping("/place/order/book")
+    public ResponseEntity<String> placeOrderOnBook(@RequestBody BookOrder bookOrder) {
+        boolean status = this.managerAgent.placeBookOrder(bookOrder);
+        if (status)
+            return ResponseEntity.status(HttpStatus.OK).body("Order is placed Successfully!");
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body("Failed to place the order!!");
     }
 
     @DeleteMapping("/delete/order/{iSBN}")
