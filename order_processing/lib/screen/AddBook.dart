@@ -74,6 +74,7 @@ class _AddBookState extends State<AddBook> {
               buildtextfield("Book ID","",false),
               buildtextfield("Book Cover Url","",false),
               buildtextfield("Book description","",false),
+              buildtextfield("Book Quantity","",false),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

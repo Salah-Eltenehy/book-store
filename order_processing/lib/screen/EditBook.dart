@@ -75,6 +75,7 @@ class _EditBookState extends State<EditBook> {
               buildtextfield("Book ID",EditBook.book.Id.toString(),false),
               buildtextfield("Book Cover Url",EditBook.book.bookcover,false),
               buildtextfield("Book description",EditBook.book.description,false),
+              buildtextfield("Book Quantity","13",false),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
