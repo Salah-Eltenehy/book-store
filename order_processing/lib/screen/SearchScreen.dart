@@ -4,6 +4,7 @@ import 'package:order_processing/Constants.dart';
 import 'package:order_processing/screen/login.dart';
 
 import 'Account.dart';
+import 'AddBook.dart';
 import 'component/Showingbook.dart';
 import 'data/book.dart';
 import 'data/newbooks.dart';
@@ -15,11 +16,11 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
 
-  List<BookData> books = [
-    new BookData("https://imgv2-2-f.scribdassets.com/img/word_document/353388341/original/f2e4b773a0/1567592883?v=1", "A Place Called Perfect "," Author", "description", 132, 3.8),
-    new BookData("https://mir-s3-cdn-cf.behance.net/project_modules/disp/9ff4c287132211.5daee6dfaf15a.jpg", "To justifie the wayes of God To Men ", "Author", "description", 145, 3.2),
-    new BookData("http://www.humanoids.com/assets/CatalogueArticle/761/341112604_BookOfChaos_Cover_Rough_8705_zoomed.jpg", " The book of chaos", "Author"," description", 186, 4.2),
-    new BookData("https://i0.wp.com/candidcover.net/wp-content/uploads/81eoHi7V9DL.jpg?fit=1400%2C2116&ssl=1", "Five feet apart"," Author", "description", 208, 4.8),
+  static List<BookData> books = [
+    new BookData("https://imgv2-2-f.scribdassets.com/img/word_document/353388341/original/f2e4b773a0/1567592883?v=1", "A Place Called Perfect "," Author", "description", "132 L.E" , "10"),
+    new BookData("https://mir-s3-cdn-cf.behance.net/project_modules/disp/9ff4c287132211.5daee6dfaf15a.jpg", "To justifie the wayes of God To Men ", "Author", "description"," 145 L.E" , "11"),
+    new BookData("http://www.humanoids.com/assets/CatalogueArticle/761/341112604_BookOfChaos_Cover_Rough_8705_zoomed.jpg", " The book of chaos", "Author"," description", "186 L.E" , "12"),
+    new BookData("https://i0.wp.com/candidcover.net/wp-content/uploads/81eoHi7V9DL.jpg?fit=1400%2C2116&ssl=1", "Five feet apart"," Author", "description", "208 L.E" , "99"),
 
   ];
 
@@ -106,16 +107,16 @@ class _SearchScreenState extends State<SearchScreen> {
                  height: 600.0,
                 child: ListView(
                   children: [
-                    newbook(books[3]),
-                    newbook(books[1]),
-                    newbook(books[2]),
-                    newbook(books[0]),
-                    newbook(books[1]),
-                    newbook(books[2]),
-                    newbook(books[0]),
-                    newbook(books[1]),
-                    newbook(books[2]),
-                    newbook(books[0]),
+                    newbook(books[3],context),
+                    newbook(books[1],context),
+                    newbook(books[2],context),
+                    newbook(books[0],context),
+                    newbook(books[1],context),
+                    newbook(books[2],context),
+                    newbook(books[0],context),
+                    newbook(books[1],context),
+                    newbook(books[2],context),
+                    newbook(books[0],context),
                   ],
                 ),
               )
@@ -126,7 +127,9 @@ class _SearchScreenState extends State<SearchScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColor,
         child: const Icon(Icons.add, size: 35),
-          onPressed: () =>{}
+          onPressed: () =>{
+          Navigator.push(context,  MaterialPageRoute(builder: (context) =>  AddBook()))
+          }
       ),
       bottomNavigationBar:
       BottomNavigationBar(

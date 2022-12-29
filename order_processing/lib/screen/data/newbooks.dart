@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:order_processing/Constants.dart';
 import 'package:order_processing/screen/data/book.dart';
 import 'package:order_processing/component/isadmin.dart';
-Widget newbook(BookData book)
+
+import '../EditBook.dart';
+Widget newbook(BookData book,BuildContext context)
 {
+
   return Container(
   width: double.infinity,
     height: 150.0,
@@ -47,18 +51,23 @@ Widget newbook(BookData book)
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(Icons.content_copy),
-                    Text(book.pageNum.toString()),
+                    Icon(Icons.monetization_on,color: kPrimaryColor,),
+                    Text(book.Price.toString()),
                     SizedBox(width: 20.0),
-                    Icon(Icons.star),
-                    Text(book.rating.toString()),
+                    Icon(Icons.numbers_sharp,color: kPrimaryColor,),
+                    Text(book.Id.toString()),
                   ],
                 )
               ],
             )
         ),
-        Icon(Icons.shopping_cart),
-        Icon(Icons.edit),
+        IconButton(onPressed: (){
+          // Navigator.push(context,  MaterialPageRoute(builder: (context) =>  EditBook()));
+        }, icon: Icon(Icons.shopping_cart,color: kPrimaryColor,)),
+        IconButton(onPressed: (){
+          EditBook.book = book;
+          Navigator.push(context,  MaterialPageRoute(builder: (context) =>  EditBook()));
+        }, icon: Icon(Icons.edit,color: kPrimaryColor,))
       ],
     ),
   );

@@ -5,15 +5,15 @@ class BookData {
   String bookname;
   String Author;
   String description;
-  int pageNum;
-  double rating;
+  String Price;
+  String Id;
   BookData(
       this.bookcover,
       this.bookname,
       this.Author,
       this.description,
-      this.pageNum,
-      this.rating
+      this.Price,
+      this.Id
       );
 
 }
