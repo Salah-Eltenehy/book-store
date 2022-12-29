@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:order_processing/modules/orders/Orders.dart';
 import 'package:order_processing/modules/cart/CartScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:order_processing/screen/login.dart';
@@ -10,6 +11,18 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+// <<<<<<< HEAD
+//   const MyApp({super.key});
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Order Processing',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: OrdersScreen(),
+//       debugShowCheckedModeBanner: false,
+// =======
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
