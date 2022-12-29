@@ -3,13 +3,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:order_processing/screen/SearchScreen.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import '../Constants.dart';
 import '../component/findlocation_Map.dart';
 import 'AddBook.dart';
 import 'MainApp.dart';
-import 'component/Showingbook.dart';
-import 'data/newbooks.dart';
+import 'component/topBarBooks.dart';
+import 'data/BookShow.dart';
 
 class SearchScreen extends StatefulWidget {
 
@@ -63,18 +63,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    ShowBook(MainApp.books[0]),
-                    ShowBook(MainApp.books[1]),
-                    ShowBook(MainApp.books[2]),
-                    ShowBook(MainApp.books[3]),
-                    ShowBook(MainApp.books[0]),
-                    ShowBook(MainApp.books[1]),
-                    ShowBook(MainApp.books[2]),
-                    ShowBook(MainApp.books[3]),
-                    ShowBook(MainApp.books[0]),
-                    ShowBook(MainApp.books[1]),
-                    ShowBook(MainApp.books[2]),
-                    ShowBook(MainApp.books[3]),
+                    topBarBook(MainApp.books[0]),
+                    topBarBook(MainApp.books[1]),
+                    topBarBook(MainApp.books[2]),
+                    topBarBook(MainApp.books[3]),
+                    topBarBook(MainApp.books[0]),
                   ],
                 ),
               ),
@@ -90,16 +83,16 @@ class _SearchScreenState extends State<SearchScreen> {
                 height: 600.0,
                 child: ListView(
                   children: [
-                    newbook(MainApp.books[3],context),
-                    newbook(MainApp.books[1],context),
-                    newbook(MainApp.books[2],context),
-                    newbook(MainApp.books[0],context),
-                    newbook(MainApp.books[1],context),
-                    newbook(MainApp.books[2],context),
-                    newbook(MainApp.books[0],context),
-                    newbook(MainApp.books[1],context),
-                    newbook(MainApp.books[2],context),
-                    newbook(MainApp.books[0],context),
+                    showBook(MainApp.books[3],context),
+                    showBook(MainApp.books[1],context),
+                    showBook(MainApp.books[2],context),
+                    showBook(MainApp.books[0],context),
+                    showBook(MainApp.books[1],context),
+                    showBook(MainApp.books[2],context),
+                    showBook(MainApp.books[0],context),
+                    showBook(MainApp.books[1],context),
+                    showBook(MainApp.books[2],context),
+                    showBook(MainApp.books[0],context),
                   ],
                 ),
               )
@@ -107,13 +100,13 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: MainApp.Manger?FloatingActionButton(
           backgroundColor: kPrimaryColor,
           child: const Icon(Icons.add, size: 35),
           onPressed: () =>{
             Navigator.push(context,  MaterialPageRoute(builder: (context) =>  AddBook()))
           }
-      ),
+      ):Container(),
     );
 
   }

@@ -39,6 +39,9 @@ dependencies:
   shared_preferences: ^2.0.15
   conditional_builder_null_safety: ^0.0.6
   dio: ^4.0.6
+  google_nav_bar: ^5.0.6
+  badges: ^2.0.3
+  cached_network_image: ^3.0.0
   credit_card_validator: ^2.0.1
   flutter_bloc: ^8.1.1
   #credit_card_input_form: ^2.3.0

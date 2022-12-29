@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:order_processing/screen/data/book.dart';
+import '../../Book.dart';
 
-Widget ShowBook(BookData book)
+Widget topBarBook(Book book)
 {
   return Container(
     width: 122.0,
@@ -16,7 +16,7 @@ Widget ShowBook(BookData book)
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
             image: DecorationImage(
-              image: NetworkImage(book.bookcover),
+              image: NetworkImage(book.photoUrl),
               fit: BoxFit.cover,
             )
           ),
@@ -25,7 +25,7 @@ Widget ShowBook(BookData book)
           height: 12.0,
         ),
 
-        Text(book.bookname,
+        Text(book.title,
         style: TextStyle(
           fontSize: 18,
         ),

@@ -2,16 +2,13 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:order_processing/screen/SearchScreen.dart';
-import 'package:order_processing/screen/data/newbooks.dart';
-
+import '../Book.dart';
 import '../Constants.dart';
 import 'MainApp.dart';
-import 'data/book.dart';
 
 
 class EditBook extends StatefulWidget {
-  static late BookData book ;
+  static late Book book ;
   @override
   _EditBookState  createState() => _EditBookState();
 }
@@ -61,7 +58,7 @@ class _EditBookState extends State<EditBook> {
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(
-                                  EditBook.book.bookcover
+                                  EditBook.book.photoUrl
                               )
                           )
                       ),
@@ -70,12 +67,12 @@ class _EditBookState extends State<EditBook> {
                 ),
               ),
               SizedBox(height: 30),
-              buildtextfield("Book Name",EditBook.book.bookname,false),
-              buildtextfield("Author",EditBook.book.Author,false),
-              buildtextfield("Book Price",EditBook.book.Price.toString(),false),
-              buildtextfield("Book ID",EditBook.book.Id.toString(),false),
-              buildtextfield("Book Cover Url",EditBook.book.bookcover,false),
-              buildtextfield("Book description",EditBook.book.description,false),
+              buildtextfield("Book Name",EditBook.book.title,false),
+              buildtextfield("Author",EditBook.book.author_name,false),
+              buildtextfield("Book Price",EditBook.book.price.toString(),false),
+              buildtextfield("Book ID",EditBook.book.ISPN.toString(),false),
+              buildtextfield("Book Cover Url",EditBook.book.photoUrl,false),
+              buildtextfield("Book Category",EditBook.book.category,false),
               buildtextfield("Book Quantity","13",false),
               SizedBox(height: 30),
               Row(

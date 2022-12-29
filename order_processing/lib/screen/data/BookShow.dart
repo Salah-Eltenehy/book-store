@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:order_processing/Constants.dart';
-import 'package:order_processing/screen/data/book.dart';
 import 'package:order_processing/component/isadmin.dart';
+import 'package:order_processing/screen/MainApp.dart';
 
+import '../../Book.dart';
 import '../EditBook.dart';
-Widget newbook(BookData book,BuildContext context)
+Widget showBook(Book book,BuildContext context)
 {
 
   return Container(
@@ -21,7 +22,7 @@ Widget newbook(BookData book,BuildContext context)
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
             image: DecorationImage(
-              image: NetworkImage(book.bookcover),
+              image: NetworkImage(book.photoUrl),
               fit: BoxFit.cover,
 
             ),
@@ -34,7 +35,7 @@ Widget newbook(BookData book,BuildContext context)
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                 book.bookname,
+                 book.title,
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight:FontWeight.bold,
@@ -42,7 +43,7 @@ Widget newbook(BookData book,BuildContext context)
                 ),
                 SizedBox(height: 8.0),
                 Text(
-                 book.Author,
+                 book.author_name,
                   style: TextStyle(
                     fontSize: 18.0,
                   ),
@@ -52,22 +53,27 @@ Widget newbook(BookData book,BuildContext context)
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Icon(Icons.monetization_on,color: kPrimaryColor,),
-                    Text(book.Price.toString()),
-                    SizedBox(width: 20.0),
-                    Icon(Icons.numbers_sharp,color: kPrimaryColor,),
-                    Text(book.Id.toString()),
+                    Text(book.price.toString()),
                   ],
-                )
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.numbers_sharp,color: kPrimaryColor,),
+                    Text(book.ISPN.toString()),
+                  ],
+                ),
               ],
             )
         ),
         IconButton(onPressed: (){
           // Navigator.push(context,  MaterialPageRoute(builder: (context) =>  EditBook()));
         }, icon: Icon(Icons.shopping_cart,color: kPrimaryColor,)),
-        IconButton(onPressed: (){
+        MainApp.Manger?IconButton(onPressed: (){
           EditBook.book = book;
           Navigator.push(context,  MaterialPageRoute(builder: (context) =>  EditBook()));
-        }, icon: Icon(Icons.edit,color: kPrimaryColor,))
+        }, icon: Icon(Icons.edit,color: kPrimaryColor,)):Container()
       ],
     ),
   );

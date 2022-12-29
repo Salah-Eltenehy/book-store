@@ -2,8 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:order_processing/Book.dart';
 import 'package:order_processing/screen/SearchScreen.dart';
-import 'package:order_processing/screen/data/book.dart';
 
 import '../Constants.dart';
 import '../component/findlocation_Map.dart';
@@ -17,7 +17,7 @@ class AddBook extends StatefulWidget {
 
 class _AddBookState extends State<AddBook> {
   var obsescureText =true;
-  late BookData book ;
+  late Book book ;
   @override
   Widget build(BuildContext context) {
     final  size  = MediaQuery.of(context).size;
@@ -74,7 +74,7 @@ class _AddBookState extends State<AddBook> {
               buildtextfield("Book Price","",false),
               buildtextfield("Book ID","",false),
               buildtextfield("Book Cover Url","",false),
-              buildtextfield("Book description","",false),
+              buildtextfield("Book Category","",false),
               buildtextfield("Book Quantity","",false),
               SizedBox(height: 30),
               Row(
