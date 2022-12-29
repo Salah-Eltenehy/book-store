@@ -40,7 +40,7 @@ class LoginForm extends StatelessWidget {
                     height: 175,
                     width: 175,
                     child: const Image(
-                        image: AssetImage('assets/booklogo.png'))),
+                        image: AssetImage('assets/booklogo.PNG'))),
 
                 SizedBox(height: 40),
                 RoundedInput(icon: Icons.mail, hint: 'Username'),

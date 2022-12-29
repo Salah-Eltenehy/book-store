@@ -10,9 +10,6 @@ class OrdersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-      ),
       body: BlocProvider(
         create: (BuildContext context) => OrdersCubit(),
         child: BlocConsumer<OrdersCubit, OrdersStates>(

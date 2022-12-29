@@ -6,6 +6,7 @@ import 'package:order_processing/screen/SearchScreen.dart';
 import 'package:order_processing/screen/data/newbooks.dart';
 
 import '../Constants.dart';
+import 'MainApp.dart';
 import 'data/book.dart';
 
 
@@ -27,7 +28,7 @@ class _EditBookState extends State<EditBook> {
         centerTitle: true,
         title: Text("Edit Book"),
         leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
-          Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
+          Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
         },
         ),
         actions: [
@@ -81,7 +82,7 @@ class _EditBookState extends State<EditBook> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OutlinedButton(onPressed:(){
-                    Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
+                    Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                   }, child: Text("Cancel",style: TextStyle(
                     fontSize: 15,
                     letterSpacing: 2,
@@ -94,7 +95,7 @@ class _EditBookState extends State<EditBook> {
                     ),
                   ),
                   ElevatedButton(onPressed: (){
-                    Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
+                    Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                   }, child: Text("Save",style: TextStyle(
                     fontSize: 15,
                     letterSpacing: 2,

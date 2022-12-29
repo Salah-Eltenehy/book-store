@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:order_processing/screen/data/book.dart';
 
-Widget Book(BookData book)
+Widget ShowBook(BookData book)
 {
   return Container(
     width: 122.0,

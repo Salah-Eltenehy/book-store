@@ -7,6 +7,7 @@ import 'package:order_processing/screen/data/book.dart';
 
 import '../Constants.dart';
 import '../component/findlocation_Map.dart';
+import 'MainApp.dart';
 
 class AddBook extends StatefulWidget {
 
@@ -26,7 +27,7 @@ class _AddBookState extends State<AddBook> {
         centerTitle: true,
         title: Text("Add Book"),
         leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
-          Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
+          Navigator.pop(context);
         },
         ),
         actions: [
@@ -80,7 +81,7 @@ class _AddBookState extends State<AddBook> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OutlinedButton(onPressed:(){
-                    Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
+                    Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                   }, child: Text("Cancel",style: TextStyle(
                     fontSize: 15,
                     letterSpacing: 2,
@@ -93,7 +94,7 @@ class _AddBookState extends State<AddBook> {
                     ),
                   ),
                   ElevatedButton(onPressed: (){
-                    Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
+                    Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                   }, child: Text("Save",style: TextStyle(
                     fontSize: 15,
                     letterSpacing: 2,

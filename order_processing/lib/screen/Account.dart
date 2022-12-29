@@ -6,6 +6,7 @@ import 'package:order_processing/screen/SearchScreen.dart';
 
 import '../Constants.dart';
 import '../component/findlocation_Map.dart';
+import 'MainApp.dart';
 
 class Account extends StatefulWidget {
 
@@ -19,21 +20,7 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     final  size  = MediaQuery.of(context).size;
-     return Scaffold(
-        appBar :AppBar(
-          backgroundColor: kPrimaryColor,
-          centerTitle: true,
-          title: Text("Profile"),
-          leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
-            Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
-          },
-          ),
-          actions: [
-             IconButton(onPressed: (){}, icon: Icon(Icons.book))
-          ],
-        ),
-
-       body: Container(
+     return Container(
          padding: EdgeInsets.only(left: 15,top: 20,right: 15),
          child: GestureDetector(
            onTap: (){
@@ -84,7 +71,7 @@ class _AccountState extends State<Account> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
                    OutlinedButton(onPressed:(){
-                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
+                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                    }, child: Text("Cancel",style: TextStyle(
                      fontSize: 15,
                      letterSpacing: 2,
@@ -97,7 +84,7 @@ class _AccountState extends State<Account> {
                      ),
                    ),
                    ElevatedButton(onPressed: (){
-                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
+                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                    }, child: Text("Save",style: TextStyle(
                      fontSize: 15,
                      letterSpacing: 2,
@@ -114,9 +101,7 @@ class _AccountState extends State<Account> {
              ],
            ),
          ),
-       ),
-
-     );
+       );
   }
 Widget buildtextfield(String label ,String placeholder, bool ispasswordTextField)
 {

@@ -206,9 +206,6 @@ class CartScreen extends StatelessWidget {
                 ),
               ),
             ],
-            appBar: AppBar(
-              backgroundColor: Color(0XFFBA68C8),
-            ),
             body: ListView.separated(
                 itemBuilder: (context, index) {
                   return buildCart(

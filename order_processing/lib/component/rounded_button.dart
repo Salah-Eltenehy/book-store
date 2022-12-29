@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Constants.dart';
+import '../screen/MainApp.dart';
 import '../screen/SearchScreen.dart';
 
 class RoundedButton extends StatelessWidget {
@@ -17,7 +18,7 @@ class RoundedButton extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
+        Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
       },
       borderRadius: BorderRadius.circular(30),
       child: Container(
