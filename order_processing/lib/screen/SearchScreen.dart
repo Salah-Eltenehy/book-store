@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:order_processing/Constants.dart';
 import 'package:order_processing/screen/login.dart';
 
+import 'Account.dart';
 import 'component/Showingbook.dart';
 import 'data/book.dart';
 import 'data/newbooks.dart';
@@ -133,9 +134,9 @@ class _SearchScreenState extends State<SearchScreen> {
         unselectedItemColor: Colors.white,
         selectedItemColor: Colors.white,
         onTap: (value) {
-          // if (value == 0) Navigator.of(context).push(...);
+          if (value == 0) Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
           // if (value == 1) Navigator.of(context).push(...);
-          // if (value == 2) Navigator.of(context).push(...);
+          if (value == 2) Navigator.push(context,  MaterialPageRoute(builder: (context) =>  Account()));
         },
         items: [
         BottomNavigationBarItem(
