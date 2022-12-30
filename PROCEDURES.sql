@@ -1,0 +1,39 @@
+-- -----------------------------------------------------
+-- Report procedures
+-- -----------------------------------------------------
+DELIMITER $$ 
+CREATE PROCEDURE TOTAL_BOOK_SALES_LAST_MONTH() 
+BEGIN 
+	SELECT B.ISBN,B.TITLE,S.TOTAL_SALES 
+	FROM BOOK AS B  JOIN (
+							SELECT ISBN,SUM(AMOUNT) AS TOTAL_SALES
+							FROM SALE 
+                            WHERE sale_date > NOW() - INTERVAL 1 MONTH
+							GROUP BY ISBN) AS S
+							ON B.ISBN=S.ISBN;
+END$$
+DELIMITER ;
+DELIMITER $$
+CREATE PROCEDURE TOP_FIVE_CUSTOMERS()
+BEGIN
+	SELECT username, SUM(price) AS PURCHASE_AMOUNT 
+	FROM SALE 
+	GROUP BY username
+	ORDER BY PURCHASE_AMOUNT DESC
+	LIMIT 5;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE TOP_10_BOOKS()
+BEGIN 
+	SELECT B.ISBN,B.TITLE,S.TOTAL_SALES
+    FROM BOOK AS B JOIN(
+					SELECT ISBN,SUM(amount) AS TOTAL_SALES
+                    FROM SALE 
+                    GROUP BY ISBN) AS S
+					ON B.ISBN=S.ISBN
+	ORDER BY S.TOTAL_SALES DESC
+    LIMIT 10;
+END $$
+DELIMITER ;
