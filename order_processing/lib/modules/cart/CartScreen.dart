@@ -189,7 +189,7 @@ class CartScreen extends StatelessWidget {
                                             backgroundColor:
                                                 const Color(0XFFBA68C8),
                                             foregroundColor: Colors.black),
-                                        child: const Text("Add card"),
+                                        child: const Text("Submit"),
                                         onPressed: () {
                                           if (formKey.currentState!
                                               .validate()) {
@@ -267,168 +267,226 @@ class CartScreen extends StatelessWidget {
     required Function decreaseFunction,
   }) {
     return Container(
-      padding: const EdgeInsets.only(left: 16, right: 16),
+      padding: const EdgeInsets.only(left: 16,top: 10, right: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         // color: const Color.fromRGBO(225, 93, 250, 0.14901960784313725)
       ),
-      child: ExpansionPanelList(
-        animationDuration: const Duration(milliseconds: 600),
-        expansionCallback: (index, isExpanded) {
-          print(expansionIndex);
-          expansion(expansionIndex, isExpanded);
-        },
-        children: [
-          ExpansionPanel(
-            isExpanded: isExpanded,
-            backgroundColor: const Color.fromRGBO(193, 0, 243, 0.1),
-            headerBuilder: (context, index) => Container(
-              // padding: const EdgeInsets.all(16),
-              height: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              // color: const Color.fromRGBO(199, 27, 234, 0.14901960784313725),
-              child: Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Image(
-                      // image: NetworkImage("https://th.bing.com/th/id/R.2436bfd57f8da9d3352be6d9c69f7d0d?rik=Meg7Z25SYT8yaA&pid=ImgRaw&r=0"),
-                      image: NetworkImage(book.photoUrl),
-                      fit: BoxFit.cover,
-                      width: 70,
-                      height: double.infinity,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // book name
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 6),
-                        child: Text(
-                          book.title,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 20),
-                        ),
-                      ),
-                      // required quantity from customer
-                      Text(
-                        "Quantity: ${book.quantity}",
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            body: Container(
-              padding: const EdgeInsets.all(16),
-              // color: const Color.fromRGBO(199, 27, 234, 0.14901960784313725),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // author name
-                  Text(
-                    "Author: ${book.author_name}",
-                    style: const TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  // available quantity on the store
-                  Text(
-                    "Stock: ${book.stock}",
-                    style: const TextStyle(
-                      color: Colors.black,
-                      // fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  // const SizedBox(height: 6,),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  Row(
-                    children: [
-                      const Spacer(),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 6),
-                            child: InkWell(
-                              onTap: () {
-                                increaseFunction(expansionIndex);
-                              },
-                              child: Container(
-                                height: 26,
-                                width: 26,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: const Color.fromRGBO(
-                                        255, 122, 249, 0.8)),
-                                child: const Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              decreaseFunction(expansionIndex);
-                            },
-                            child: Container(
-                              height: 26,
-                              width: 26,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color:
-                                      const Color.fromRGBO(255, 122, 249, 0.8)),
-                              child: const Icon(
-                                Icons.remove,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // delete order
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: InkWell(
-                          onTap: () {
-                            delete();
-                          },
-                          child: Container(
-                            height: 50,
-                            width: 40,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: const Color.fromRGBO(173, 0, 158, 0.8)),
-                            child: const Icon(
-                              Icons.restore_from_trash_sharp,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+      child: Container(
+          // padding: const EdgeInsets.all(16),
+          height: 100,
+          decoration: BoxDecoration(
+            color :const Color.fromRGBO(193, 0, 243, 0.1),
+            borderRadius: BorderRadius.circular(10),
           ),
-        ],
-      ),
+          // color: const Color.fromRGBO(199, 27, 234, 0.14901960784313725),
+          child: Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Image(
+                  // image: NetworkImage("https://th.bing.com/th/id/R.2436bfd57f8da9d3352be6d9c69f7d0d?rik=Meg7Z25SYT8yaA&pid=ImgRaw&r=0"),
+                  image: NetworkImage(book.photoUrl),
+                  fit: BoxFit.cover,
+                  width: 70,
+                  height: double.infinity,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // book name
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 6),
+                      child: Text(
+                        book.title,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 20),
+                      ),
+                    ),
+                    // required quantity from customer
+                    Text(
+                      "Quantity: ${book.quantity}",
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                    Text(
+                      "Price: ${book.price} EGP",
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: InkWell(
+                        onTap: () {
+                          increaseFunction(expansionIndex);
+                        },
+                        child: Container(
+                          height: 26,
+                          width: 26,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: const Color.fromRGBO(
+                                  255, 122, 249, 0.8)),
+                          child: const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        decreaseFunction(expansionIndex);
+                      },
+                      child: Container(
+                        height: 26,
+                        width: 26,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color:
+                            const Color.fromRGBO(255, 122, 249, 0.8)),
+                        child: const Icon(
+                          Icons.remove,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // delete order
+              Padding(
+                padding: const EdgeInsets.only(left: 10,right: 10),
+                child: InkWell(
+                  onTap: () {
+                    delete();
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color.fromRGBO(173, 0, 158, 0.8)),
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        // body: Container(
+        //   padding: const EdgeInsets.all(16),
+        //   // color: const Color.fromRGBO(199, 27, 234, 0.14901960784313725),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       // author name
+        //       Text(
+        //         "Author: ${book.author_name}",
+        //         style: const TextStyle(
+        //             color: Colors.black, fontWeight: FontWeight.bold),
+        //       ),
+        //       const SizedBox(
+        //         height: 6,
+        //       ),
+        //       // available quantity on the store
+        //       Text(
+        //         "Stock: ${book.stock}",
+        //         style: const TextStyle(
+        //           color: Colors.black,
+        //           // fontWeight: FontWeight.bold
+        //         ),
+        //       ),
+        //       // const SizedBox(height: 6,),
+        //       const SizedBox(
+        //         height: 6,
+        //       ),
+        //       Row(
+        //         children: [
+        //           const Spacer(),
+        //           Column(
+        //             children: [
+        //               Padding(
+        //                 padding: const EdgeInsets.only(bottom: 6),
+        //                 child: InkWell(
+        //                   onTap: () {
+        //                     increaseFunction(expansionIndex);
+        //                   },
+        //                   child: Container(
+        //                     height: 26,
+        //                     width: 26,
+        //                     decoration: BoxDecoration(
+        //                         borderRadius: BorderRadius.circular(10),
+        //                         color: const Color.fromRGBO(
+        //                             255, 122, 249, 0.8)),
+        //                     child: const Icon(
+        //                       Icons.add,
+        //                       color: Colors.white,
+        //                     ),
+        //                   ),
+        //                 ),
+        //               ),
+        //               InkWell(
+        //                 onTap: () {
+        //                   decreaseFunction(expansionIndex);
+        //                 },
+        //                 child: Container(
+        //                   height: 26,
+        //                   width: 26,
+        //                   decoration: BoxDecoration(
+        //                       borderRadius: BorderRadius.circular(10),
+        //                       color:
+        //                           const Color.fromRGBO(255, 122, 249, 0.8)),
+        //                   child: const Icon(
+        //                     Icons.remove,
+        //                     color: Colors.white,
+        //                   ),
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //           // delete order
+        //           Padding(
+        //             padding: const EdgeInsets.only(left: 10),
+        //             child: InkWell(
+        //               onTap: () {
+        //                 delete();
+        //               },
+        //               child: Container(
+        //                 height: 50,
+        //                 width: 40,
+        //                 decoration: BoxDecoration(
+        //                     borderRadius: BorderRadius.circular(10),
+        //                     color: const Color.fromRGBO(173, 0, 158, 0.8)),
+        //                 child: const Icon(
+        //                   Icons.restore_from_trash_sharp,
+        //                   color: Colors.white,
+        //                 ),
+        //               ),
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        // ),
     );
   }
 }
