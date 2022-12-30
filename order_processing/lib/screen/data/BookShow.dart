@@ -68,7 +68,16 @@ Widget showBook(Book book,BuildContext context)
             )
         ),
         IconButton(onPressed: (){
-          // Navigator.push(context,  MaterialPageRoute(builder: (context) =>  EditBook()));
+          var myListFiltered = MainApp.cartBooks.where((x) => x.title == book.title);
+          if (myListFiltered.isNotEmpty) {
+            myListFiltered.first.quantity++;
+          } else {
+            MainApp.cartBooks.add(book);
+            MainApp.cartItemsNo++;
+            book.quantity++;
+          }
+          MainApp.update();
+
         }, icon: Icon(Icons.shopping_cart,color: kPrimaryColor,)),
         MainApp.Manger?IconButton(onPressed: (){
           EditBook.book = book;

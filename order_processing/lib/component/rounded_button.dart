@@ -18,7 +18,8 @@ class RoundedButton extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
+        MainApp.intializeBooks();
+        Navigator.popAndPushNamed(context, "/app");
       },
       borderRadius: BorderRadius.circular(30),
       child: Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:order_processing/Constants.dart';
 import 'package:badges/badges.dart';
 import '../Book.dart';
@@ -8,12 +9,16 @@ import 'Account.dart';
 import 'SearchScreen.dart';
 import 'package:order_processing/modules/cart/CartScreen.dart';
 
+import 'login.dart';
+
 class MainApp extends StatefulWidget {
   static int currentPage = 0;
-  static int cartItems = 5;
   static int orders = 1;
+  static List<Book> cartBooks=[];
+  static int cartItemsNo =cartBooks.length;
   static bool Manger = true;
-  static List<Book> books = [
+  static List<Book> books = [];
+  static intializeBooks()=>books=[
     new Book(
         "0123456789012",
         "A Place Called Perfect ",
@@ -55,143 +60,132 @@ class MainApp extends StatefulWidget {
         99,
         "https://i0.wp.com/candidcover.net/wp-content/uploads/81eoHi7V9DL.jpg?fit=1400%2C2116&ssl=1"),
   ];
+  static final _MainAppState _currentState = _MainAppState();
+
+  static update() => _currentState.setState(() {});
 
   @override
-  _MainAppState createState() => _MainAppState();
+  _MainAppState createState() => _currentState;
 }
 
 class _MainAppState extends State<MainApp> {
   late List<BottomNavigationBarItem> bottomBarButtons;
+
   @override
   Widget build(BuildContext context) {
-    if (MainApp.Manger){
-      bottomBarButtons =[
+    if (MainApp.Manger) {
+      bottomBarButtons = [
         BottomNavigationBarItem(
             backgroundColor: kPrimaryColor,
             icon: Icon(Icons.home),
             label: "Home"),
         BottomNavigationBarItem(
-            icon: MainApp.cartItems != 0
+            backgroundColor: kPrimaryColor,
+            icon: MainApp.cartItemsNo != 0
                 ? Badge(
-              showBadge: true,
-              badgeContent: Text("${MainApp.cartItems}",
-                  style: const TextStyle(color: Colors.white)),
-              animationType: BadgeAnimationType.scale,
-              shape: BadgeShape.circle,
-              //position: BadgePosition.center(),
-              child: const Icon(Icons.shopping_cart),
-            )
+                    showBadge: true,
+                    badgeContent: Text("${MainApp.cartItemsNo}",
+                        style: const TextStyle(color: Colors.white)),
+                    animationType: BadgeAnimationType.scale,
+                    shape: BadgeShape.circle,
+                    //position: BadgePosition.center(),
+                    child: const Icon(Icons.shopping_cart),
+                  )
                 : const Icon(Icons.shopping_cart),
             label: "Cart"),
         BottomNavigationBarItem(
-            icon: Icon(Icons.person), label: "my Account"),
+            backgroundColor: kPrimaryColor,
+            icon: Icon(Icons.person),
+            label: "my Account"),
         BottomNavigationBarItem(
+            backgroundColor: kPrimaryColor,
             icon: MainApp.orders != 0
                 ? Badge(
-              showBadge: true,
-              badgeContent: Text("${MainApp.orders}",
-                  style: const TextStyle(color: Colors.white)),
-              animationType: BadgeAnimationType.scale,
-              shape: BadgeShape.circle,
-              //position: BadgePosition.center(),
-              child: const Icon(Icons.menu_book_sharp),
-            )
+                    showBadge: true,
+                    badgeContent: Text("${MainApp.orders}",
+                        style: const TextStyle(color: Colors.white)),
+                    animationType: BadgeAnimationType.scale,
+                    shape: BadgeShape.circle,
+                    //position: BadgePosition.center(),
+                    child: const Icon(Icons.menu_book_sharp),
+                  )
                 : const Icon(Icons.menu_book_sharp),
             label: "Orders"),
       ];
-
-    }
-    else{
-      bottomBarButtons =[
+    } else {
+      bottomBarButtons = [
         BottomNavigationBarItem(
             backgroundColor: kPrimaryColor,
             icon: Icon(Icons.home),
             label: "Home"),
         BottomNavigationBarItem(
-            icon: MainApp.cartItems != 0
+            backgroundColor: kPrimaryColor,
+            icon: MainApp.cartItemsNo != 0
                 ? Badge(
-              showBadge: true,
-              badgeContent: Text("${MainApp.cartItems}",
-                  style: const TextStyle(color: Colors.white)),
-              animationType: BadgeAnimationType.scale,
-              shape: BadgeShape.circle,
-              //position: BadgePosition.center(),
-              child: const Icon(Icons.shopping_cart),
-            )
+                    showBadge: true,
+                    badgeContent: Text("${MainApp.cartItemsNo}",
+                        style: const TextStyle(color: Colors.white)),
+                    animationType: BadgeAnimationType.scale,
+                    shape: BadgeShape.circle,
+                    //position: BadgePosition.center(),
+                    child: const Icon(Icons.shopping_cart),
+                  )
                 : const Icon(Icons.shopping_cart),
             label: "Cart"),
         BottomNavigationBarItem(
-            icon: Icon(Icons.person), label: "my Account"),
-
+            backgroundColor: kPrimaryColor,
+            icon: Icon(Icons.person),
+            label: "my Account"),
       ];
     }
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        centerTitle: true,
-        title: Text("BookStore"),
-        leading: Container(),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.pop(context);
+    return MaterialApp(
+        title: 'Flutter Animated Login',
+        debugShowCheckedModeBanner: false,
+        initialRoute: "/login",
+        routes: {
+          '/login': (context) => LoginScreen(),
+          '/app': (context) =>Scaffold(
+            appBar: AppBar(
+              backgroundColor: kPrimaryColor,
+              centerTitle: true,
+              title: Text("BookStore"),
+              leading: Container(),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      MainApp.cartBooks.clear();
+                      MainApp.books.clear();
+                      Navigator.popAndPushNamed(context, "/login");
+                    },
+                    icon: Icon(Icons.logout))
+              ],
+            ),
+            body: (MainApp.currentPage == 0)
+                ? SearchScreen()
+                : (MainApp.currentPage == 1)
+                ? CartScreen()
+                : (MainApp.currentPage == 2)
+                ? Account()
+                : OrdersScreen(),
+            bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: kPrimaryColor,
+              unselectedItemColor: Colors.white,
+              selectedItemColor: Colors.white,
+              currentIndex: MainApp.currentPage,
+              onTap: (value) {
+                setState(() {
+                  MainApp.currentPage = value;
+                });
               },
-              icon: Icon(Icons.logout))
-        ],
-      ),
-      body: (MainApp.currentPage == 0)
-          ? SearchScreen()
-          : (MainApp.currentPage == 1)
-              ? CartScreen()
-              : (MainApp.currentPage == 2)
-                  ? Account()
-                  : OrdersScreen(),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: kPrimaryColor,
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Colors.white,
-        currentIndex: MainApp.currentPage,
-        onTap: (value) {
-          setState(() {
-            MainApp.currentPage = value;
-          });
+              items: bottomBarButtons,
+            ),
+
+          ),
         },
-        items: bottomBarButtons,
-      ),
-      // GNav(
-      //   gap: 5,
-      //   activeColor: Colors.white,
-      //   color: kPrimaryColor,
-      //   tabBackgroundColor: kPrimaryColor,
-      //   duration: const Duration(milliseconds: 300),
-      //   // backgroundColor: kPrimaryColor,
-      //   // unselectedItemColor: Colors.white,
-      //   // selectedItemColor: Colors.white,
-      //   selectedIndex: MainApp.currentPage,
-      //   onTabChange: (value) {
-      //     setState(() {
-      //       MainApp.currentPage=value;
-      //     });
-      //   },
-      //   tabs: [
-      //     GButton(
-      //         icon: Icons.home,
-      //         text: "Home"
-      //     ),
-      //     GButton(
-      //         icon: Icons.shopping_cart,
-      //         text: "Cart"
-      //     ),
-      //     GButton(
-      //         icon: Icons.menu_book_sharp,
-      //         text: "Orders"
-      //     ),
-      //     GButton(
-      //         icon: Icons.person,
-      //         text: "my Account"
-      //     ),
-      //   ],
-      // ),
-    );
+        theme: ThemeData(
+          primaryColor: kPrimaryColor,
+          textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme)
+        ),
+      );
   }
 }

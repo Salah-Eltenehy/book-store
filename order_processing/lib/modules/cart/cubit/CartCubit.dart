@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:credit_card_validator/credit_card_validator.dart';
+import 'package:order_processing/screen/MainApp.dart';
 
+import '../../../Book.dart';
 import '../../CardUtils/CardUtils.dart';
 import '../CartScreen.dart';
 import 'CartStates.dart';
@@ -30,28 +32,19 @@ class CartCubit extends Cubit<CartStates> {
   static CartCubit get(context) => BlocProvider.of(context);
 
   // generate random data
-  List<Map<String, dynamic>> books = [];
+  // List<Map<String, dynamic>> books = [];
   List<bool> isExpanded = [];
 
   void calculatePrice() {
-    for(Map<String, dynamic> book in books) {
-      double p = book['unitPrice'] as double;
-      int q = book['reqQuantity'] as int;
+    for(Book book in MainApp.cartBooks) {
+      double p = book.price ;
+      int q = book.quantity ;
       totalPrice = totalPrice + p*q;
     }
     emit(CalculateTotalPriceState());
   }
   void generateData(int total) {
     for (int i = 0; i < total; i++) {
-      Map<String, dynamic> temp = {
-        "reqQuantity": i + 5,
-        "bookName": "Book Name",
-        "author": "Salah  Ahmed",
-        "avaQuantity": i * 10 + 3,
-        "date": DateTime.now(),
-        "unitPrice": i*5+20.0
-      };
-      books.add(temp);
       isExpanded.add(false);
     }
     emit(GenerateRandomDataState());
@@ -59,7 +52,11 @@ class CartCubit extends Cubit<CartStates> {
 
   void deleteBook(int index) {
     isExpanded[index] = !isExpanded[index];
-    books.removeAt(index);
+    totalPrice =totalPrice- MainApp.cartBooks[index].price*MainApp.cartBooks[index].quantity;
+    MainApp.cartBooks[index].quantity=0;
+    MainApp.cartBooks.removeAt(index);
+    MainApp.cartItemsNo--;
+    MainApp.update();
     emit(RemoveBookState());
   }
 
@@ -88,12 +85,12 @@ class CartCubit extends Cubit<CartStates> {
     required int index
   })
   {
-    int ava = books[index]['avaQuantity'] as int;
-    int req = books[index]['reqQuantity'] as int;
+    int ava = MainApp.cartBooks[index].stock ;
+    int req = MainApp.cartBooks[index].quantity ;
     if(req >= ava)
       return;
-    books[index]['reqQuantity'] = req+1;
-    double price = books[index]['unitPrice'] as double;
+    MainApp.cartBooks[index].quantity = req+1;
+    double price = MainApp.cartBooks[index].price;
     totalPrice = totalPrice + price;
     emit(IncreaseOrdersState());
   }
@@ -103,13 +100,13 @@ class CartCubit extends Cubit<CartStates> {
     required int index
   })
   {
-    int req = books[index]['reqQuantity'] as int;
+    int req = MainApp.cartBooks[index].quantity;
     if(req <= 1) {
       deleteBook(index);
       return;
     }
-    books[index]['reqQuantity'] = req-1;
-    double price = books[index]['unitPrice'] as double;
+    MainApp.cartBooks[index].quantity = req-1;
+    double price = MainApp.cartBooks[index].price;
     totalPrice = totalPrice - price;
     emit(DecreaseOrdersState());
   }

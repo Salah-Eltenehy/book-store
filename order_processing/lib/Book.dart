@@ -19,4 +19,5 @@ class Book {
   double price =0.0;
   int stock=0;
   String photoUrl="";
+  int quantity = 0;
 }
