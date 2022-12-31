@@ -24,7 +24,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => CartCubit()
-        ..generateData(MainApp.cartItemsNo)
+        ..generateData(MainApp.cartBooks.length)
         ..initState()
         ..calculatePrice(),
       child: BlocConsumer<CartCubit, CartStates>(
@@ -391,102 +391,6 @@ class CartScreen extends StatelessWidget {
             ],
           ),
         ),
-        // body: Container(
-        //   padding: const EdgeInsets.all(16),
-        //   // color: const Color.fromRGBO(199, 27, 234, 0.14901960784313725),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       // author name
-        //       Text(
-        //         "Author: ${book.author_name}",
-        //         style: const TextStyle(
-        //             color: Colors.black, fontWeight: FontWeight.bold),
-        //       ),
-        //       const SizedBox(
-        //         height: 6,
-        //       ),
-        //       // available quantity on the store
-        //       Text(
-        //         "Stock: ${book.stock}",
-        //         style: const TextStyle(
-        //           color: Colors.black,
-        //           // fontWeight: FontWeight.bold
-        //         ),
-        //       ),
-        //       // const SizedBox(height: 6,),
-        //       const SizedBox(
-        //         height: 6,
-        //       ),
-        //       Row(
-        //         children: [
-        //           const Spacer(),
-        //           Column(
-        //             children: [
-        //               Padding(
-        //                 padding: const EdgeInsets.only(bottom: 6),
-        //                 child: InkWell(
-        //                   onTap: () {
-        //                     increaseFunction(expansionIndex);
-        //                   },
-        //                   child: Container(
-        //                     height: 26,
-        //                     width: 26,
-        //                     decoration: BoxDecoration(
-        //                         borderRadius: BorderRadius.circular(10),
-        //                         color: const Color.fromRGBO(
-        //                             255, 122, 249, 0.8)),
-        //                     child: const Icon(
-        //                       Icons.add,
-        //                       color: Colors.white,
-        //                     ),
-        //                   ),
-        //                 ),
-        //               ),
-        //               InkWell(
-        //                 onTap: () {
-        //                   decreaseFunction(expansionIndex);
-        //                 },
-        //                 child: Container(
-        //                   height: 26,
-        //                   width: 26,
-        //                   decoration: BoxDecoration(
-        //                       borderRadius: BorderRadius.circular(10),
-        //                       color:
-        //                           const Color.fromRGBO(255, 122, 249, 0.8)),
-        //                   child: const Icon(
-        //                     Icons.remove,
-        //                     color: Colors.white,
-        //                   ),
-        //                 ),
-        //               ),
-        //             ],
-        //           ),
-        //           // delete order
-        //           Padding(
-        //             padding: const EdgeInsets.only(left: 10),
-        //             child: InkWell(
-        //               onTap: () {
-        //                 delete();
-        //               },
-        //               child: Container(
-        //                 height: 50,
-        //                 width: 40,
-        //                 decoration: BoxDecoration(
-        //                     borderRadius: BorderRadius.circular(10),
-        //                     color: const Color.fromRGBO(173, 0, 158, 0.8)),
-        //                 child: const Icon(
-        //                   Icons.restore_from_trash_sharp,
-        //                   color: Colors.white,
-        //                 ),
-        //               ),
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ],
-        //   ),
-        // ),
     );
   }
 }

@@ -73,7 +73,6 @@ Widget showBook(Book book,BuildContext context)
             myListFiltered.first.quantity++;
           } else {
             MainApp.cartBooks.add(book);
-            MainApp.cartItemsNo++;
             book.quantity++;
           }
           MainApp.update();

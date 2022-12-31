@@ -20,4 +20,5 @@ class Book {
   int stock=0;
   String photoUrl="";
   int quantity = 0;
+  int orderedquantity=20;
 }

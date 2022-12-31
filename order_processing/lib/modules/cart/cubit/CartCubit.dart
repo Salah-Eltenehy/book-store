@@ -55,7 +55,6 @@ class CartCubit extends Cubit<CartStates> {
     totalPrice =totalPrice- MainApp.cartBooks[index].price*MainApp.cartBooks[index].quantity;
     MainApp.cartBooks[index].quantity=0;
     MainApp.cartBooks.removeAt(index);
-    MainApp.cartItemsNo--;
     MainApp.update();
     emit(RemoveBookState());
   }
