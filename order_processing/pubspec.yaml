@@ -44,6 +44,7 @@ dependencies:
   cached_network_image: ^3.0.0
   credit_card_validator: ^2.0.1
   flutter_bloc: ^8.1.1
+  number_paginator: ^0.2.3
   #credit_card_input_form: ^2.3.0
   open_street_map_search_and_pick: ^0.0.15
   google_fonts: ^3.0.1

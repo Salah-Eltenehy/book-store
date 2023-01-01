@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:number_paginator/number_paginator.dart';
 import 'package:order_processing/screen/SearchScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../Constants.dart';
@@ -19,7 +20,8 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   var obsescureText =true;
-
+  int numberofpages = 10 ;
+  int currentpage = 1;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -54,7 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               ),
               SizedBox(
-                height: 12.0,
+                height: 10.0,
               ),
 
               Container(
@@ -76,7 +78,56 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               ),
               SizedBox(
-                height: 12.0,
+                height: 5.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+
+                  ElevatedButton(onPressed: (){
+                    setState(() {
+                      if(currentpage > 1)
+                        {
+                          currentpage = currentpage-1;
+                        }
+                      else
+                        {
+                          currentpage = 1;
+                        }
+
+                    });
+                  },
+          style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
+          child: const Icon(
+            Icons.arrow_back,
+          )),
+         Text("${currentpage}",style: TextStyle(
+           color: kPrimaryColor,
+           fontSize: 20
+         ) ,
+         ),
+      ElevatedButton(onPressed: (){
+        setState(() {
+          if(currentpage <  numberofpages)
+            {
+              currentpage = currentpage+1;
+            }
+          else
+            {
+              currentpage = numberofpages;
+            }
+
+        }
+
+
+        );
+      },
+          style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
+          child: const Icon(
+            Icons.arrow_forward,
+          )),
+                  ]
+
               ),
               Container(
                 width: double.infinity,
@@ -95,8 +146,10 @@ class _SearchScreenState extends State<SearchScreen> {
                     showBook(MainApp.books[0],context),
                   ],
                 ),
-              )
+              ),
+
             ],
+
           ),
         ),
       ),
