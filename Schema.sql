@@ -1,11 +1,6 @@
-/*
-edits:
--adding image_url to book
--delete category table
-*/
-drop database library;
-create database library;
-use library;
+drop database BookStore;
+create database BookStore;
+use BookStore;
 /*
 CREATE TABLE category(
     category VARCHAR(20),

@@ -2,7 +2,7 @@ import random
 import time
 import mysql.connector
 import string
-mydb = mysql.connector.connect(  host="localhost",  user="root",  password="root",  database="library")
+mydb = mysql.connector.connect(  host="localhost",  user="root",  password="root",  database="BookStore")
 mycursor = mydb.cursor()
 
 
