@@ -1,13 +1,21 @@
-
+/*
+edits:
+-adding image_url to book
+-delete category table
+*/
+drop database library;
+create database library;
+use library;
+/*
 CREATE TABLE category(
     category VARCHAR(20),
     PRIMARY KEY(category)
 );
-
+*/
 CREATE TABLE publisher(
     name VARCHAR(30),
     address VARCHAR(40) NOT NULL,
-    telephone_number CHAR(11) NOT NULL,
+    telephone_number CHAR(14) NOT NULL,
     PRIMARY KEY(name)
 );
 
@@ -20,8 +28,9 @@ CREATE TABLE book(
     category VARCHAR(20),
     stock INT NOT NULL,
     threshold INT NOT NULL,
+    image_url varchar(250),
     PRIMARY KEY(ISBN),
-    FOREIGN KEY(category) REFERENCES category (category),
+    #FOREIGN KEY(category) REFERENCES category (category),
     FOREIGN KEY(publisher) REFERENCES publisher (name)
 );
 
