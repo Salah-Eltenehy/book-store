@@ -3,6 +3,8 @@ package com.example.demo.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @Setter
 @Getter
@@ -28,5 +30,17 @@ public class User {
         this.phone_number = phone_number;
         this.shipping_address = shipping_address;
         this.is_manager = is_manager;
+    }
+
+    public User(String jsonString) throws JSONException {
+        JSONObject jsonObject = new JSONObject(jsonString);
+        username = jsonObject.getString("username") ;
+        password = jsonObject.getString("password") ;
+        first_name = jsonObject.getString("first_name") ;
+        last_name = jsonObject.getString("last_name") ;
+        email = jsonObject.getString("email") ;
+        phone_number = jsonObject.getString("phone_number") ;;
+        shipping_address = jsonObject.getString("shipping_address") ;;
+        is_manager = false;
     }
 }

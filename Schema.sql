@@ -54,7 +54,7 @@ CREATE TABLE cart(
     total_price INT,
     state enum('purchased','not purchased'),
     PRIMARY KEY(cart_id),
-    FOREIGN KEY(username) REFERENCES user (username)
+    FOREIGN KEY(username) REFERENCES user (username) on update CASCADE
 );
 
 CREATE TABLE cart_book(
@@ -74,7 +74,7 @@ CREATE TABLE sale(
     sale_date DATE NOT NULL,
     price DOUBLE NOT NULL,
     PRIMARY KEY(saleId),
-    FOREIGN KEY(username) REFERENCES user (username),
+    FOREIGN KEY(username) REFERENCES user (username) on update CASCADE,
     FOREIGN KEY(ISBN) REFERENCES book (ISBN)
 );
 

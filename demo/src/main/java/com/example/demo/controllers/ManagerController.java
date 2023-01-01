@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin()
-@RequestMapping("/bookstore/manager/")
+@RequestMapping("/bookstore/manager")
 public class ManagerController {
     @Autowired
 //    @Resource(name = "ManagerAgent")
