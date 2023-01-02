@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.controllers.RequestModels.BookRequest;
 import com.example.demo.model.Book;
 import com.example.demo.model.BookOrder;
 import com.example.demo.services.interfaces.IManagerAgent;
@@ -31,16 +32,30 @@ public class ManagerAgent implements IManagerAgent {
     }
 
     @Override
-    public boolean addNewBook(Book newBook) {
+    public boolean addNewBook(BookRequest newBookRequest) {
+        System.out.println(newBookRequest.toString());
+        Book newBook = new Book(newBookRequest.getIsbn(), newBookRequest.getTitle(), newBookRequest.getPublisher(),
+                                newBookRequest.getPublication_year(), newBookRequest.getPrice(), newBookRequest.getCategory(),
+                                newBookRequest.getStock(), newBookRequest.getThreshold(), newBookRequest.getImage_url());
         if(newBook.getThreshold() < 0 || newBook.getStock() < newBook.getThreshold() || newBook.getPrice() < 0) return false;
-        String insertQuery = "INSERT INTO book(ISBN, title, publisher, publication_year, price, category, stock, threshold) " +
+        String insertQuery = "INSERT INTO book(ISBN, title, publisher, publication_year, price, category, stock, threshold, image_url) " +
                              "VALUES (" + toSQLString(newBook.getISBN()) + ", " + toSQLString(newBook.getTitle()) +  ", " +
                              toSQLString(newBook.getPublisher()) + ", " + toSQLDate(newBook.getPublication_year()) + ", " +
                              newBook.getPrice() + ", " + toSQLString(newBook.getCategory()) + ", " +
-                             newBook.getStock() + ", " + newBook.getThreshold() + ");";
-        return executeQuery(insertQuery);
+                             newBook.getStock() + ", " + newBook.getThreshold() + ", " + toSQLString(newBook.getImage_url()) +");";
+        return executeQuery(insertQuery) && insertAuthors(newBookRequest.getAuthors(), newBook.getISBN());
     }
-
+    private boolean insertAuthors(String authorString, String ISBN){
+        String[] authors = authorString.split(", ");
+        String insertAuthorsQuery;
+        boolean result = true;
+        for (String author : authors) {
+            insertAuthorsQuery = "INSERT INTO AUTHOR(ISBN, author) " +
+                    "VALUES(" + toSQLString(ISBN) + ", " + toSQLString(author) + ");";
+            result = executeQuery(insertAuthorsQuery) && result;
+        }
+        return result;
+    }
     @Override
     public boolean modifyBookQuantity(String iSBN, int quantityDifference) {
         String updateQuery = "UPDATE BOOK " +

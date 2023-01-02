@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.controllers.RequestModels.BookRequest;
 import com.example.demo.model.Book;
 import com.example.demo.model.BookOrder;
 import com.example.demo.services.interfaces.IManagerAgent;
@@ -17,8 +18,11 @@ public class ManagerController {
     private IManagerAgent managerAgent;
 
     @PostMapping("/add/book")
-    public ResponseEntity<String> addNewBook(@RequestBody Book newBook){
-        boolean status = this.managerAgent.addNewBook(newBook);
+    public ResponseEntity<String> addNewBook(@RequestBody BookRequest newBookRequest){ //
+//        System.out.println(s);
+//        return ResponseEntity.status(HttpStatus.CREATED).body("Added Successfully");
+//
+        boolean status = this.managerAgent.addNewBook(newBookRequest);
         if (status) return ResponseEntity.status(HttpStatus.CREATED).body("Added Successfully");
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Failed to Add the Book");
     }
