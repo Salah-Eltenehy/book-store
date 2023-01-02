@@ -55,7 +55,7 @@ CREATE TABLE cart(
     purchased_date date NOT NULL,
     credit_cart_number CHAR(16) NOT NULL,
     cvv CHAR(3) NOT NULL,
-	purchased_date date NOT NULL,
+	expiry_date date NOT NULL,
     PRIMARY KEY(cart_id),
     FOREIGN KEY(username) REFERENCES user (username) on update CASCADE
 );
