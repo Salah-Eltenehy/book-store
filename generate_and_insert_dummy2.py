@@ -293,8 +293,6 @@ Avg num of authors = 500K
 """
 
 start = time.time()
-n = int(1*1e1)
-threshold = 4
 min_stock = 5
 max_stock = 25
 min_price = 50
@@ -330,7 +328,7 @@ for table,table_count in  zip(data.keys(),range(len(data.keys()))):
             if v == 'id':
                 values.append(id)
             elif v == 'threshold':
-                values.append(f"{threshold}")
+                values.append(f"{random.randint(5 , 10)}")
             elif v == 'book_title':
                 values.append(random.choice(book_titles))
             elif v == 'publisher':
