@@ -1,13 +1,14 @@
 package com.example.demo.services;
 
-import com.example.demo.model.Book;
-import com.example.demo.model.BookOrder;
-import com.example.demo.model.User;
+import com.example.demo.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -65,48 +66,66 @@ public class CustomerAgent {
     }
 
 
+    public boolean createCart(String username, int total_cost, String credit_cart_number, String cvv, Date expiry_date, Map<String, Integer> books) throws Exception {
+        username = toSQLString(username) ;
+        String query = "SELECT * FROM USER WHERE username = " + username + " ;";
+        System.out.println(query);
+        ResultSet resultSet = dbAgent.getStatement().executeQuery(query);
+        if(!resultSet.next())
+            throw new Exception("username don't exist");
 
+        String insertQuery = "INSERT INTO CART(username, total_price, purchased_date, credit_cart_number, cvv, expiry_date) " +
+                "VALUES (" + toSQLString(username) + ", " + total_cost +  ", " + toSQLDate(Date.valueOf(LocalDate.now()))+ ", " +
+                toSQLString(credit_cart_number) + toSQLString(cvv) +  ", " + toSQLDate(expiry_date) + ");";
+        System.out.println(insertQuery);
+        if(this.dbAgent.getStatement().executeUpdate(insertQuery)== 0){
+            throw new Exception("could not add cart");
+        }
 
-    public boolean addNewBook(Book newBook) {
-        if(newBook.getThreshold() < 0 || newBook.getStock() < newBook.getThreshold() || newBook.getPrice() < 0) return false;
-        String insertQuery = "INSERT INTO book(ISBN, title, publisher, publication_year, price, category, stock, threshold) " +
-                "VALUES (" + toSQLString(newBook.getISBN()) + ", " + toSQLString(newBook.getTitle()) +  ", " +
-                toSQLString(newBook.getPublisher()) + ", " + toSQLDate(newBook.getPublication_year()) + ", " +
-                newBook.getPrice() + ", " + toSQLString(newBook.getCategory()) + ", " +
-                newBook.getStock() + ", " + newBook.getThreshold() + ");";
-        return executeQuery(insertQuery);
+        query = "SELECT * FROM CART WHERE username = " + username + " ORDER BY cart_id DESC ;";
+        System.out.println(query);
+        resultSet = dbAgent.getStatement().executeQuery(query);
+        if(!resultSet.next())
+            throw new Exception("error");
+
+        Cart cart = getCart(resultSet) ;
+
+        for(String ISBN: books.keySet()){
+            insertQuery = "INSERT INTO cart_book(cart_id, ISBN, no_books) " +
+                    "VALUES (" + cart.getCart_id() + ", " + toSQLString(ISBN) +  ", " + books.get(ISBN) + ");";
+            System.out.println(insertQuery);
+            if(this.dbAgent.getStatement().executeUpdate(insertQuery)== 0){
+                throw new Exception("could not add book");
+            }
+        }
+        return true;
+
     }
 
 
+    private Cart getCart(ResultSet resultSet) throws SQLException {
+        Cart cart = new Cart();
+        cart.setUsername(resultSet.getString("username"));
+        cart.setCart_id(resultSet.getInt("cart_id"));
+        cart.setTotal_price(resultSet.getInt("total_price"));
+        String state = resultSet.getString("state") ;
+        if(state.equals("not purchased"))
+            cart.setState(CartState.NOT_PURCHASED);
+        else
+            cart.setState(CartState.PURCHASED);
 
-    public boolean placeBookOrder(BookOrder bookOrder) {
-        String query = "INSERT INTO BOOK_ORDER(ISBN, quantity, publisher) VALUES " +
-                "(" +
-                toSQLString(bookOrder.getISBN()) + ", " +
-                bookOrder.getQuantity() + ", " +
-                toSQLString(bookOrder.getPublisher())
-                + ");";
-        return executeQuery(query);
+
+        return cart ;
+
     }
 
-    public boolean confirmBookOrder(String iSBN) {
-        String deleteQuery = "DELETE FROM BOOK_ORDER " +
-                "WHERE ISBN = " + toSQLString(iSBN) + ";";
-        return executeQuery(deleteQuery);
-    }
-
-    public boolean promoteUser(String userName) {
-        String promoteUserQuery = "UPDATE USER " +
-                "SET IS_MANGER = 1 " +
-                "WHERE USERNAME = " + toSQLString(userName) + ";";
-        return executeQuery(promoteUserQuery);
+    private String toSQLDate(Date dateAttribute){
+        return "date'" + dateAttribute + "'";
     }
 
     private String toSQLString(String strAttribute){
         return "'" + strAttribute + "'";
     }
-    private String toSQLDate(Date dateAttribute){
-        return "date'" + dateAttribute + "'";
-    }
+
 
 }
