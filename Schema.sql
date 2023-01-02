@@ -52,7 +52,10 @@ CREATE TABLE cart(
 	cart_id INT AUTO_INCREMENT,
     username VARCHAR(40) NOT NULL,
     total_price INT,
-    state enum('purchased','not purchased'),
+    purchased_date date NOT NULL,
+    credit_cart_number CHAR(16) NOT NULL,
+    cvv CHAR(3) NOT NULL,
+	purchased_date date NOT NULL,
     PRIMARY KEY(cart_id),
     FOREIGN KEY(username) REFERENCES user (username) on update CASCADE
 );
@@ -60,9 +63,10 @@ CREATE TABLE cart(
 CREATE TABLE cart_book(
 	cart_id INT,
     ISBN CHAR(13) NOT NULL,
+    no_books INT default 1,
 	PRIMARY KEY(cart_id,ISBN),
-    FOREIGN KEY(cart_id) REFERENCES cart (cart_id),
-    FOREIGN KEY(ISBN) REFERENCES book (ISBN)
+    FOREIGN KEY(cart_id) REFERENCES cart(cart_id),
+    FOREIGN KEY(ISBN) REFERENCES book(ISBN)
 );
 
 

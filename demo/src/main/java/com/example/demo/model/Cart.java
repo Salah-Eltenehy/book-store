@@ -10,8 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cart {
-    int cartID;
-    String userName;
-    double totalPrice;
+    int cart_id;
+    String username;
+    int total_price;
     CartState state;
 }

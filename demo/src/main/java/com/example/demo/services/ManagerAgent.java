@@ -6,7 +6,8 @@ import com.example.demo.services.interfaces.IManagerAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.sql.Date;
+
 
 @Service
 @Slf4j
