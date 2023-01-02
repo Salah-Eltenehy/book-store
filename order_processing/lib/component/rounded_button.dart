@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:order_processing/component/rounded_input.dart';
+import 'package:order_processing/component/rounded_password_input.dart';
+import 'package:order_processing/component/rounded_phone.dart';
+import 'package:order_processing/component/secondname.dart';
+import 'package:order_processing/shared/DioHelper.dart';
+import 'package:order_processing/shared/network/local/Cachhelper.dart';
 
 import '../Constants.dart';
 import '../screen/MainApp.dart';
 import '../screen/SearchScreen.dart';
+import 'Username.dart';
+import 'findlocation_Map.dart';
+import 'firstname.dart';
 
 class RoundedButton extends StatelessWidget {
   const RoundedButton({
@@ -18,6 +27,48 @@ class RoundedButton extends StatelessWidget {
 
     return InkWell(
       onTap: () {
+        // int id = await CachHelper.getData(key: )
+        if(title == "LOGIN")
+          {
+            DioHelper.postData(url:"bookstore/login" , data: {
+              "email" : RoundedInput.Text.text,
+              "password": RoundedPasswordInput.PASSWORD.text,
+
+            }).then((value) async {
+              String id = value.data["id"] ;
+              await CachHelper.saveData(key: "id", value: id);
+            } ).catchError((Error){
+              showAlertDialog( context,"Check your inputs" );
+              RoundedInput.Text.clear();
+              RoundedPasswordInput.PASSWORD.clear();
+            });
+          }
+        else
+          {
+            DioHelper.postData(url:"bookstore/signup" , data: {
+              "email" : RoundedInput.Text.text,
+              "password": RoundedPasswordInput.PASSWORD.text,
+              "userName":Username.Text.text,
+              "firstName":FirstName.Text.text,
+              "lastName":SecondName.Text.text,
+              "PhoneNumber": RoundedPhoneNumber.PhoneNumber.text,
+              "location": FindLocation.Locationaddress,
+              "xAxis": FindLocation.X_axis,
+              "yAxis":FindLocation.Y_axis,
+            }).then((value) async {
+              String id = value.data["id"] ;
+              await CachHelper.saveData(key: "id", value: id);
+            } ).catchError((Error){
+              showAlertDialog( context,"Check your inputs" );
+              RoundedInput.Text.clear();
+              RoundedPasswordInput.PASSWORD.clear();
+              Username.Text.clear();
+              FirstName.Text.clear();
+              SecondName.Text.clear();
+              RoundedPhoneNumber.PhoneNumber.clear();
+            });
+          }
+
         MainApp.intializeBooks();
         MainApp.update();
         Navigator.popAndPushNamed(context, "/app");
@@ -42,4 +93,20 @@ class RoundedButton extends StatelessWidget {
       ),
     );
   }
+}
+showAlertDialog(BuildContext context, text3) {
+  return showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Alert"),
+        content: Text(text3),
+        actions: [
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ));
 }

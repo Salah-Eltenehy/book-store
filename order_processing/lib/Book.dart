@@ -9,6 +9,7 @@ class Book {
     this.price=price;
     this.stock=stock;
     this.photoUrl=photoUrl;
+    this.quantity = quantity;
   }
   String ISPN = '';
   String title = '';

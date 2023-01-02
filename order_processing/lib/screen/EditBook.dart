@@ -4,11 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Book.dart';
 import '../Constants.dart';
+import '../shared/DioHelper.dart';
 import 'MainApp.dart';
 
 
 class EditBook extends StatefulWidget {
   static late Book book ;
+  static TextEditingController Text1 = TextEditingController();
   @override
   _EditBookState  createState() => _EditBookState();
 }
@@ -67,18 +69,13 @@ class _EditBookState extends State<EditBook> {
                 ),
               ),
               SizedBox(height: 30),
-              buildtextfield("Book Name",EditBook.book.title,false),
-              buildtextfield("Author",EditBook.book.author_name,false),
-              buildtextfield("Book Price",EditBook.book.price.toString(),false),
-              buildtextfield("Book ID",EditBook.book.ISPN.toString(),false),
-              buildtextfield("Book Cover Url",EditBook.book.photoUrl,false),
-              buildtextfield("Book Category",EditBook.book.category,false),
-              buildtextfield("Book Quantity","13",false),
+              buildtextfield("Book Quantity",EditBook.book.quantity.toString(),false),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OutlinedButton(onPressed:(){
+                    EditBook.Text1.clear();
                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                   }, child: Text("Cancel",style: TextStyle(
                     fontSize: 15,
@@ -92,6 +89,12 @@ class _EditBookState extends State<EditBook> {
                     ),
                   ),
                   ElevatedButton(onPressed: (){
+                    DioHelper.postData(url: "bookstore/manager/modify/book/{iSBN}", data: {
+                      "stock": EditBook.Text1,
+                    }).catchError((Error){
+                      showAlertDialog( context,"Check your inputs" );
+                      EditBook.Text1.clear();
+                    });
                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                   }, child: Text("Save",style: TextStyle(
                     fontSize: 15,
@@ -113,12 +116,29 @@ class _EditBookState extends State<EditBook> {
 
     );
   }
+  showAlertDialog(BuildContext context, text3) {
+    return showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Alert"),
+          content: Text(text3),
+          actions: [
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            ),
+          ],
+        ));
+  }
   Widget buildtextfield(String label ,String placeholder, bool ispasswordTextField)
   {
     return Padding(
       padding: EdgeInsets.only(bottom: 30),
       child: TextField(
         obscureText: ispasswordTextField? obsescureText :false ,
+        controller: EditBook.Text1,
         decoration: InputDecoration(
             suffixIcon: ispasswordTextField?
             IconButton(onPressed: (){
