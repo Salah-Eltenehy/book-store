@@ -19,6 +19,7 @@ public class Book {
     private int stock;
     private int threshold;
     private String image_url;
+    private String author;
 
     public Book(String ISBN, String title, String publisher, Date publication_year, double price,
                 String category, int stock, int threshold, String image_url)
