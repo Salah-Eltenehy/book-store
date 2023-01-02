@@ -91,3 +91,9 @@ CREATE TABLE book_order(
     FOREIGN KEY(ISBN) REFERENCES book (ISBN),
     FOREIGN KEY(publisher) REFERENCES publisher (name)
 );
+
+CREATE INDEX ISBN_index ON book(ISBN);
+CREATE INDEX title_index ON book(title);
+CREATE INDEX publisher_index ON book(publisher);
+CREATE INDEX category_index ON book(category);
+CREATE INDEX author_index ON author(author);

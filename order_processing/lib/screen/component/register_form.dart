@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:order_processing/Constants.dart';
+import 'package:order_processing/component/Username.dart';
+import 'package:order_processing/component/firstname.dart';
+import 'package:order_processing/component/secondname.dart';
 import '../../component/findlocation_Map.dart';
 import '../../component/rounded_button.dart';
 import '../../component/rounded_input.dart';
@@ -52,10 +55,9 @@ class RegisterForm extends StatelessWidget {
                   SizedBox(height: 40),
 
                   RoundedInput(icon: Icons.mail, hint: 'Email Address'),
-
-                  RoundedInput(icon: Icons.face_rounded, hint: 'User Name'),
-                  RoundedInput(icon: Icons.face_rounded, hint: 'First Name'),
-                  RoundedInput(icon: Icons.face_rounded, hint: 'Last Name'),
+                  Username(icon: Icons.face_rounded, hint: 'User Name'),
+                  FirstName(icon: Icons.face_rounded, hint: 'First Name'),
+                  SecondName(icon: Icons.face_rounded, hint: 'Last Name'),
                   RoundedPasswordInput(),
                   RoundedPhoneNumber(icon: Icons.phone,color: kPrimaryColor, hint: 'Phone Number'),
                   Container(
