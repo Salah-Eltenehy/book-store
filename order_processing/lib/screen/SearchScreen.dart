@@ -20,7 +20,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   var obsescureText =true;
-  int numberofpages = 10 ;
+  int numberofpages = 50000 ;
   int currentpage = 1;
   @override
   Widget build(BuildContext context) {
@@ -46,6 +46,9 @@ class _SearchScreenState extends State<SearchScreen> {
                 )
                 ,
               ),
+              onChanged: (value){
+
+              },
             ),
               SizedBox(
                 height: 20.0,
@@ -132,24 +135,31 @@ class _SearchScreenState extends State<SearchScreen> {
               Container(
                 width: double.infinity,
                 height: 600.0,
-                child: ListView(
-                  children: [
-                    showBook(MainApp.books[3],context),
-                    showBook(MainApp.books[1],context),
-                    showBook(MainApp.books[2],context),
-                    showBook(MainApp.books[0],context),
-                    showBook(MainApp.books[1],context),
-                    showBook(MainApp.books[2],context),
-                    showBook(MainApp.books[0],context),
-                    showBook(MainApp.books[1],context),
-                    showBook(MainApp.books[2],context),
-                    showBook(MainApp.books[0],context),
-                  ],
+                child: ListView.builder(
+                   itemCount: MainApp.books.length,
+                  itemBuilder:  (context,index)=> Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: ListView(
+                      children: [
+                        showBook(MainApp.books[index], context),
+                      ],
+                    ),
+                  ),
+                  // children: [
+                  //   showBook(MainApp.books[3],context),
+                  //   showBook(MainApp.books[1],context),
+                  //   showBook(MainApp.books[2],context),
+                  //   showBook(MainApp.books[0],context),
+                  //   showBook(MainApp.books[1],context),
+                  //   showBook(MainApp.books[2],context),
+                  //   showBook(MainApp.books[0],context),
+                  //   showBook(MainApp.books[1],context),
+                  //   showBook(MainApp.books[2],context),
+                  //   showBook(MainApp.books[0],context),
+                  // ],
                 ),
               ),
-
             ],
-
           ),
         ),
       ),

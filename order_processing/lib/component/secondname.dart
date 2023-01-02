@@ -4,8 +4,8 @@ import 'input_container.dart';
 import '../Constants.dart';
 
 
-class RoundedInput extends StatelessWidget {
-  const RoundedInput({
+class SecondName extends StatelessWidget {
+  const SecondName({
     Key? key,
     required this.icon,
     required this.hint

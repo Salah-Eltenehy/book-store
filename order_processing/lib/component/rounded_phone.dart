@@ -8,12 +8,13 @@ class RoundedPhoneNumber extends StatelessWidget {
   final Color color;
   final IconData icon;
   final String hint;
-
+  static TextEditingController PhoneNumber = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return InputContainer(
       child: TextField(
         cursorColor: color,
+        controller: PhoneNumber,
         decoration: InputDecoration(
             icon: Icon(icon, color: color),
             hintText: hint,

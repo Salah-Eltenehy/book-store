@@ -6,10 +6,16 @@ import 'package:order_processing/screen/SearchScreen.dart';
 
 import '../Constants.dart';
 import '../component/findlocation_Map.dart';
+import '../shared/DioHelper.dart';
 import 'MainApp.dart';
 
 class Account extends StatefulWidget {
-
+  static TextEditingController Text1 = TextEditingController();
+  static TextEditingController Text2 = TextEditingController();
+  static TextEditingController Text3 = TextEditingController();
+  static TextEditingController Text4 = TextEditingController();
+  static TextEditingController Text5 = TextEditingController();
+  static TextEditingController Text6 = TextEditingController();
   @override
   _AccountState  createState() => _AccountState ();
 }
@@ -55,7 +61,7 @@ class _AccountState extends State<Account> {
                   ),
                 ),
                SizedBox(height: 30),
-               buildtextfield("Email Address"," zizo@zizo,com",false),
+               buildtextfield("Email Address","zizo@zizo,com",false),
                buildtextfield("Password","*********",true),
                buildtextfield("User name","zizo",false),
                buildtextfield("First Name","Abdelaziz",false),
@@ -71,6 +77,12 @@ class _AccountState extends State<Account> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
                    OutlinedButton(onPressed:(){
+                     Account.Text1.clear();
+                     Account.Text2.clear();
+                     Account.Text3.clear();
+                     Account.Text4.clear();
+                     Account.Text5.clear();
+                     Account.Text6.clear();
                      Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                    }, child: Text("Cancel",style: TextStyle(
                      fontSize: 15,
@@ -84,6 +96,25 @@ class _AccountState extends State<Account> {
                      ),
                    ),
                    ElevatedButton(onPressed: (){
+                     DioHelper.postData(url: "bookstore/customer/editProfile", data: {
+                       "email": Account.Text1,
+                       "password": Account.Text2,
+                       "userName": Account.Text3,
+                       "firstName":Account.Text4,
+                       "lastName": Account.Text5,
+                       "phoneNumber":Account.Text6,
+                       "location": FindLocation.Locationaddress,
+                       "xAxis": FindLocation.X_axis,
+                       "yAxis":FindLocation.Y_axis,
+                     }).catchError((Error){
+                       showAlertDialog( context,"Check your inputs" );
+                       Account.Text1.clear();
+                       Account.Text2.clear();
+                       Account.Text3.clear();
+                       Account.Text4.clear();
+                       Account.Text5.clear();
+                       Account.Text6.clear();
+                     });
                      Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                    }, child: Text("Save",style: TextStyle(
                      fontSize: 15,
@@ -102,6 +133,22 @@ class _AccountState extends State<Account> {
            ),
          ),
        );
+  }
+  showAlertDialog(BuildContext context, text3) {
+    return showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Alert"),
+          content: Text(text3),
+          actions: [
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            ),
+          ],
+        ));
   }
 Widget buildtextfield(String label ,String placeholder, bool ispasswordTextField)
 {

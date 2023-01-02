@@ -4,12 +4,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:order_processing/Book.dart';
 import 'package:order_processing/screen/SearchScreen.dart';
+import 'package:order_processing/shared/DioHelper.dart';
 
 import '../Constants.dart';
 import '../component/findlocation_Map.dart';
 import 'MainApp.dart';
 
 class AddBook extends StatefulWidget {
+  static TextEditingController Text1 = TextEditingController();
+  static TextEditingController Text2 = TextEditingController();
+  static TextEditingController Text3 = TextEditingController();
+  static TextEditingController Text4 = TextEditingController();
+  static TextEditingController Text5 = TextEditingController();
+  static TextEditingController Text6 = TextEditingController();
+  static TextEditingController Text7 = TextEditingController();
+  static TextEditingController Text8 = TextEditingController();
+  static TextEditingController Text9 = TextEditingController();
+  static TextEditingController Text10 = TextEditingController();
+
 
   @override
   _AddBookState  createState() => _AddBookState ();
@@ -69,18 +81,31 @@ class _AddBookState extends State<AddBook> {
                 ),
               ),
               SizedBox(height: 30),
-              buildtextfield("Book Name","",false),
-              buildtextfield("Author","",false),
-              buildtextfield("Book Price","",false),
-              buildtextfield("Book ID","",false),
-              buildtextfield("Book Cover Url","",false),
-              buildtextfield("Book Category","",false),
-              buildtextfield("Book Quantity","",false),
+              buildbookTitle("Book Name","",false),
+              buildtextfield("Author(s)","put commas between authors",false),
+              buildbookprice("Book Price","",false),
+              buildtextfield("Book Publisher","",false),
+              buildpublishyear("Book Publication year","",false),
+              buildIsbn("Book ISBN","",false),
+              buildTitleCover("Book Cover Url","",false),
+              buildcategroy("Book Category","",false),
+              buildbookstock("Book Stock","",false),
+              buildbookThreshohold("Book Threshold","",false),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OutlinedButton(onPressed:(){
+                    AddBook.Text1.clear();
+                    AddBook.Text2.clear();
+                    AddBook.Text3.clear();
+                    AddBook.Text4.clear();
+                    AddBook.Text5.clear();
+                    AddBook.Text6.clear();
+                    AddBook.Text7.clear();
+                    AddBook.Text8.clear();
+                    AddBook.Text9.clear();
+                    AddBook.Text10.clear();
                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                   }, child: Text("Cancel",style: TextStyle(
                     fontSize: 15,
@@ -94,6 +119,30 @@ class _AddBookState extends State<AddBook> {
                     ),
                   ),
                   ElevatedButton(onPressed: (){
+                    DioHelper.postData(url: "bookstore/manager/add/book", data: {
+                      "ISBN": AddBook.Text2,
+                      "title": AddBook.Text3,
+                      "publisher": AddBook.Text1,
+                      "author":AddBook.Text6,
+                      "coverphoto":AddBook.Text7,
+                      "publication_year": AddBook.Text9,
+                      "price": AddBook.Text4,
+                      "category": AddBook.Text10,
+                      "stock": AddBook.Text5,
+                      "threshold": AddBook.Text8,
+                    }).catchError((Error){
+                      showAlertDialog( context,"Check your inputs" );
+                      AddBook.Text1.clear();
+                      AddBook.Text2.clear();
+                      AddBook.Text3.clear();
+                      AddBook.Text4.clear();
+                      AddBook.Text5.clear();
+                      AddBook.Text6.clear();
+                      AddBook.Text7.clear();
+                      AddBook.Text8.clear();
+                      AddBook.Text9.clear();
+                      AddBook.Text10.clear();
+                    });
                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                   }, child: Text("Save",style: TextStyle(
                     fontSize: 15,
@@ -115,12 +164,335 @@ class _AddBookState extends State<AddBook> {
 
     );
   }
+  showAlertDialog(BuildContext context, text3) {
+    return showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Alert"),
+          content: Text(text3),
+          actions: [
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            ),
+          ],
+        ));
+  }
   Widget buildtextfield(String label ,String placeholder, bool ispasswordTextField)
+  {
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller: AddBook.Text1,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+        ),
+      ),
+    );
+  }
+  Widget buildIsbn(String label ,String placeholder, bool ispasswordTextField)
+  {
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller:AddBook.Text2,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+        ),
+      ),
+    );
+  }
+  Widget buildbookTitle(String label ,String placeholder, bool ispasswordTextField)
+  {
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller:AddBook.Text3,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+        ),
+      ),
+    );
+  }
+  Widget buildbookprice(String label ,String placeholder, bool ispasswordTextField)
+  {
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller: AddBook.Text4,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+        ),
+      ),
+    );
+  }
+  Widget buildbookstock(String label ,String placeholder, bool ispasswordTextField)
+  {
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller:AddBook.Text5,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+        ),
+      ),
+    );
+  }
+  Widget buildauthor(String label ,String placeholder, bool ispasswordTextField)
+  {
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller: AddBook.Text6,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+        ),
+      ),
+    );
+  }
+  Widget buildTitleCover(String label ,String placeholder, bool ispasswordTextField)
+  {
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller:AddBook.Text7,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+        ),
+      ),
+    );
+  }
+  Widget buildbookThreshohold(String label ,String placeholder, bool ispasswordTextField)
+  {
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller:AddBook.Text8,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+        ),
+      ),
+    );
+  }
+  Widget buildpublishyear(String label ,String placeholder, bool ispasswordTextField)
   {
     return Padding(
       padding: EdgeInsets.only(bottom: 30),
       child: TextField(
         obscureText: ispasswordTextField? obsescureText :false ,
+        controller:AddBook.Text9,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+        ),
+      ),
+    );
+  }
+  Widget buildcategroy(String label ,String placeholder, bool ispasswordTextField)
+  {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller:AddBook.Text10,
         decoration: InputDecoration(
             suffixIcon: ispasswordTextField?
             IconButton(onPressed: (){

@@ -29,7 +29,7 @@ public class SearchAgent {
     }
     public ArrayList<Book> searchByISBN(String ISBN, Integer offset) throws SQLException
     {
-        ISBN = "'".concat(ISBN.concat("'"));
+        ISBN = "'".concat(ISBN.concat("%'"));
         String query = "SELECT * FROM book WHERE ISBN = " + ISBN + " LIMIT 20 OFFSET "+ ((offset - 1) * 20) + " ;";
         return getBooks(query);
     }
@@ -53,8 +53,8 @@ public class SearchAgent {
     }
     public ArrayList<Book> searchByAuthor(String author, Integer offset) throws SQLException
     {
-        author = "'".concat(author.concat("'"));
-        String query = "Select * from book as b join author as a on a.ISBN = b.ISBN where a.author = " + author + " LIMIT 20 OFFSET " + offset + " ;";
+        author = "'%".concat(author.concat("%'"));
+        String query = "Select * from book as b join author as a on a.ISBN = b.ISBN where a.author like " + author + " LIMIT 20 OFFSET " + offset + " ;";
         return getBooks(query);
     }
     public ArrayList<Book> getAllBooks(Integer offset) throws SQLException
