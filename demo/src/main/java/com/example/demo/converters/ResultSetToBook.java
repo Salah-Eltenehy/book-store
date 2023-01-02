@@ -17,7 +17,8 @@ public class ResultSetToBook {
         book.setPrice(resultSet.getDouble("price"));
         book.setCategory(resultSet.getString("category"));
         book.setStock(resultSet.getInt("stock"));
-        book.setStock(resultSet.getInt("threshold"));
+        book.setThreshold(resultSet.getInt("threshold"));
+        book.setImage_url(resultSet.getString("image_url"));
         return book;
     }
 }

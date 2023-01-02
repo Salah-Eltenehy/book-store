@@ -18,8 +18,10 @@ public class Book {
     private String category;
     private int stock;
     private int threshold;
+    private String image_url;
 
-    public Book(String ISBN, String title, String publisher, Date publication_year, double price, String category, int stock, int threshold)
+    public Book(String ISBN, String title, String publisher, Date publication_year, double price,
+                String category, int stock, int threshold, String image_url)
     {
         this.ISBN = ISBN;
         this.title = title;
@@ -29,5 +31,6 @@ public class Book {
         this.category = category;
         this.stock = stock;
         this.threshold = threshold;
+        this.image_url = image_url;
     }
 }
