@@ -57,9 +57,9 @@ public class SearchAgent {
         String query = "Select * from book as b join author as a on a.ISBN = b.ISBN where a.author = " + author + " LIMIT 20 OFFSET " + offset + " ;";
         return getBooks(query);
     }
-    public ArrayList<Book> getAllBooks(String author, Integer offset) throws SQLException
+    public ArrayList<Book> getAllBooks(Integer offset) throws SQLException
     {
-        String query = "Select * from book";
+        String query = "Select * from book LIMIT 20 OFFSET "+ offset + " ;";
         return getBooks(query);
     }
 }

@@ -1,10 +1,11 @@
 package com.example.demo.services;
 
 import com.example.demo.model.User;
+import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+@Service
 public class LoginSignupService {
     private final DBAgent dbAgent;
 
