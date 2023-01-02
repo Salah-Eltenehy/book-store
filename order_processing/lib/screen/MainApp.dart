@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:order_processing/Constants.dart';
 import 'package:badges/badges.dart';
+import 'package:order_processing/shared/DioHelper.dart';
 import '../Book.dart';
 import '../modules/orders/Orders.dart';
 import 'Account.dart';
 import 'SearchScreen.dart';
 import 'package:order_processing/modules/cart/CartScreen.dart';
+import 'package:order_processing/shared/network/local/Cachhelper.dart';
 
 import 'login.dart';
 
@@ -17,7 +19,12 @@ class MainApp extends StatefulWidget {
   static List<Book> orderBooks=[];
   static bool Manger = true;
   static List<Book> books = [];
-  static intializeBooks(){
+  static intializeBooks() async {
+    int id=await CachHelper.getData(key: 'id');
+    //TODO : add url of the request and the form of the data
+    DioHelper.getData(url: '').then((value) {
+      orderBooks=value.data;
+    });
     books=[
       new Book(
           "0123456789012",
