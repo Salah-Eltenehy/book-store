@@ -113,7 +113,11 @@ class _EditBookState extends State<EditBook> {
           ),
         ),
       ),
-
+      floatingActionButton: FloatingActionButton(
+    backgroundColor: kPrimaryColor,
+    child: const Icon(Icons.add, size: 35),
+    onPressed: () =>print("put the request of books here ")
+      ),
     );
   }
   showAlertDialog(BuildContext context, text3) {
