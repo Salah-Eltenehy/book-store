@@ -43,7 +43,7 @@ CREATE TABLE user(
     last_name VARCHAR(15) NOT NULL,
     email VARCHAR(40),
     phone_number CHAR(11),
-    shipping_address VARCHAR(40) NOT NULL,
+    shipping_address VARCHAR(100) NOT NULL,
     is_manger BOOLEAN NOT NULL DEFAULT false, 
     PRIMARY KEY(username)
 );
