@@ -26,14 +26,14 @@ CREATE TABLE book(
     image_url varchar(250),
     PRIMARY KEY(ISBN),
     #FOREIGN KEY(category) REFERENCES category (category),
-    FOREIGN KEY(publisher) REFERENCES publisher (name)
+    FOREIGN KEY(publisher) REFERENCES publisher (name) ON DELETE CASCADE
 );
 
 CREATE TABLE author(
     ISBN CHAR(13),
     author VARCHAR(30),
-    PRIMARY KEY(ISBN, author),
-    FOREIGN KEY(ISBN) REFERENCES book (ISBN)
+    PRIMARY KEY(ISBN, author) ,
+    FOREIGN KEY(ISBN) REFERENCES book (ISBN) ON DELETE CASCADE
 );
 
 CREATE TABLE user(
@@ -45,7 +45,9 @@ CREATE TABLE user(
     phone_number CHAR(11),
     shipping_address VARCHAR(100) NOT NULL,
     is_manager BOOLEAN NOT NULL DEFAULT false, 
-    PRIMARY KEY(username)
+    PRIMARY KEY(username),
+	UNIQUE INDEX EMAIL_UNIQUE (email ASC) VISIBLE,
+	UNIQUE INDEX USERNAME_UNIQUE (username ASC) VISIBLE
 );
 
 CREATE TABLE cart(
@@ -88,8 +90,8 @@ CREATE TABLE book_order(
     quantity INT NOT NULL,
     publisher VARCHAR(30) NOT NULL,
     PRIMARY KEY(orderId),
-    FOREIGN KEY(ISBN) REFERENCES book (ISBN),
-    FOREIGN KEY(publisher) REFERENCES publisher (name)
+    FOREIGN KEY(ISBN) REFERENCES book (ISBN) ON DELETE CASCADE,
+    FOREIGN KEY(publisher) REFERENCES publisher (name) ON DELETE CASCADE
 );
 
 CREATE INDEX ISBN_index ON book(ISBN);

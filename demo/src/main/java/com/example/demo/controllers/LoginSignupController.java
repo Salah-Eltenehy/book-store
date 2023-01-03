@@ -28,6 +28,9 @@ public class LoginSignupController {
         try {
             LoginConverter converter = new LoginConverter(info) ;
             User user = service.login(converter.username, converter.password);
+            if(user==null){
+                return new ResponseEntity<>("not found user by this combination", HttpStatus.NOT_FOUND) ;
+            }
             return new ResponseEntity<>(new Gson().toJson(user), HttpStatus.OK) ;
         }catch (Exception e){
             System.out.println(e);
