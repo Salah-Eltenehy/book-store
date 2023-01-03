@@ -20,46 +20,71 @@ public class SearchAgent {
     {
         ArrayList<Book> books = new ArrayList<>();
         ResultSet resultSet = dbAgent.getStatement().executeQuery(query);
+        System.out.println(query);
         while (resultSet.next())
         {
+//            System.out.println("resultset");
             books.add(resultSetToBook.convert(resultSet));
+//            System.out.println(books.get(books.size() - 1));
         }
         resultSet.close();
         return books;
     }
     public ArrayList<Book> searchByISBN(String ISBN, Integer offset) throws SQLException
     {
-        ISBN = "'".concat(ISBN.concat("%'"));
-        String query = "SELECT * FROM book WHERE ISBN = " + ISBN + " LIMIT 20 OFFSET "+ ((offset - 1) * 20) + " ;";
+        Integer from = ((offset - 1) * 20);
+        Integer to = ((offset) * 20);
+        ISBN = "'".concat(ISBN.concat("'"));
+        String query = "SELECT * FROM BookStore.book WHERE ISBN = " + ISBN +
+                " LIMIT " + from + " , " + to +" ;";
         return getBooks(query);
     }
     public ArrayList<Book> searchByTitle(String title, Integer offset) throws SQLException
     {
+        Integer from = ((offset - 1) * 20);
+        Integer to = ((offset) * 20);
         title = "'%".concat(title.concat("%'"));
-        String query = "SELECT * FROM book WHERE title like " + title + " LIMIT 20 OFFSET "+ ((offset - 1) * 20) + " ;";
+        String query = "SELECT * FROM BookStore.book WHERE title like " + title +
+                " LIMIT " +  from + " , " + to +" ;";
         return getBooks(query);
     }
     public ArrayList<Book> searchByCategory(String category, Integer offset) throws SQLException
     {
-        category = "'%".concat(category.concat("%'"));
-        String query = "SELECT * FROM book WHERE category like " + category + " LIMIT 20 OFFSET " + offset + " ;";
+        Integer from = ((offset - 1) * 20);
+        Integer to = ((offset) * 20);
+        category = "'".concat(category.concat("'"));
+        String query = "SELECT * FROM BookStore.book WHERE category = " + category +
+                " LIMIT " + from + " , " + to +" ;";
         return getBooks(query);
     }
     public ArrayList<Book> searchByPublisher(String publisher, Integer offset) throws SQLException
     {
+        Integer from = ((offset - 1) * 20);
+        Integer to = ((offset) * 20);
         publisher = "'%".concat(publisher.concat("%'"));
-        String query = "SELECT * FROM book WHERE publisher like " + publisher + " LIMIT 20 OFFSET " + offset + " ;";
+        String query = "SELECT * FROM BookStore.book WHERE publisher like " + publisher +
+                " LIMIT " + from + " , " + to +" ;";
         return getBooks(query);
     }
     public ArrayList<Book> searchByAuthor(String author, Integer offset) throws SQLException
     {
+        Integer from = ((offset - 1) * 20);
+        Integer to = ((offset) * 20);
         author = "'%".concat(author.concat("%'"));
-        String query = "Select * from book as b join author as a on a.ISBN = b.ISBN where a.author like " + author + " LIMIT 20 OFFSET " + offset + " ;";
+        String query = "Select * from BookStore.book as b join BookStore.author as a on a.ISBN = b.ISBN where a.author like " + author +
+                " LIMIT " + from + " , " + to +" ;";
         return getBooks(query);
     }
     public ArrayList<Book> getAllBooks(Integer offset) throws SQLException
     {
-        String query = "Select * from book LIMIT 20 OFFSET "+ offset + " ;";
+//        System.out.println(offset);
+        Integer from = ((offset - 1) * 20);
+        Integer to = ((offset) * 20);
+//        String query = "Select * from book LIMIT 20 OFFSET " + ((offset - 1) * 20) + " ;";
+        String query = "Select * from BookStore.book LIMIT "+ from + " , " + to +" ;";
+//        String query = "Select * from BookStore.book;";
+//        String query = "Select * from BookStore.book LIMIT 20, 20  ;";
+//        System.out.println("book");
         return getBooks(query);
     }
 }

@@ -45,7 +45,7 @@ public class ResultSetToBook {
         if(book.getISBN() != null) {
             String ISBN = book.getISBN();
             ISBN = "'".concat(ISBN.concat("'"));
-            String query = "SELECT * FROM author WHERE ISBN = " + ISBN + " ;";
+            String query = "SELECT * FROM BookStore.author WHERE ISBN = " + ISBN + " ;";
             book.setAuthor(getAuthors(query));
         }
         else

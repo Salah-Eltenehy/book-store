@@ -1,13 +1,20 @@
 package com.example.demo.controllers;
 
+import com.example.demo.model.Book;
 import com.example.demo.services.SearchAgent;
 import com.google.gson.Gson;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @CrossOrigin
@@ -20,27 +27,31 @@ public class SearchController {
 //        System.out.println(searchAgent.dbAgent);
     }
     @GetMapping("/isbn")
-    String searchByISBN(String keyword, Integer offset) throws SQLException {
-        return new Gson().toJson(searchAgent.searchByISBN(keyword, offset));
+    ResponseEntity<String> searchByISBN(@RequestParam String keyword, @RequestParam Integer offset) throws SQLException {
+        return new ResponseEntity<>(new Gson().toJson(searchAgent.searchByISBN(keyword, offset)), HttpStatus.OK);
     }
     @GetMapping("/title")
-    String searchByTitle(String keyword, Integer offset) throws SQLException {
-        return new Gson().toJson(searchAgent.searchByTitle(keyword, offset));
+    ResponseEntity<String> searchByTitle(@RequestParam String keyword, @RequestParam Integer offset) throws SQLException {
+        return new ResponseEntity<>(new Gson().toJson(searchAgent.searchByTitle(keyword, offset)), HttpStatus.OK);
     }
     @GetMapping("/category")
-    String searchByCategory(String keyword, Integer offset) throws SQLException {
-        return new Gson().toJson(searchAgent.searchByCategory(keyword, offset));
+    ResponseEntity<String> searchByCategory(@RequestParam String keyword, @RequestParam Integer offset) throws SQLException {
+        return new ResponseEntity<>(new Gson().toJson(searchAgent.searchByCategory(keyword, offset)), HttpStatus.OK);
     }
     @GetMapping("/publisher")
-    String searchByPublisher(String keyword, Integer offset) throws SQLException {
-        return new Gson().toJson(searchAgent.searchByPublisher(keyword, offset));
+    ResponseEntity<String> searchByPublisher(@RequestParam String keyword, @RequestParam Integer offset) throws SQLException {
+        return new ResponseEntity<>(new Gson().toJson(searchAgent.searchByPublisher(keyword, offset)), HttpStatus.OK);
     }
     @GetMapping("/author")
-    String searchByAuthor(String keyword, Integer offset) throws SQLException {
-        return new Gson().toJson(searchAgent.searchByAuthor(keyword, offset));
+    ResponseEntity<String> searchByAuthor(@RequestParam String keyword, @RequestParam Integer offset) throws SQLException {
+        return new ResponseEntity<>(new Gson().toJson(searchAgent.searchByAuthor(keyword, offset)), HttpStatus.OK);
     }
     @GetMapping("/all")
-    String getAllBooks(Integer offset) throws SQLException {
-        return new Gson().toJson(searchAgent.getAllBooks(offset));
+    ResponseEntity<String> getAllBooks(@RequestParam Integer offset) throws SQLException {
+//        System.out.println("all");
+        List<Book> books = searchAgent.getAllBooks(offset);
+        System.out.println(books.toString());
+        ResponseEntity<String> response = new ResponseEntity<>(new Gson().toJson(books), HttpStatus.OK);
+        return response ;
     }
 }
