@@ -32,7 +32,7 @@ class RoundedButton extends StatelessWidget {
     return InkWell(
       onTap: () async{
         // int id = await CachHelper.getData(key: )
-        MainApp.books= await DioHelper.getData(url: "search/all/${1}") as List<Book>;
+        // MainApp.books= await DioHelper.getData(url: "search/all/${1}") as List<Book>;
         if(title == "LOGIN")
           {
             await DioHelper.postData(url:"bookstore/login" , data: {
@@ -42,14 +42,14 @@ class RoundedButton extends StatelessWidget {
             }).then((value) async {
               String id = value.data["id"] ;
              User =  (await CachHelper.saveData(key: "id", value: id)) as user;
-              MainApp.books= await DioHelper.getData(url: "search/all/${1}") as List<Book>;
+              MainApp.books= await DioHelper.getData(url: "search/all?offset=${1}") as List<Book>;
             } ).catchError((Error){
               showAlertDialog( context,"Check your inputs" );
               RoundedInput.Text.clear();
               RoundedPasswordInput.PASSWORD.clear();
             });
           }
-        else
+        else if(title == "SIGN UP" )
           {
             await DioHelper.postData(url:"bookstore/signup" , data: {
               "email" : RoundedInput.Text.text,
@@ -64,6 +64,7 @@ class RoundedButton extends StatelessWidget {
             }).then((value) async {
               String id = value.data["id"] ;
              User = (await CachHelper.saveData(key: "id", value: id)) as user;
+              MainApp.books= await DioHelper.getData(url: "search/all?offset=${1}") as List<Book>;
             } ).catchError((Error){
               showAlertDialog( context,"Check your inputs" );
               RoundedInput.Text.clear();
