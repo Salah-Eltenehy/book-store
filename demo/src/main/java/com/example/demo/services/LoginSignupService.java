@@ -53,6 +53,6 @@ public class LoginSignupService {
 
     }
     private String toSQLString(String strAttribute){
-        return "'" + strAttribute + "'";
+        return "\"" + strAttribute + "\"";
     }
 }
