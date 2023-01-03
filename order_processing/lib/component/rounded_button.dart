@@ -32,48 +32,48 @@ class RoundedButton extends StatelessWidget {
     return InkWell(
       onTap: () async{
         // int id = await CachHelper.getData(key: )
-       MainApp.books= DioHelper.getData(url: "search/all/${1}") as List<Book>;
-        // if(title == "LOGIN")
-        //   {
-        //     DioHelper.postData(url:"bookstore/login" , data: {
-        //       "email" : RoundedInput.Text.text,
-        //       "password": RoundedPasswordInput.PASSWORD.text,
-        //
-        //     }).then((value) async {
-        //       String id = value.data["id"] ;
-        //      User =  (await CachHelper.saveData(key: "id", value: id)) as user;
-        //       MainApp.books= DioHelper.getData(url: "search/all/${1}") as List<Book>;
-        //     } ).catchError((Error){
-        //       showAlertDialog( context,"Check your inputs" );
-        //       RoundedInput.Text.clear();
-        //       RoundedPasswordInput.PASSWORD.clear();
-        //     });
-        //   }
-        // else
-        //   {
-        //     DioHelper.postData(url:"bookstore/signup" , data: {
-        //       "email" : RoundedInput.Text.text,
-        //       "password": RoundedPasswordInput.PASSWORD.text,
-        //       "userName":Username.Text.text,
-        //       "firstName":FirstName.Text.text,
-        //       "lastName":SecondName.Text.text,
-        //       "PhoneNumber": RoundedPhoneNumber.PhoneNumber.text,
-        //       "locationAddress": FindLocation.Locationaddress,
-        //       "xAxis": FindLocation.X_axis,
-        //       "yAxis":FindLocation.Y_axis,
-        //     }).then((value) async {
-        //       String id = value.data["id"] ;
-        //      User = (await CachHelper.saveData(key: "id", value: id)) as user;
-        //     } ).catchError((Error){
-        //       showAlertDialog( context,"Check your inputs" );
-        //       RoundedInput.Text.clear();
-        //       RoundedPasswordInput.PASSWORD.clear();
-        //       Username.Text.clear();
-        //       FirstName.Text.clear();
-        //       SecondName.Text.clear();
-        //       RoundedPhoneNumber.PhoneNumber.clear();
-        //     });
-        //   }
+        MainApp.books= DioHelper.getData(url: "search/all/${1}") as List<Book>;
+        if(title == "LOGIN")
+          {
+            DioHelper.postData(url:"bookstore/login" , data: {
+              "email" : RoundedInput.Text.text,
+              "password": RoundedPasswordInput.PASSWORD.text,
+
+            }).then((value) async {
+              String id = value.data["id"] ;
+             User =  (await CachHelper.saveData(key: "id", value: id)) as user;
+              MainApp.books= DioHelper.getData(url: "search/all/${1}") as List<Book>;
+            } ).catchError((Error){
+              showAlertDialog( context,"Check your inputs" );
+              RoundedInput.Text.clear();
+              RoundedPasswordInput.PASSWORD.clear();
+            });
+          }
+        else
+          {
+            DioHelper.postData(url:"bookstore/signup" , data: {
+              "email" : RoundedInput.Text.text,
+              "password": RoundedPasswordInput.PASSWORD.text,
+              "userName":Username.Text.text,
+              "firstName":FirstName.Text.text,
+              "lastName":SecondName.Text.text,
+              "PhoneNumber": RoundedPhoneNumber.PhoneNumber.text,
+              "locationAddress": FindLocation.Locationaddress,
+              "xAxis": FindLocation.X_axis,
+              "yAxis":FindLocation.Y_axis,
+            }).then((value) async {
+              String id = value.data["id"] ;
+             User = (await CachHelper.saveData(key: "id", value: id)) as user;
+            } ).catchError((Error){
+              showAlertDialog( context,"Check your inputs" );
+              RoundedInput.Text.clear();
+              RoundedPasswordInput.PASSWORD.clear();
+              Username.Text.clear();
+              FirstName.Text.clear();
+              SecondName.Text.clear();
+              RoundedPhoneNumber.PhoneNumber.clear();
+            });
+          }
 
         MainApp.intializeBooks();
         MainApp.update();
