@@ -22,7 +22,7 @@ class MainApp extends StatefulWidget {
   static intializeBooks() async {
     int id=await CachHelper.getData(key: 'id');
     //TODO : add url of the request and the form of the data
-    DioHelper.getData(url: '').then((value) {
+    await DioHelper.getData(url: '').then((value) {
       orderBooks=value.data;
     });
     books=[

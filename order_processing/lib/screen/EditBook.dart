@@ -88,8 +88,8 @@ class _EditBookState extends State<EditBook> {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
                     ),
                   ),
-                  ElevatedButton(onPressed: (){
-                    DioHelper.postData(url: "bookstore/manager/modify/book/{iSBN}", data: {
+                  ElevatedButton(onPressed: ()async{
+                    await DioHelper.postData(url: "bookstore/manager/modify/book/{iSBN}", data: {
                       "stock": EditBook.Text1,
                     }).catchError((Error){
                       showAlertDialog( context,"Check your inputs" );

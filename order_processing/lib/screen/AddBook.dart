@@ -118,8 +118,8 @@ class _AddBookState extends State<AddBook> {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
                     ),
                   ),
-                  ElevatedButton(onPressed: (){
-                    DioHelper.postData(url: "bookstore/manager/add/book", data: {
+                  ElevatedButton(onPressed: () async{
+                    await DioHelper.postData(url: "bookstore/manager/add/book", data: {
                       "ISBN": AddBook.Text2,
                       "title": AddBook.Text3,
                       "publisher": AddBook.Text1,

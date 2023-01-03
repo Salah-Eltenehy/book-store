@@ -32,17 +32,17 @@ class RoundedButton extends StatelessWidget {
     return InkWell(
       onTap: () async{
         // int id = await CachHelper.getData(key: )
-        MainApp.books= DioHelper.getData(url: "search/all/${1}") as List<Book>;
+        MainApp.books= await DioHelper.getData(url: "search/all/${1}") as List<Book>;
         if(title == "LOGIN")
           {
-            DioHelper.postData(url:"bookstore/login" , data: {
+            await DioHelper.postData(url:"bookstore/login" , data: {
               "email" : RoundedInput.Text.text,
               "password": RoundedPasswordInput.PASSWORD.text,
 
             }).then((value) async {
               String id = value.data["id"] ;
              User =  (await CachHelper.saveData(key: "id", value: id)) as user;
-              MainApp.books= DioHelper.getData(url: "search/all/${1}") as List<Book>;
+              MainApp.books= await DioHelper.getData(url: "search/all/${1}") as List<Book>;
             } ).catchError((Error){
               showAlertDialog( context,"Check your inputs" );
               RoundedInput.Text.clear();
@@ -51,7 +51,7 @@ class RoundedButton extends StatelessWidget {
           }
         else
           {
-            DioHelper.postData(url:"bookstore/signup" , data: {
+            await DioHelper.postData(url:"bookstore/signup" , data: {
               "email" : RoundedInput.Text.text,
               "password": RoundedPasswordInput.PASSWORD.text,
               "userName":Username.Text.text,

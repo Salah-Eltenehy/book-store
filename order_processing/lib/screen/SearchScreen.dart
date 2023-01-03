@@ -161,7 +161,7 @@ class _SearchScreenState extends State<SearchScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  ElevatedButton(onPressed: (){
+                  ElevatedButton(onPressed: () async{
                     setState(() {
                       if(currentpage > 1)
                         {
@@ -173,7 +173,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         }
 
                     });
-                   MainApp.books= DioHelper.getData(url: "search/${field}/${currentpage}") as List<Book>;
+                   MainApp.books= await DioHelper.getData(url: "search/${field}/${currentpage}") as List<Book>;
                   },
           style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
           child: const Icon(
@@ -184,8 +184,8 @@ class _SearchScreenState extends State<SearchScreen> {
            fontSize: 20
          ) ,
          ),
-      ElevatedButton(onPressed: (){
-        setState(() {
+      ElevatedButton(onPressed: () {
+        setState(() async{
           if(currentpage <  numberofpages)
             {
               currentpage = currentpage+1;
@@ -194,7 +194,7 @@ class _SearchScreenState extends State<SearchScreen> {
             {
               currentpage = numberofpages;
             }
-         MainApp.books = DioHelper.getData(url: "search/${field}/${currentpage}") as List<Book>;
+         MainApp.books = await DioHelper.getData(url: "search/${field}/${currentpage}") as List<Book>;
         }
         );
       },

@@ -12,6 +12,6 @@ import 'Constants.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachHelper.init();
-  DioHelper.init();
+  await DioHelper.init();
   runApp(MainApp());
 }

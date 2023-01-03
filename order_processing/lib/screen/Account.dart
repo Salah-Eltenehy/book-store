@@ -96,8 +96,8 @@ class _AccountState extends State<Account> {
                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
                      ),
                    ),
-                   ElevatedButton(onPressed: (){
-                     DioHelper.postData(url: "bookstore/customer/editProfile", data: {
+                   ElevatedButton(onPressed: ()async{
+                     await DioHelper.postData(url: "bookstore/customer/editProfile", data: {
                        "email": Account.Text1,
                        "password": Account.Text2,
                        "userName": Account.Text3,
