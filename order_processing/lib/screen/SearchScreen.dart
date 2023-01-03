@@ -28,6 +28,7 @@ class _SearchScreenState extends State<SearchScreen> {
   late String field;
   @override
   Widget build(BuildContext context) {
+    print(MainApp.books[0].title);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -143,11 +144,12 @@ class _SearchScreenState extends State<SearchScreen> {
                   itemCount: MainApp.books.length,
                   itemBuilder:  (context,index)=> Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: ListView(
-                      children: [
-                        showBook(MainApp.books[index], context),
-                      ],
-                    ),
+                     child: topBarBook(MainApp.books[index]),
+                    // child: ListView(
+                    //   children: [
+                    //     showBook(MainApp.books[index], context),
+                    //   ],
+                    // ),
                   ),
                 ),
               ),
@@ -173,7 +175,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         }
 
                     });
-                   MainApp.books= await DioHelper.getData(url: "search/${field}/${currentpage}") as List<Book>;
+                   // MainApp.books= await DioHelper.getData(url: "search/${field}/${currentpage}") as List<Book>;
                   },
           style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
           child: const Icon(
@@ -194,7 +196,7 @@ class _SearchScreenState extends State<SearchScreen> {
             {
               currentpage = numberofpages;
             }
-         MainApp.books = await DioHelper.getData(url: "search/${field}/${currentpage}") as List<Book>;
+         // MainApp.books = await DioHelper.getData(url: "search/${field}/${currentpage}") as List<Book>;
         }
         );
       },
@@ -212,11 +214,7 @@ class _SearchScreenState extends State<SearchScreen> {
                    itemCount: MainApp.books.length,
                   itemBuilder:  (context,index)=> Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: ListView(
-                      children: [
-                        showBook(MainApp.books[index], context),
-                      ],
-                    ),
+                    child: showBook(MainApp.books[index], context),
                   ),
                   // children: [
                   //   showBook(MainApp.books[3],context),
