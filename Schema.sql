@@ -44,7 +44,7 @@ CREATE TABLE user(
     email VARCHAR(40),
     phone_number CHAR(11),
     shipping_address VARCHAR(100) NOT NULL,
-    is_manger BOOLEAN NOT NULL DEFAULT false, 
+    is_manager BOOLEAN NOT NULL DEFAULT false, 
     PRIMARY KEY(username)
 );
 
