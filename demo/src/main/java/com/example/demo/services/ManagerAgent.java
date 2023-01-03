@@ -91,9 +91,8 @@ public class ManagerAgent implements IManagerAgent {
     }
 
     private String toSQLString(String strAttribute){
-        return "'" + strAttribute + "'";
-    }
-    private String toSQLDate(Date dateAttribute){
+        return "\"" + strAttribute + "\"";
+    }    private String toSQLDate(Date dateAttribute){
         return "date'" + dateAttribute + "'";
     }
 
