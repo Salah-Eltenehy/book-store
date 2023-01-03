@@ -58,13 +58,17 @@ class RoundedButton extends StatelessWidget {
               "first_name":FirstName.Text.text,
               "last_name":SecondName.Text.text,
               "phone_number": RoundedPhoneNumber.PhoneNumber.text,
-              "shipping_address": FindLocation.Locationaddress,
-            }).then((value) async {
+              // "shipping_address": FindLocation.Locationaddress,
+              "shipping_address": "dddddddddddd",
+            }).then((value)  {
              // String id = value.data["id"] ;
+              print("hello000000000000000000o");
               print(value.data);
+              User = new user(value.data['email'], value.data['username'], value.data['first_name'], value.data['last_name'],value.data['phone_number'], value.data['shipping_address'],value.data['is_manager'] );
             // User = (await CachHelper.saveData(key: "id", value: id)) as user;
               //MainApp.books= await DioHelper.getData(url: "search/all?offset=${1}") as List<Book>;
             } ).catchError((Error){
+              print(Error);
               showAlertDialog( context,"Check your inputs" );
               RoundedInput.Text.clear();
               RoundedPasswordInput.PASSWORD.clear();

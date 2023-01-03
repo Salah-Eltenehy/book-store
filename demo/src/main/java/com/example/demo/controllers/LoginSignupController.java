@@ -41,6 +41,7 @@ public class LoginSignupController {
             user = service.signup(user);
             return new ResponseEntity<>(new Gson().toJson(user), HttpStatus.OK) ;
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND) ;
         }
     }
