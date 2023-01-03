@@ -58,8 +58,8 @@ class RoundedButton extends StatelessWidget {
               "first_name":FirstName.Text.text,
               "last_name":SecondName.Text.text,
               "phone_number": RoundedPhoneNumber.PhoneNumber.text,
-              // "shipping_address": FindLocation.Locationaddress,
-              "shipping_address": "dddddddddddd",
+              "shipping_address": FindLocation.Locationaddress,
+              // "shipping_address": "dddddddddddd",
             }).then((value)  {
              // String id = value.data["id"] ;
               print("hello000000000000000000o");
