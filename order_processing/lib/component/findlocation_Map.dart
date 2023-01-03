@@ -5,8 +5,12 @@ import 'package:order_processing/Constants.dart';
 class FindLocation extends StatelessWidget {
   FindLocation({
     Key? key,
+    required this.x,
+    required this.y,
   }) : super(key: key);
   static var Locationaddress;
+  final double x;
+  final double y;
   static var X_axis;
   static var Y_axis;
 
@@ -15,7 +19,7 @@ class FindLocation extends StatelessWidget {
     return Scaffold(
       body: SizedBox(
         child: OpenStreetMapSearchAndPick(
-            center: LatLong(31.2160786, 29.9469253),
+            center: LatLong(x,y),
             buttonColor: kPrimaryColor,
             buttonText: "Choose Shipping Address",
             onPicked: (pickedData) {

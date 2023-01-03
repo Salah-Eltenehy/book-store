@@ -3,10 +3,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
+import 'package:order_processing/Book.dart';
 import 'package:order_processing/screen/SearchScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../Constants.dart';
 import '../component/findlocation_Map.dart';
+import '../shared/DioHelper.dart';
 import 'AddBook.dart';
 import 'MainApp.dart';
 import 'component/topBarBooks.dart';
@@ -22,6 +24,8 @@ class _SearchScreenState extends State<SearchScreen> {
   var obsescureText =true;
   int numberofpages = 50000 ;
   int currentpage = 1;
+  int selectedValue = 1;
+  late String field;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -34,7 +38,77 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [TextField(
+            children: [
+              Row(
+               children: [
+                 Text("choose Search Field : ",
+                 style: TextStyle(
+                   fontSize: 18,
+                 ),
+                 ),
+                 DropdownButton(
+                     value:  selectedValue,
+                     iconEnabledColor: kPrimaryColor,
+                     iconDisabledColor: kPrimaryColor,
+                     focusColor: kPrimaryColor,
+                     items: [
+                       DropdownMenuItem(
+                         child: Text("all"),
+                         value: 1,
+                       ),
+                       DropdownMenuItem(
+                         child: Text("Book Name"),
+                         value: 2,
+                       ),
+                       DropdownMenuItem(
+                         child: Text("Book ISBN"),
+                         value: 3,
+                       ),
+                       DropdownMenuItem(
+                           child: Text("Book Author"),
+                           value: 4
+                       ),
+                       DropdownMenuItem(
+                           child: Text("Category"),
+                           value: 5
+                       ),
+                       DropdownMenuItem(
+                           child: Text("Book Publisher"),
+                           value: 6
+                       ),
+                     ],
+                     onChanged: (value) {
+                       setState(() {
+                         selectedValue = value!;
+                         if(value ==1)
+                           {
+                             field = "all";
+                           }
+                         else if(value ==2)
+                           {
+                             field ="title";
+                           }
+                         else if(value ==3)
+                           {
+                             field = "isbn";
+                           }
+                         else if( value == 4)
+                           {
+                             field = "author";
+                           }
+                         else if(value ==5)
+                           {
+                             field = "category";
+                           }
+                         else
+                           {
+                             field = "publisher";
+                           }
+                       });
+                     }),
+               ],
+              ),
+              TextField(
               decoration: InputDecoration(
                 filled: true,
                 fillColor: kBackgroundColor,
@@ -43,8 +117,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 hintText: "Search your favorite Book... ",
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0),
                   borderSide: BorderSide.none,
-                )
-                ,
+                ),
               ),
               onChanged: (value){
 
@@ -65,15 +138,17 @@ class _SearchScreenState extends State<SearchScreen> {
               Container(
                 width: double.infinity,
                 height: 280.0,
-                child: ListView(
+                child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  children: [
-                    topBarBook(MainApp.books[0]),
-                    topBarBook(MainApp.books[1]),
-                    topBarBook(MainApp.books[2]),
-                    topBarBook(MainApp.books[3]),
-                    topBarBook(MainApp.books[0]),
-                  ],
+                  itemCount: MainApp.books.length,
+                  itemBuilder:  (context,index)=> Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: ListView(
+                      children: [
+                        showBook(MainApp.books[index], context),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               Text("See Also...",style: TextStyle(
@@ -86,7 +161,6 @@ class _SearchScreenState extends State<SearchScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                   ElevatedButton(onPressed: (){
                     setState(() {
                       if(currentpage > 1)
@@ -99,6 +173,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         }
 
                     });
+                   MainApp.books= DioHelper.getData(url: "search/${field}/${currentpage}") as List<Book>;
                   },
           style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
           child: const Icon(
@@ -119,10 +194,8 @@ class _SearchScreenState extends State<SearchScreen> {
             {
               currentpage = numberofpages;
             }
-
+         MainApp.books = DioHelper.getData(url: "search/${field}/${currentpage}") as List<Book>;
         }
-
-
         );
       },
           style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),

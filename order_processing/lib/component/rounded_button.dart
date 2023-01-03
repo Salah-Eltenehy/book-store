@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:order_processing/Book.dart';
 import 'package:order_processing/component/rounded_input.dart';
 import 'package:order_processing/component/rounded_password_input.dart';
 import 'package:order_processing/component/rounded_phone.dart';
 import 'package:order_processing/component/secondname.dart';
+import 'package:order_processing/screen/user.dart';
 import 'package:order_processing/shared/DioHelper.dart';
 import 'package:order_processing/shared/network/local/Cachhelper.dart';
 
@@ -14,19 +16,21 @@ import 'findlocation_Map.dart';
 import 'firstname.dart';
 
 class RoundedButton extends StatelessWidget {
-  const RoundedButton({
+
+
+   RoundedButton({
     Key? key,
     required this.title,
   }) : super(key: key);
 
   final String title;
-
+  static late user User;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return InkWell(
-      onTap: () {
+      onTap: () async{
         // int id = await CachHelper.getData(key: )
         if(title == "LOGIN")
           {
@@ -36,7 +40,8 @@ class RoundedButton extends StatelessWidget {
 
             }).then((value) async {
               String id = value.data["id"] ;
-              await CachHelper.saveData(key: "id", value: id);
+             User =  (await CachHelper.saveData(key: "id", value: id)) as user;
+              MainApp.books= DioHelper.getData(url: "search/all/${1}") as List<Book>;
             } ).catchError((Error){
               showAlertDialog( context,"Check your inputs" );
               RoundedInput.Text.clear();
@@ -52,12 +57,12 @@ class RoundedButton extends StatelessWidget {
               "firstName":FirstName.Text.text,
               "lastName":SecondName.Text.text,
               "PhoneNumber": RoundedPhoneNumber.PhoneNumber.text,
-              "location": FindLocation.Locationaddress,
+              "locationAddress": FindLocation.Locationaddress,
               "xAxis": FindLocation.X_axis,
               "yAxis":FindLocation.Y_axis,
             }).then((value) async {
               String id = value.data["id"] ;
-              await CachHelper.saveData(key: "id", value: id);
+             User = (await CachHelper.saveData(key: "id", value: id)) as user;
             } ).catchError((Error){
               showAlertDialog( context,"Check your inputs" );
               RoundedInput.Text.clear();

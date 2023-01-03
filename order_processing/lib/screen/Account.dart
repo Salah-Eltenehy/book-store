@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:order_processing/component/rounded_button.dart';
 import 'package:order_processing/screen/SearchScreen.dart';
 
 import '../Constants.dart';
@@ -61,16 +62,16 @@ class _AccountState extends State<Account> {
                   ),
                 ),
                SizedBox(height: 30),
-               buildtextfield("Email Address","zizo@zizo,com",false),
+               buildtextfield("Email Address",RoundedButton.User.email,false),
                buildtextfield("Password","*********",true),
-               buildtextfield("User name","zizo",false),
-               buildtextfield("First Name","Abdelaziz",false),
-               buildtextfield("Second Name","Mohamed",false),
-               buildtextfield("Phone Number","01551641621",false),
+               buildtextfield("User name",RoundedButton.User.username,false),
+               buildtextfield("First Name",RoundedButton.User.firstName,false),
+               buildtextfield("Last Name",RoundedButton.User.lastName,false),
+               buildtextfield("Phone Number",RoundedButton.User.phoneNumber,false),
                Container(
                  height: 450,
                  width: size.width * 0.8,
-                 child: FindLocation(),
+                 child: FindLocation(x: RoundedButton.User.X_axis,y: RoundedButton.User.Y_axis,),
                ),
                SizedBox(height: 30),
                Row(
@@ -83,6 +84,7 @@ class _AccountState extends State<Account> {
                      Account.Text4.clear();
                      Account.Text5.clear();
                      Account.Text6.clear();
+                     FindLocation(x: 31.2160786,y:  29.9469253,);
                      Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                    }, child: Text("Cancel",style: TextStyle(
                      fontSize: 15,
