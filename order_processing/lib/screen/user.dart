@@ -2,27 +2,22 @@
 class user
 {
 
-  int id = 0;
+
   String email ='';
   String username = '';
-  String firstName = '';
-  String lastName = '';
-  String phoneNumber = '';
-  String locationAddress ='';
-  double X_axis = 0;
-  double Y_axis = 0;
+  String first_name = '';
+  String last_name = '';
+  String phone_number = '';
+  String  shipping_address ='';
   bool manager = false;
-  user(this.id,this.email, this.username, this.firstName, this.lastName,
-      this.phoneNumber, this.locationAddress, this.X_axis, this.Y_axis,this.manager){
+  user(this.email, this.username, this.first_name, this.last_name,
+      this.phone_number, this. shipping_address, this.manager){
       this.email = email;
       this.username =username;
-      this.firstName = firstName;
-      this.lastName = lastName;
-      this.phoneNumber = phoneNumber;
-      this.locationAddress = locationAddress;
-      this.X_axis =X_axis;
-      this.Y_axis = Y_axis;
-      this.id = id;
+      this.first_name = first_name;
+      this.last_name = last_name;
+      this.phone_number = phone_number;
+      this. shipping_address =  shipping_address;
       this.manager = manager;
   }
 }

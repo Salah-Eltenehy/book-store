@@ -24,8 +24,8 @@ class FindLocation extends StatelessWidget {
             buttonText: "Choose Shipping Address",
             onPicked: (pickedData) {
               Locationaddress = pickedData.address;
-              X_axis = pickedData.latLong.latitude;
-              Y_axis = pickedData.latLong.longitude;
+              // X_axis = pickedData.latLong.latitude;
+              // Y_axis = pickedData.latLong.longitude;
             }),
       ),
     );

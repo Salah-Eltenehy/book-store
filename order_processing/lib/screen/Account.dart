@@ -16,6 +16,7 @@ class Account extends StatefulWidget {
   static TextEditingController Text4 = TextEditingController();
   static TextEditingController Text5 = TextEditingController();
   static TextEditingController Text6 = TextEditingController();
+  static TextEditingController Text7 = TextEditingController();
   @override
   _AccountState  createState() => _AccountState ();
 }
@@ -62,16 +63,17 @@ class _AccountState extends State<Account> {
                 ),
                SizedBox(height: 30),
                buildtextfield("Email Address",RoundedButton.User.email,false),
-               buildtextfield("Password","*********",true),
-               buildtextfield("User name",RoundedButton.User.username,false),
-               buildtextfield("First Name",RoundedButton.User.firstName,false),
-               buildtextfield("Last Name",RoundedButton.User.lastName,false),
-               buildtextfield("Phone Number",RoundedButton.User.phoneNumber,false),
-               Container(
-                 height: 450,
-                 width: size.width * 0.8,
-                 child: FindLocation(x: RoundedButton.User.X_axis,y: RoundedButton.User.Y_axis,),
-               ),
+               buildtextfield2("Password","",true),
+               buildtextfield3("User name",RoundedButton.User.username,false),
+               buildtextfield4("First Name",RoundedButton.User.first_name,false),
+               buildtextfield5("Last Name",RoundedButton.User.last_name,false),
+               buildtextfield6("Phone Number",RoundedButton.User.phone_number,false),
+               buildtextfield7("shipping address", RoundedButton.User.shipping_address, false),
+               // Container(
+               //   height: 450,
+               //   width: size.width * 0.8,
+               //   child: FindLocation(x: RoundedButton.User.X_axis,y: RoundedButton.User.Y_axis,),
+               // ),
                SizedBox(height: 30),
                Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,13 +102,11 @@ class _AccountState extends State<Account> {
                      await DioHelper.postData(url: "bookstore/customer/editProfile", data: {
                        "email": Account.Text1,
                        "password": Account.Text2,
-                       "userName": Account.Text3,
-                       "firstName":Account.Text4,
-                       "lastName": Account.Text5,
-                       "phoneNumber":Account.Text6,
-                       "location": FindLocation.Locationaddress,
-                       "xAxis": FindLocation.X_axis,
-                       "yAxis":FindLocation.Y_axis,
+                       "username": Account.Text3,
+                       "first_name":Account.Text4,
+                       "last_name": Account.Text5,
+                       "phone_number":Account.Text6,
+                       "shipping_address":Account.Text7,
                      }).catchError((Error){
                        showAlertDialog( context,"Check your inputs" );
                        Account.Text1.clear();
@@ -115,6 +115,7 @@ class _AccountState extends State<Account> {
                        Account.Text4.clear();
                        Account.Text5.clear();
                        Account.Text6.clear();
+                       Account.Text7.clear();
                      });
                      Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                    }, child: Text("Save",style: TextStyle(
@@ -157,6 +158,7 @@ Widget buildtextfield(String label ,String placeholder, bool ispasswordTextField
       padding: EdgeInsets.only(bottom: 30),
      child: TextField(
        obscureText: ispasswordTextField? obsescureText :false ,
+       controller: Account.Text1,
        decoration: InputDecoration(
          suffixIcon: ispasswordTextField?
              IconButton(onPressed: (){
@@ -184,4 +186,208 @@ Widget buildtextfield(String label ,String placeholder, bool ispasswordTextField
      ),
   );
 }
+  Widget buildtextfield2(String label ,String placeholder, bool ispasswordTextField)
+  {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller: Account.Text2,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+
+        ),
+      ),
+    );
+  }
+  Widget buildtextfield3(String label ,String placeholder, bool ispasswordTextField)
+  {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller: Account.Text3,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+
+        ),
+      ),
+    );
+  }
+  Widget buildtextfield4(String label ,String placeholder, bool ispasswordTextField)
+  {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller: Account.Text4,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+
+        ),
+      ),
+    );
+  }
+  Widget buildtextfield5(String label ,String placeholder, bool ispasswordTextField)
+  {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller: Account.Text5,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+
+        ),
+      ),
+    );
+  }
+  Widget buildtextfield6(String label ,String placeholder, bool ispasswordTextField)
+  {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller: Account.Text6,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+
+        ),
+      ),
+    );
+  }
+  Widget buildtextfield7(String label ,String placeholder, bool ispasswordTextField)
+  {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller: Account.Text7,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+
+        ),
+      ),
+    );
+  }
 }
