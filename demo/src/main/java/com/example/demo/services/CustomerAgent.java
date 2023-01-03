@@ -124,8 +124,7 @@ public class CustomerAgent {
     }
 
     private String toSQLString(String strAttribute){
-        return "'" + strAttribute + "'";
+        return "\"" + strAttribute + "\"";
     }
-
 
 }
