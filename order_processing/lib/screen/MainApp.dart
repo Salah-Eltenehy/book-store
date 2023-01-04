@@ -29,7 +29,6 @@ class MainApp extends StatefulWidget {
       new Book(
           "0123456789012",
           "A Place Called Perfect ",
-          " Ziad zidan",
           "Animals",
           "Dar Elnahda",
           2020,
@@ -39,7 +38,6 @@ class MainApp extends StatefulWidget {
       new Book(
           "0123456789012",
           "To justifie the wayes of God To Men ",
-          " Jason Stathim",
           "Animals",
           "Dar Elnahda",
           2021,
@@ -49,7 +47,6 @@ class MainApp extends StatefulWidget {
       new Book(
           "0123456789012",
           "The book of chaos ",
-          " Tim Drake",
           "Animals",
           "Dar Elnahda",
           2015,
@@ -59,7 +56,6 @@ class MainApp extends StatefulWidget {
       new Book(
           "0123456789012",
           "Five feet apart ",
-          " Kratos",
           "Animals",
           "Dar Elnahda",
           2010,
