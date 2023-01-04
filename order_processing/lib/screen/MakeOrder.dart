@@ -67,8 +67,7 @@ class _makeOrderButtonState extends State<makeOrderButton> {
             padding:
             const EdgeInsets.symmetric(vertical: 20, horizontal: 15)),
         onPressed: () async {
-          // Validate name and money constraints
-          print("han7ot elrequestat hina");//TODO : han7ot elrequest hina
+          print("han7ot elrequestat hina");//TODO : han7ot elrequest hina elattributes hya el ISPN hyb2a id wel quantity hatib2a textFields[0];
           Navigator.pop(context);
         }),
   );
