@@ -21,23 +21,18 @@ public class CustomerAgent {
         this.dbAgent = DBAgent.getInstance();
     }
 
-    private boolean executeQuery(String query){
+    private boolean executeQuery(String query) throws SQLException {
         System.out.println(query);
-        try {
-            int result = this.dbAgent.getStatement().executeUpdate(query);
-            return result != 0;
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
+        int result = this.dbAgent.getStatement().executeUpdate(query);
+        return result != 0;
+
     }
 
-    public boolean editProfile(String username, String password, User user) throws SQLException {
+    public User editProfile(String username, String password, User user) throws Exception {
         User old = loginSignupService.login(username, password) ;
         if(old == null){
             System.out.println("username or the password is incorrect for " + username);
-            return false ;
+            throw new Exception("username or the password is incorrect for " + username);
         }
         String updateQuery = "UPDATE USER SET password = " + toSQLString(user.getPassword())  ;
         if(!old.getUsername().equals(user.getUsername())){
@@ -62,7 +57,10 @@ public class CustomerAgent {
 
         System.out.println(updateQuery);
 
-        return executeQuery(updateQuery);
+        if(executeQuery(updateQuery)){
+            return user ;
+        }
+        return null;
     }
 
 

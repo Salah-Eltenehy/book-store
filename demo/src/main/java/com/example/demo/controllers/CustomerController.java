@@ -28,14 +28,11 @@ public class CustomerController {
     public ResponseEntity<String> editProfile(@RequestBody String info){
         try {
             EditProfileCommand command = new EditProfileCommand(info) ;
-            boolean state = customerAgent.editProfile(command.oldUsername, command.oldPassword, command.user);
-            if (state)
-                return new ResponseEntity<>("Success", HttpStatus.OK) ;
+            User user = customerAgent.editProfile(command.oldUsername, command.oldPassword, command.user);
+            return new ResponseEntity<>(new Gson().toJson(user), HttpStatus.OK) ;
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND) ;
         }
-        return new ResponseEntity<>("Failed", HttpStatus.NOT_MODIFIED) ;
-
     }
 
     @PostMapping("/addCart")
