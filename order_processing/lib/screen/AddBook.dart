@@ -23,6 +23,8 @@ class AddBook extends StatefulWidget {
   static TextEditingController Text8 = TextEditingController();
   static TextEditingController Text9 = TextEditingController();
   static TextEditingController Text10 = TextEditingController();
+  static TextEditingController Text11 = TextEditingController();
+  static TextEditingController Text12 = TextEditingController();
   @override
   _AddBookState  createState() => _AddBookState ();
 }
@@ -85,6 +87,13 @@ class _AddBookState extends State<AddBook> {
               buildauthor("Author(s)","put commas between authors",false),
               buildbookprice("Book Price","",false),
               buildtextfield("Book Publisher","",false),
+              buildpublishertelephone("publisher telephone", "", false),
+              Container(
+                height: 450,
+                width: size.width * 0.8,
+                child: FindLocation(x: 31.2160786,y:  29.9469253,address: "Choose publisher address"),
+              ),
+              SizedBox(height: 30),
               buildpublishyear("Book Publication year","",false),
               buildIsbn("Book ISBN","",false),
               buildTitleCover("Book Cover Url","",false),
@@ -119,7 +128,7 @@ class _AddBookState extends State<AddBook> {
                     ),
                   ),
                   ElevatedButton(onPressed: () async{
-
+                    print(AddBook.Text6.text);
                     String _url =
                         "http://${ip}:8080/bookstore/manager/add/book";
                     print(AddBook.Text2.text);
@@ -129,7 +138,9 @@ class _AddBookState extends State<AddBook> {
                           "ISBN": AddBook.Text2.text,
                           "title": AddBook.Text3.text,
                           "publisher": AddBook.Text1.text,
-                          "author":AddBook.Text6.text,
+                          "authors":AddBook.Text6.text,
+                          "telephone_number" :AddBook.Text11.text,
+                          "address":FindLocation.Locationaddress,
                           "image_url":AddBook.Text7.text,
                           "publication_year": AddBook.Text9.text,
                           "price": AddBook.Text4.text,
@@ -137,7 +148,15 @@ class _AddBookState extends State<AddBook> {
                           "stock": AddBook.Text5.text,
                           "threshold": AddBook.Text8.text,
                         }));
-                    print(res.body);
+                    if(res.statusCode!=200)
+                      {
+                        showAlertDialog( context,"Check your input of books" );
+                        print(res.body);
+                      }
+                    else
+                      {
+                        print(res.body);
+                      }
                     // await DioHelper.postData(url: "bookstore/manager/add/book", data: {
                     //   "ISBN": AddBook.Text2,
                     //   "title": AddBook.Text3,
@@ -162,7 +181,7 @@ class _AddBookState extends State<AddBook> {
                     //   AddBook.Text9.clear();
                     //   AddBook.Text10.clear();
                     // });
-                    Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
+                    // Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                   }, child: Text("Save",style: TextStyle(
                     fontSize: 15,
                     letterSpacing: 2,
@@ -198,6 +217,76 @@ class _AddBookState extends State<AddBook> {
             ),
           ],
         ));
+  }
+  Widget buildpublisheraddress(String label ,String placeholder, bool ispasswordTextField)
+  {
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller: AddBook.Text12,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+        ),
+      ),
+    );
+  }
+  Widget buildpublishertelephone(String label ,String placeholder, bool ispasswordTextField)
+  {
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller: AddBook.Text11,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+        ),
+      ),
+    );
   }
   Widget buildtextfield(String label ,String placeholder, bool ispasswordTextField)
   {

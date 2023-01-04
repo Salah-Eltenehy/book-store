@@ -2,20 +2,20 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:order_processing/screen/MainApp.dart';
 import '../Book.dart';
 import '../Constants.dart';
 import '../shared/DioHelper.dart';
-import 'MainApp.dart';
-import 'package:http/http.dart' as http;
 
-class EditBook extends StatefulWidget {
-  static late dynamic book ;
+
+class Promote extends StatefulWidget {
+  static late Book book ;
   static TextEditingController Text1 = TextEditingController();
   @override
-  _EditBookState  createState() => _EditBookState();
+  _promoteState  createState() => _promoteState();
 }
 
-class _EditBookState extends State<EditBook> {
+class _promoteState extends State<Promote> {
   var obsescureText =true;
 
   @override
@@ -25,7 +25,7 @@ class _EditBookState extends State<EditBook> {
       appBar :AppBar(
         backgroundColor: kPrimaryColor,
         centerTitle: true,
-        title: Text("Edit Book"),
+        title: Text("Promote User"),
         leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
           Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
         },
@@ -60,7 +60,7 @@ class _EditBookState extends State<EditBook> {
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(
-                                  "https://cdn3.iconfinder.com/data/icons/ios-web-user-interface-flat-circle-vol-3/512/Book_books_education_library_reading_open_book_study-512.png"
+                                  'https://wvnpa.org/content/uploads/blank-profile-picture-973460_1280-768x768.png'
                               )
                           )
                       ),
@@ -69,13 +69,13 @@ class _EditBookState extends State<EditBook> {
                 ),
               ),
               SizedBox(height: 30),
-              buildtextfield("Book Quantity",EditBook.book['stock'].toString(),false),
+              buildtextfield("username of customer","",false),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OutlinedButton(onPressed:(){
-                    EditBook.Text1.clear();
+                    Promote.Text1.clear();
                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                   }, child: Text("Cancel",style: TextStyle(
                     fontSize: 15,
@@ -89,20 +89,14 @@ class _EditBookState extends State<EditBook> {
                     ),
                   ),
                   ElevatedButton(onPressed: ()async{
-                    String _url = "http://${ip}:8080/bookstore/manager/modify/book/${EditBook.book['ISBN']}/${EditBook.Text1.text}";
-                    var response = await http.get(Uri.parse(_url));
-                    if(response.statusCode!=200)
-                      {
-                        print(response.body);
-                        showAlertDialog( context,"Check your inputs" );
-                        EditBook.Text1.clear();
-                      }
-                    else
-                      {
-                        print(response.body);
-                      }
-                    // Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
-                  }, child: Text("Save",style: TextStyle(
+                    await DioHelper.postData(url: "bookstore/manager/modify/book/{iSBN}", data: {
+                      "username": Promote.Text1,
+                    }).catchError((Error){
+                      showAlertDialog( context,"Check your inputs" );
+                      Promote.Text1.clear();
+                    });
+                    Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
+                  }, child: Text("Promote",style: TextStyle(
                     fontSize: 15,
                     letterSpacing: 2,
                     color: Colors.white,
@@ -120,9 +114,9 @@ class _EditBookState extends State<EditBook> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-    backgroundColor: kPrimaryColor,
-    child: const Icon(Icons.add, size: 35),
-    onPressed: () =>print("put the request of books here ")
+          backgroundColor: kPrimaryColor,
+          child: const Icon(Icons.add, size: 35),
+          onPressed: () =>print("put the request of books here ")
       ),
     );
   }
@@ -148,7 +142,7 @@ class _EditBookState extends State<EditBook> {
       padding: EdgeInsets.only(bottom: 30),
       child: TextField(
         obscureText: ispasswordTextField? obsescureText :false ,
-        controller: EditBook.Text1,
+        controller: Promote.Text1,
         decoration: InputDecoration(
             suffixIcon: ispasswordTextField?
             IconButton(onPressed: (){

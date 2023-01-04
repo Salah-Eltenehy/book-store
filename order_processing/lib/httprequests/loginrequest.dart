@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:order_processing/screen/Account.dart';
+import 'package:order_processing/screen/SearchScreen.dart';
 import '../Constants.dart';
 import '../component/Username.dart';
 import '../component/firstname.dart';
@@ -17,9 +18,20 @@ import '../screen/MainApp.dart';
 
 class Login extends StatefulWidget {
   static late Map<String, dynamic> data;
+  static late List<dynamic> booksdynamic;
+  static Future<void> sendsearchrequest()
+  async {
+    String _url = "http://${ip}:8080/search/all?offset=${1}";
+    var response = await http.get(Uri.parse(_url));
+      print(response.body);
+     booksdynamic = json.decode(response.body) as List<dynamic>;
+     SearchScreen.booksdynamic =booksdynamic;
+    }
   @override
   loginrequest createState() => loginrequest();
 }
+
+
 
 class loginrequest extends State<Login> {
   @override
@@ -69,6 +81,8 @@ class loginrequest extends State<Login> {
               RoundedPasswordInput.PASSWORD.clear();
               MainApp.Manger = Login.data['is_manager'];
               RoundedInput.Text.clear();
+              // MainApp.books= await DioHelper.getData(url: "search/all?offset=${1}") ;
+              await Login.sendsearchrequest();
               RoundedPasswordInput.PASSWORD.clear();
               MainApp.intializeBooks();
               MainApp.update();

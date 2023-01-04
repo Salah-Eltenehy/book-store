@@ -13,16 +13,18 @@ import 'AddBook.dart';
 import 'MainApp.dart';
 import 'component/topBarBooks.dart';
 import 'data/BookShow.dart';
+import 'package:http/http.dart' as http;
 
 class SearchScreen extends StatefulWidget {
-
+  static TextEditingController Text1 = TextEditingController();
+  static late List<dynamic> booksdynamic =[];
   @override
   _SearchScreenState  createState() => _SearchScreenState ();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
   var obsescureText =true;
-  int numberofpages = 50000 ;
+  int numberofpages = 50000;
   int currentpage = 1;
   int selectedValue = 1;
   late String field;
@@ -79,7 +81,7 @@ class _SearchScreenState extends State<SearchScreen> {
                        ),
                      ],
                      onChanged: (value) {
-                       setState(() {
+                       setState(()  {
                          selectedValue = value!;
                          if(value ==1)
                            {
@@ -105,6 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
                            {
                              field = "publisher";
                            }
+
                        });
                      }),
                ],
@@ -120,8 +123,19 @@ class _SearchScreenState extends State<SearchScreen> {
                   borderSide: BorderSide.none,
                 ),
               ),
-              onChanged: (value){
-
+              onChanged: (value) async {
+                if(field == "all")
+                {
+                  String _url = "http://${ip}:8080/search/all?offset=${1}";
+                  var response = await http.get(Uri.parse(_url));
+                  print(response.body);
+                }
+                else
+                {
+                  String _url = "http://${ip}:8080/search/${field}? keyword=${SearchScreen.Text1.text} &offset=${currentpage}";
+                  var response = await http.get(Uri.parse(_url));
+                  print(response.body);
+                }
               },
             ),
               SizedBox(
@@ -164,18 +178,28 @@ class _SearchScreenState extends State<SearchScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                   ElevatedButton(onPressed: () async{
-                    setState(() {
-                      if(currentpage > 1)
+                    setState(() async {
+                      if(currentpage > 1 )
                         {
                           currentpage = currentpage-1;
+                          if(field == "all")
+                          {
+                            String _url = "http://${ip}:8080/search/all?offset=${1}";
+                            var response = await http.get(Uri.parse(_url));
+                            print(response.body);
+                          }
+                          else
+                          {
+                            String _url = "http://${ip}:8080/search/${field}? keyword=${SearchScreen.Text1.text} &offset=${currentpage}";
+                            var response = await http.get(Uri.parse(_url));
+                            print(response.body);
+                          }
                         }
                       else
                         {
                           currentpage = 1;
                         }
-
                     });
-                   // MainApp.books= await DioHelper.getData(url: "search/${field}/${currentpage}") as List<Book>;
                   },
           style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
           child: const Icon(
@@ -188,13 +212,21 @@ class _SearchScreenState extends State<SearchScreen> {
          ),
       ElevatedButton(onPressed: () {
         setState(() async{
-          if(currentpage <  numberofpages)
+          if(currentpage < numberofpages && SearchScreen.booksdynamic.length!=0)
             {
               currentpage = currentpage+1;
-            }
-          else
-            {
-              currentpage = numberofpages;
+              if(field == "all")
+              {
+                String _url = "http://${ip}:8080/search/all?offset=${1}";
+                var response = await http.get(Uri.parse(_url));
+                print(response.body);
+              }
+              else
+              {
+                String _url = "http://${ip}:8080/search/all? keyword=${field} &offset=${currentpage}";
+                var response = await http.get(Uri.parse(_url));
+                print(response.body);
+              }
             }
          // MainApp.books = await DioHelper.getData(url: "search/${field}/${currentpage}") as List<Book>;
         }
@@ -214,7 +246,7 @@ class _SearchScreenState extends State<SearchScreen> {
                    itemCount: MainApp.books.length,
                   itemBuilder:  (context,index)=> Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: showBook(MainApp.books[index], context),
+                    child: showBook(SearchScreen.booksdynamic[index], context),
                   ),
                   // children: [
                   //   showBook(MainApp.books[3],context),
