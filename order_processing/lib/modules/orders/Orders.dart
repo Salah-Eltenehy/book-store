@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_processing/modules/orders/cubit/OrdersCubit.dart';
@@ -5,9 +7,12 @@ import 'package:order_processing/modules/orders/cubit/OrdersStates.dart';
 import 'package:order_processing/screen/MainApp.dart';
 import 'package:order_processing/shared/DioHelper.dart';
 import 'package:order_processing/shared/network/local/Cachhelper.dart';
+import 'package:http/http.dart' as http;
 
 import '../../Book.dart';
 import 'package:order_processing/shared/DioHelper.dart';
+
+import '../../Constants.dart';
 
 class OrdersScreen extends StatelessWidget {
   int total = 50;
@@ -31,7 +36,7 @@ class OrdersScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return buildBook(
                               book: MainApp.orderBooks[index],
-                              decline: () {
+                              decline: () async {
                                 print("Decline function");
                                 String _url = "http://${ip}:8080/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}";
                                 var res = await http.delete(Uri.parse(_url),
@@ -52,7 +57,7 @@ class OrdersScreen extends StatelessWidget {
                                 //   print(value.data);
                                 // });
                               },
-                              accept: () {
+                              accept: () async {
                                 print("Accept function");
                                 String _url = "http://${ip}:8080/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}";
                                 var res = await http.delete(Uri.parse(_url),

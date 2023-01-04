@@ -10,7 +10,7 @@ class OrdersCubit extends Cubit<OrdersStates> {
 
   static OrdersCubit get(context) => BlocProvider.of(context);
 
-  void getOrdersFromBackEnd() {
+  Future<void> getOrdersFromBackEnd() async {
     String _url =
         "http://${ip}:8080/bookstore/manager/allOrders";
     var res = await http.post(Uri.parse(_url),
