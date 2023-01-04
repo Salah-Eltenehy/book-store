@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
+
 @Service
 public class LoginSignupService {
     private final DBAgent dbAgent;
@@ -26,7 +28,13 @@ public class LoginSignupService {
             return null ;
     }
 
-    public User signup(User user) throws SQLException {
+    public User signup(User user) throws Exception {
+        String regex = "^(.+)@(.+)$";
+        boolean valid = Pattern.compile(regex).matcher(user.getEmail()).matches();
+        System.out.println("youssryTaha 2adwtna");
+        if (!valid)
+            throw new Exception("invalid");
+
         String insertQuery = "INSERT INTO USER(username, password, first_name, last_name, email, phone_number, shipping_address) " +
                 "VALUES (" + toSQLString(user.getUsername()) + ", " + toSQLString(user.getPassword()) +  ", " +
                 toSQLString(user.getFirst_name()) + ", " + toSQLString(user.getLast_name()) + ", " +
@@ -35,7 +43,6 @@ public class LoginSignupService {
         System.out.println(insertQuery);
         this.dbAgent.getStatement().executeUpdate(insertQuery);
 
-        user.setPassword(null);
         return user ;
 
     }
@@ -43,6 +50,7 @@ public class LoginSignupService {
     private User getUser(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setUsername(resultSet.getString("username"));
+        user.setPassword(resultSet.getString("password"));
         user.setFirst_name(resultSet.getString("first_name"));
         user.setLast_name(resultSet.getString("last_name"));
         user.setEmail(resultSet.getString("email"));
