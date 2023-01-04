@@ -10,6 +10,8 @@ import 'package:order_processing/shared/components/Components.dart';
 import '../../Book.dart';
 import '../CardUtils/CardMonthInputFormatter.dart';
 import '../CardUtils/CardNumberInputFormatter.dart';
+import '../screen/Account';
+
 import '../CardUtils/CardUtils.dart';
 import 'package:order_processing/shared/DioHelper.dart';
 import 'package:http/http.dart' as http;
@@ -203,7 +205,7 @@ class CartScreen extends StatelessWidget {
                                             var res = await http.post(Uri.parse(_url),
                                                 headers: {"Content-Type": "application/json"},
                                                 body: json.encode({
-                                                  "username": cartCubit.nameController.text,
+                                                  "username": Account.Oldusername,
                                                   "total_cost": cartCubit.totalPrice,
                                                   "credit_cart_number": cartCubit.cardNumberController.text,
                                                   "cvv": cartCubit.ccvController.text,
