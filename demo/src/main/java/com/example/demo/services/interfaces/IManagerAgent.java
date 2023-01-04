@@ -4,6 +4,8 @@ import com.example.demo.controllers.RequestModels.BookRequest;
 import com.example.demo.model.Book;
 import com.example.demo.model.BookOrder;
 
+import java.util.List;
+
 public interface IManagerAgent {
     boolean addNewBook(BookRequest newBookRequest) throws Exception;   /// true if a book is added successfully
     boolean modifyBookQuantity(String iSBN, int difference) throws Exception; /// true if the difference in the book quantity is applied successfully
@@ -12,4 +14,6 @@ public interface IManagerAgent {
     // true if the order is placed only when the quantity of a book
     // drops from above a given threshold to below the given threshold
     boolean placeBookOrder(BookOrder bookOrder) throws Exception;
+
+    List<BookOrder> getAllOrders() throws Exception;
 }

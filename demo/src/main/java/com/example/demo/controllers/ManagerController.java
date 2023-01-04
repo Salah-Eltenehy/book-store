@@ -4,10 +4,14 @@ import com.example.demo.controllers.RequestModels.BookRequest;
 import com.example.demo.model.Book;
 import com.example.demo.model.BookOrder;
 import com.example.demo.services.interfaces.IManagerAgent;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 @CrossOrigin()
@@ -81,5 +85,11 @@ public class ManagerController {
 
     }
 
-
+    @GetMapping("/allOrders")
+    ResponseEntity<String> getAllOrders() throws Exception {
+        List<BookOrder> bookOrders = managerAgent.getAllOrders();
+        System.out.println(bookOrders.toString());
+        return new ResponseEntity<>(new Gson().toJson(bookOrders),
+                HttpStatus.OK);
+    }
 }

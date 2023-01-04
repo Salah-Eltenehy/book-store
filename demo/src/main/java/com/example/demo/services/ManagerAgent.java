@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.controllers.RequestModels.BookRequest;
 import com.example.demo.converters.ResultSetToBook;
+import com.example.demo.converters.ResultSetToBookOrder;
 import com.example.demo.model.Book;
 import com.example.demo.model.BookOrder;
 import com.example.demo.services.interfaces.IManagerAgent;
@@ -12,6 +13,8 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -19,6 +22,8 @@ import java.time.LocalDate;
 public class ManagerAgent implements IManagerAgent {
     private final DBAgent dbAgent;
     ResultSetToBook resultSetToBook;
+
+    ResultSetToBookOrder resultSetToBookOrder;
     public ManagerAgent() {
         this.dbAgent = DBAgent.getInstance();
         resultSetToBook = new ResultSetToBook();
@@ -107,6 +112,22 @@ public class ManagerAgent implements IManagerAgent {
                 toSQLString(book1.getPublisher())
                 + ");";
         return executeQuery(query);
+    }
+
+    @Override
+    public List<BookOrder> getAllOrders() throws Exception {
+//        String query = "Select * from book LIMIT 20 OFFSET " + ((offset - 1) * 20) + " ;";
+        String query = "SELECT * FROM BookOrder;";
+//        ResultSet resultSet = executeQuery(query);
+//        return resultSet;
+        ArrayList<BookOrder> orders = new ArrayList<>();
+        ResultSet resultSet = dbAgent.getStatement().executeQuery(query);
+        System.out.println(query);
+        while (resultSet.next()) {
+            orders.add(resultSetToBookOrder.convert(resultSet));
+        }
+        resultSet.close();
+        return orders;
     }
 
     @Override
