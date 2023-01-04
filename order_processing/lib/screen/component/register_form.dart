@@ -64,7 +64,7 @@ class RegisterForm extends StatelessWidget {
                   Container(
                     height: 450,
                     width: size.width * 0.8,
-                    child: FindLocation(x: 31.2160786,y:  29.9469253,),
+                    child: FindLocation(x: 31.2160786,y:  29.9469253,address: "Choose shipping address"),
                   ),
                   SizedBox(height: 10),
                   Signup(),

@@ -7,10 +7,12 @@ class FindLocation extends StatelessWidget {
     Key? key,
     required this.x,
     required this.y,
+    required this.address,
   }) : super(key: key);
   static var Locationaddress;
   final double x;
   final double y;
+  final String address;
   static var X_axis;
   static var Y_axis;
 
@@ -21,7 +23,7 @@ class FindLocation extends StatelessWidget {
         child: OpenStreetMapSearchAndPick(
             center: LatLong(x,y),
             buttonColor: kPrimaryColor,
-            buttonText: "Choose Shipping Address",
+            buttonText: address,
             onPicked: (pickedData) {
               Locationaddress = pickedData.address;
               // X_axis = pickedData.latLong.latitude;
