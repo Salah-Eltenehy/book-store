@@ -8,6 +8,7 @@ import org.springframework.data.util.Pair;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,14 +29,14 @@ public class CreateCartConverter {
         credit_cart_number = jsonObject.getString("credit_cart_number");
         cvv = jsonObject.getString("cvv");
         String date = jsonObject.getString("expiry_date");
-        try
-        {
-            SimpleDateFormat obj = new SimpleDateFormat("MM/dd/yyyy");
-            long date1 = obj.parse(date).getTime();
-            expiry_date = new Date(date1);
-        } catch (Exception e) {
-            throw new Exception("In valid date format " + date);
+
+        String[] monthYear = date.split("/") ;
+        if(monthYear.length!=2){
+            throw new Exception(date + " invalid");
         }
+        monthYear[1] = "20"+monthYear[1] ;
+        expiry_date =  Date.valueOf(LocalDate.of(Integer.parseInt(monthYear[1]), Integer.parseInt(monthYear[0]), 1 ));
+
         JSONArray booksJSON = jsonObject.getJSONArray("books");
         books = new HashMap<>();
         for(int i=0 ; !booksJSON.isNull(i) ; i++){
