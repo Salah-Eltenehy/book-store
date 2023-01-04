@@ -34,7 +34,7 @@ class OrdersScreen extends StatelessWidget {
                               decline: () {
                                 print("Decline function");
                                 DioHelper.deleteData(
-                                  '/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index]['ISPN']}'
+                                  url:  '/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}'
                                 ).then((value) {
                                   print("delete order successfully");
                                   print(value.data);
@@ -43,7 +43,7 @@ class OrdersScreen extends StatelessWidget {
                               accept: () {
                                 print("Accept function");
                                 DioHelper.deleteData(
-                                    '/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index]['ISPN']}'
+                                    url:  '/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}'
                                 ).then((value) {
                                   print("Confirm order successfully");
                                   print(value.data);
