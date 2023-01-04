@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 
@@ -32,9 +34,29 @@ public class ManagerAgent implements IManagerAgent {
         }
     }
 
+    private ResultSet select(String sql) throws SQLException {
+        return dbAgent.getStatement().executeQuery(sql);
+    }
+
     @Override
     public boolean addNewBook(BookRequest newBookRequest) throws Exception {
         System.out.println(newBookRequest.toString());
+        String getBook =  "SELECT * FROM BOOK WHERE ISBN = " + toSQLString(newBookRequest.getISBN())  + " ;";
+        ResultSet book = select(getBook) ;
+        if (book.next()){
+            throw new Exception(newBookRequest.getISBN() + " ISBN is already exist!");
+        }
+
+        String getPublisher =  "SELECT * FROM publisher WHERE name = " + toSQLString(newBookRequest.getPublisher())  + " ;";
+        ResultSet publisher = select(getPublisher) ;
+        if (!publisher.next()){
+            String insertPublisher = "INSERT INTO publisher(name, address, telephone_number) " +
+                    "VALUES (" + toSQLString(newBookRequest.getPublisher()) + ", " + toSQLString(newBookRequest.getAddress()) +  ", " +
+                    toSQLString(newBookRequest.getTelephone_number())  +");";
+            if(!executeQuery(insertPublisher))
+                throw new Exception("could not insert publisher");
+        }
+
         Book newBook = new Book(newBookRequest.getISBN(), newBookRequest.getTitle(), newBookRequest.getPublisher(),
                                 Date.valueOf(LocalDate.of(Integer.parseInt(newBookRequest.getPublication_year()),1,1)) ,
                                 newBookRequest.getPrice(), newBookRequest.getCategory(), newBookRequest.getStock(),
@@ -45,7 +67,8 @@ public class ManagerAgent implements IManagerAgent {
                              toSQLString(newBook.getPublisher()) + ", " + toSQLDate(newBook.getPublication_year()) + ", " +
                              newBook.getPrice() + ", " + toSQLString(newBook.getCategory()) + ", " +
                              newBook.getStock() + ", " + newBook.getThreshold() + ", " + toSQLString(newBook.getImage_url()) +");";
-        return executeQuery(insertQuery) && insertAuthors(newBookRequest.getAuthors(), newBook.getISBN());
+
+        return insertAuthors(newBookRequest.getAuthors(), newBook.getISBN()) && executeQuery(insertQuery);
     }
     private boolean insertAuthors(String authorString, String ISBN) throws Exception {
         String[] authors = authorString.split(", ");

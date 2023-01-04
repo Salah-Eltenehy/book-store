@@ -23,6 +23,9 @@ public class BookRequest {
     private String image_url;
     private String authors;
 
+    private String address;
+    private String telephone_number;
+
     public BookRequest(String info) throws JSONException {
         JSONObject jsonObject = new JSONObject(info);
         ISBN = jsonObject.getString("ISBN");
@@ -35,6 +38,7 @@ public class BookRequest {
         threshold = jsonObject.getInt("threshold");
         image_url = jsonObject.getString("image_url");
         authors = jsonObject.getString("authors");
-
+        address = jsonObject.getString("address");
+        telephone_number = jsonObject.getString("telephone_number");
     }
 }

@@ -6,14 +6,14 @@ CREATE TABLE category(
     category VARCHAR(20),
     PRIMARY KEY(category)
 );
-
+*/
 CREATE TABLE publisher(
     name VARCHAR(30),
-    address VARCHAR(40) NOT NULL,
+    address VARCHAR(500) NOT NULL,
     telephone_number CHAR(14) NOT NULL,
     PRIMARY KEY(name)
 );
-*/
+
 
 CREATE TABLE book(
     ISBN CHAR(13),
@@ -25,8 +25,9 @@ CREATE TABLE book(
     stock INT NOT NULL,
     threshold INT NOT NULL,
     image_url varchar(250),
-    PRIMARY KEY(ISBN)
+    PRIMARY KEY(ISBN),
     #FOREIGN KEY(category) REFERENCES category (category),
+    FOREIGN KEY(publisher) REFERENCES publisher (name) ON DELETE CASCADE
 );
 
 CREATE TABLE author(
@@ -90,7 +91,8 @@ CREATE TABLE book_order(
     quantity INT NOT NULL,
     publisher VARCHAR(30) NOT NULL,
     PRIMARY KEY(orderId),
-    FOREIGN KEY(ISBN) REFERENCES book (ISBN) ON DELETE CASCADE
+    FOREIGN KEY(ISBN) REFERENCES book (ISBN) ON DELETE CASCADE,
+    FOREIGN KEY(publisher) REFERENCES publisher (name) ON DELETE CASCADE
 );
 
 CREATE INDEX ISBN_index ON book(ISBN);

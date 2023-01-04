@@ -26,6 +26,7 @@ public class ManagerController {
             boolean status = this.managerAgent.addNewBook(book);
             if (status) return ResponseEntity.status(HttpStatus.CREATED).body("Added Successfully");
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Failed to Add the Book");
