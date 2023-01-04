@@ -31,7 +31,6 @@ public class LoginSignupService {
     public User signup(User user) throws Exception {
         String regex = "^(.+)@(.+)$";
         boolean valid = Pattern.compile(regex).matcher(user.getEmail()).matches();
-        System.out.println("youssryTaha 2adwtna");
         if (!valid)
             throw new Exception("invalid");
 
