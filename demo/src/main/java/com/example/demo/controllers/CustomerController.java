@@ -4,6 +4,7 @@ package com.example.demo.controllers;
 import com.example.demo.converters.CreateCartConverter;
 import com.example.demo.converters.EditProfileCommand;
 import com.example.demo.converters.LoginConverter;
+import com.example.demo.model.Book;
 import com.example.demo.model.User;
 import com.example.demo.services.CustomerAgent;
 import com.google.gson.Gson;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 @CrossOrigin()
@@ -42,14 +45,12 @@ public class CustomerController {
     public ResponseEntity<String> addCart(@RequestBody String info){
         try {
             CreateCartConverter command = new CreateCartConverter(info) ;
-            boolean state = customerAgent.createCart(command.username, command.total_cost, command.credit_cart_number,
+            ArrayList<Book> books = customerAgent.createCart(command.username, command.total_cost, command.credit_cart_number,
                     command.cvv, command.expiry_date, command.books);
-            if (state)
-                return new ResponseEntity<>("Success", HttpStatus.OK) ;
+            return new ResponseEntity<>(new Gson().toJson(books), HttpStatus.OK) ;
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND) ;
         }
-        return new ResponseEntity<>("Failed", HttpStatus.NOT_MODIFIED) ;
 
     }
 

@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.converters.ResultSetToBook;
 import com.example.demo.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Map;
 
 @Service
@@ -15,10 +17,12 @@ import java.util.Map;
 public class CustomerAgent {
     private final DBAgent dbAgent;
     private final LoginSignupService loginSignupService ;
+    ResultSetToBook resultSetToBook ;
 
     public CustomerAgent(LoginSignupService loginSignupService) {
         this.loginSignupService = loginSignupService;
         this.dbAgent = DBAgent.getInstance();
+        this.resultSetToBook = new ResultSetToBook() ;
     }
 
     private boolean executeQuery(String query) throws SQLException {
@@ -104,13 +108,25 @@ public class CustomerAgent {
     }
 
 
-    public boolean createCart(String username, int total_cost, String credit_cart_number, String cvv, Date expiry_date, Map<String, Integer> books) throws Exception {
+    public ArrayList<Book> createCart(String username, int total_cost, String credit_cart_number, String cvv, Date expiry_date, Map<String, Integer> books) throws Exception {
         username = toSQLString(username) ;
         String query = "SELECT * FROM USER WHERE username = " + username + " ;";
         System.out.println(query);
         ResultSet resultSet = dbAgent.getStatement().executeQuery(query);
         if(!resultSet.next())
             throw new Exception("username don't exist");
+
+        ArrayList<Book> booksArray = new ArrayList<>() ;
+        for(String ISBN: books.keySet()){
+            query = "SELECT * FROM BOOK WHERE ISBN = " + toSQLString(ISBN) + " ;";
+            System.out.println(query);
+            resultSet = dbAgent.getStatement().executeQuery(query);
+            if(!resultSet.next())
+                throw new Exception(ISBN + " do not exist");
+            booksArray.add(resultSetToBook.convert(resultSet)) ;
+        }
+
+
 
         String insertQuery = "INSERT INTO CART(username, total_price, purchased_date, credit_cart_number, cvv, expiry_date) " +
                 "VALUES (" + toSQLString(username) + ", " + total_cost +  ", " + toSQLDate(Date.valueOf(LocalDate.now()))+ ", " +
@@ -127,7 +143,6 @@ public class CustomerAgent {
             throw new Exception("error");
 
         Cart cart = getCart(resultSet) ;
-
         for(String ISBN: books.keySet()){
             insertQuery = "INSERT INTO cart_book(cart_id, ISBN, no_books) " +
                     "VALUES (" + cart.getCart_id() + ", " + toSQLString(ISBN) +  ", " + books.get(ISBN) + ");";
@@ -136,7 +151,7 @@ public class CustomerAgent {
                 throw new Exception("could not add book");
             }
         }
-        return true;
+        return booksArray;
 
     }
 
