@@ -33,21 +33,45 @@ class OrdersScreen extends StatelessWidget {
                               book: MainApp.orderBooks[index],
                               decline: () {
                                 print("Decline function");
-                                DioHelper.deleteData(
-                                  url:  '/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}'
-                                ).then((value) {
-                                  print("delete order successfully");
-                                  print(value.data);
-                                });
+                                String _url = "http://${ip}:8080/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}";
+                                var res = await http.delete(Uri.parse(_url),
+                                    headers: {"Content-Type": "application/json"},
+                                    body: json.encode({})
+                                );
+                                if (res.statusCode!=200) {
+                                  print("Error ya sa7by fe el credit card");
+                                } else {
+                                  // TODO: confilct between front end and back end
+                                  print("Response from backend when add card credit");
+                                  print(res.body);
+                                }
+                                // DioHelper.deleteData(
+                                //   url:  '/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}'
+                                // ).then((value) {
+                                //   print("delete order successfully");
+                                //   print(value.data);
+                                // });
                               },
                               accept: () {
                                 print("Accept function");
-                                DioHelper.deleteData(
-                                    url:  '/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}'
-                                ).then((value) {
-                                  print("Confirm order successfully");
-                                  print(value.data);
-                                });
+                                String _url = "http://${ip}:8080/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}";
+                                var res = await http.delete(Uri.parse(_url),
+                                    headers: {"Content-Type": "application/json"},
+                                    body: json.encode({})
+                                );
+                                if (res.statusCode!=200) {
+                                  print("Error ya sa7by fe el credit card");
+                                } else {
+                                  // TODO: confilct between front end and back end
+                                  print("Response from backend when add card credit");
+                                  print(res.body);
+                                }
+                                // DioHelper.deleteData(
+                                //     url:  '/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}'
+                                // ).then((value) {
+                                //   print("Confirm order successfully");
+                                //   print(value.data);
+                                // });
                               }
                           );
                         },
