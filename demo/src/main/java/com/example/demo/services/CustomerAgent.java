@@ -35,22 +35,22 @@ public class CustomerAgent {
             throw new Exception("username or the password is incorrect for " + username);
         }
         String updateQuery = "UPDATE USER SET password = " + toSQLString(user.getPassword())  ;
-        if(!old.getUsername().equals(user.getUsername())){
+        if(!old.getUsername().equals(user.getUsername()) && !user.getUsername().equals("")){
             updateQuery = updateQuery + ", username = " + toSQLString(user.getUsername()) ;
         }
-        if(!old.getFirst_name().equals(user.getFirst_name())){
+        if(!old.getFirst_name().equals(user.getFirst_name()) && !user.getFirst_name().equals("")){
             updateQuery = updateQuery + ", first_name = " + toSQLString(user.getFirst_name()) ;
         }
-        if(!old.getLast_name().equals(user.getLast_name())){
+        if(!old.getLast_name().equals(user.getLast_name()) && !user.getLast_name().equals("")){
             updateQuery = updateQuery + ", last_name = " + toSQLString(user.getLast_name()) ;
         }
-        if(!old.getEmail().equals(user.getEmail())){
+        if(!old.getEmail().equals(user.getEmail()) && !user.getEmail().equals("")){
             updateQuery = updateQuery + ", email = " + toSQLString(user.getEmail()) ;
         }
-        if(!old.getPhone_number().equals(user.getPhone_number())){
+        if(!old.getPhone_number().equals(user.getPhone_number()) && !user.getPhone_number().equals("")){
             updateQuery = updateQuery + ", phone_number = " + toSQLString(user.getPhone_number()) ;
         }
-        if(!old.getShipping_address().equals(user.getShipping_address())){
+        if(!old.getShipping_address().equals(user.getShipping_address()) && !user.getShipping_address().equals("")){
             updateQuery = updateQuery + ", shipping_address = " + toSQLString(user.getShipping_address()) ;
         }
         updateQuery = updateQuery + " WHERE username = "+ toSQLString(username) + ";";
