@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 
 @Service
@@ -34,9 +35,10 @@ public class ManagerAgent implements IManagerAgent {
     @Override
     public boolean addNewBook(BookRequest newBookRequest) {
         System.out.println(newBookRequest.toString());
-        Book newBook = new Book(newBookRequest.getIsbn(), newBookRequest.getTitle(), newBookRequest.getPublisher(),
-                                newBookRequest.getPublication_year(), newBookRequest.getPrice(), newBookRequest.getCategory(),
-                                newBookRequest.getStock(), newBookRequest.getThreshold(), newBookRequest.getImage_url());
+        Book newBook = new Book(newBookRequest.getISBN(), newBookRequest.getTitle(), newBookRequest.getPublisher(),
+                                Date.valueOf(LocalDate.of(Integer.parseInt(newBookRequest.getPublication_year()),1,1)) ,
+                                newBookRequest.getPrice(), newBookRequest.getCategory(), newBookRequest.getStock(),
+                                newBookRequest.getThreshold(), newBookRequest.getImage_url());
         if(newBook.getThreshold() < 0 || newBook.getStock() < newBook.getThreshold() || newBook.getPrice() < 0) return false;
         String insertQuery = "INSERT INTO book(ISBN, title, publisher, publication_year, price, category, stock, threshold, image_url) " +
                              "VALUES (" + toSQLString(newBook.getISBN()) + ", " + toSQLString(newBook.getTitle()) +  ", " +
