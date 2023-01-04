@@ -72,9 +72,9 @@ class CartScreen extends StatelessWidget {
                                   children: [
                                     TextFormField(
                                       validator: (value) {
-                                        return CardUtils.validateCardNum(
-                                            cartCubit
-                                                .cardNumberController.text);
+                                        // return CardUtils.validateCardNum(
+                                        //     cartCubit
+                                        //         .cardNumberController.text);
                                       },
                                       controller:
                                           cartCubit.cardNumberController,
@@ -197,7 +197,7 @@ class CartScreen extends StatelessWidget {
                                               .validate()) {
                                             cartCubit.createBooksForBackEnd();
                                             DioHelper.postData(
-                                              url:'customer/addCart',
+                                              url:'bookstore/customer/addCart',
                                               data: {
                                                 "username": cartCubit.nameController.text,
                                                 "total_cost": cartCubit.totalPrice,
