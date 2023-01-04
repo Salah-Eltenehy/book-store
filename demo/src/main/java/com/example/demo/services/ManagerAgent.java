@@ -27,6 +27,7 @@ public class ManagerAgent implements IManagerAgent {
     public ManagerAgent() {
         this.dbAgent = DBAgent.getInstance();
         resultSetToBook = new ResultSetToBook();
+        resultSetToBookOrder = new ResultSetToBookOrder();
     }
 
     private boolean executeQuery(String query) throws Exception {
@@ -116,10 +117,7 @@ public class ManagerAgent implements IManagerAgent {
 
     @Override
     public List<BookOrder> getAllOrders() throws Exception {
-//        String query = "Select * from book LIMIT 20 OFFSET " + ((offset - 1) * 20) + " ;";
         String query = "SELECT * FROM Book_Order;";
-//        ResultSet resultSet = executeQuery(query);
-//        return resultSet;
         ArrayList<BookOrder> orders = new ArrayList<>();
         ResultSet resultSet = dbAgent.getStatement().executeQuery(query);
         System.out.println(query);
