@@ -1,11 +1,13 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:order_processing/Book.dart';
 import 'package:order_processing/screen/SearchScreen.dart';
 import 'package:order_processing/shared/DioHelper.dart';
-
+import 'package:http/http.dart' as http;
 import '../Constants.dart';
 import '../component/findlocation_Map.dart';
 import 'MainApp.dart';
@@ -21,8 +23,6 @@ class AddBook extends StatefulWidget {
   static TextEditingController Text8 = TextEditingController();
   static TextEditingController Text9 = TextEditingController();
   static TextEditingController Text10 = TextEditingController();
-
-
   @override
   _AddBookState  createState() => _AddBookState ();
 }
@@ -82,7 +82,7 @@ class _AddBookState extends State<AddBook> {
               ),
               SizedBox(height: 30),
               buildbookTitle("Book Name","",false),
-              buildtextfield("Author(s)","put commas between authors",false),
+              buildauthor("Author(s)","put commas between authors",false),
               buildbookprice("Book Price","",false),
               buildtextfield("Book Publisher","",false),
               buildpublishyear("Book Publication year","",false),
@@ -119,30 +119,49 @@ class _AddBookState extends State<AddBook> {
                     ),
                   ),
                   ElevatedButton(onPressed: () async{
-                    await DioHelper.postData(url: "bookstore/manager/add/book", data: {
-                      "ISBN": AddBook.Text2,
-                      "title": AddBook.Text3,
-                      "publisher": AddBook.Text1,
-                      "author":AddBook.Text6,
-                      "coverphoto":AddBook.Text7,
-                      "publication_year": AddBook.Text9,
-                      "price": AddBook.Text4,
-                      "category": AddBook.Text10,
-                      "stock": AddBook.Text5,
-                      "threshold": AddBook.Text8,
-                    }).catchError((Error){
-                      showAlertDialog( context,"Check your inputs" );
-                      AddBook.Text1.clear();
-                      AddBook.Text2.clear();
-                      AddBook.Text3.clear();
-                      AddBook.Text4.clear();
-                      AddBook.Text5.clear();
-                      AddBook.Text6.clear();
-                      AddBook.Text7.clear();
-                      AddBook.Text8.clear();
-                      AddBook.Text9.clear();
-                      AddBook.Text10.clear();
-                    });
+
+                    String _url =
+                        "http://${ip}:8080/bookstore/manager/add/book";
+                    print(AddBook.Text2.text);
+                    var res = await http.post(Uri.parse(_url),
+                        headers: {"Content-Type": "application/json"},
+                        body: json.encode({
+                          "ISBN": AddBook.Text2.text,
+                          "title": AddBook.Text3.text,
+                          "publisher": AddBook.Text1.text,
+                          "author":AddBook.Text6.text,
+                          "image_url":AddBook.Text7.text,
+                          "publication_year": AddBook.Text9.text,
+                          "price": AddBook.Text4.text,
+                          "category": AddBook.Text10.text,
+                          "stock": AddBook.Text5.text,
+                          "threshold": AddBook.Text8.text,
+                        }));
+                    print(res.body);
+                    // await DioHelper.postData(url: "bookstore/manager/add/book", data: {
+                    //   "ISBN": AddBook.Text2,
+                    //   "title": AddBook.Text3,
+                    //   "publisher": AddBook.Text1,
+                    //   "author":AddBook.Text6,
+                    //   "coverphoto":AddBook.Text7,
+                    //   "publication_year": AddBook.Text9,
+                    //   "price": AddBook.Text4,
+                    //   "category": AddBook.Text10,
+                    //   "stock": AddBook.Text5,
+                    //   "threshold": AddBook.Text8,
+                    // }).catchError((Error){
+                    //   showAlertDialog( context,"Check your inputs" );
+                    //   AddBook.Text1.clear();
+                    //   AddBook.Text2.clear();
+                    //   AddBook.Text3.clear();
+                    //   AddBook.Text4.clear();
+                    //   AddBook.Text5.clear();
+                    //   AddBook.Text6.clear();
+                    //   AddBook.Text7.clear();
+                    //   AddBook.Text8.clear();
+                    //   AddBook.Text9.clear();
+                    //   AddBook.Text10.clear();
+                    // });
                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                   }, child: Text("Save",style: TextStyle(
                     fontSize: 15,

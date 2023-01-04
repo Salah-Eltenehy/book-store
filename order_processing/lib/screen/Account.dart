@@ -92,7 +92,12 @@ class _AccountState extends State<Account> {
                      Account.Text5.clear();
                      Account.Text6.clear();
                      Account.Text7.clear();
-                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
+                     // setState(() {
+                     //   MainApp.currentPage == 0;
+                     //   Navigator.popAndPushNamed(contex);
+                     // });
+
+                    Navigator.pop(context);
                    }, child: Text("Cancel",style: TextStyle(
                      fontSize: 15,
                      letterSpacing: 2,
@@ -198,7 +203,7 @@ class _AccountState extends State<Account> {
                            {
                              setState(() => Account.data = json.decode(res.body));
                              MainApp.update();
-                             Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
+                             // Navigator.pop(context);
                            }
                        }
                    }, child: Text("Save",style: TextStyle(
