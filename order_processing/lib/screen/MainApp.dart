@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:order_processing/Constants.dart';
 import 'package:badges/badges.dart';
+import 'package:order_processing/screen/MakeManager.dart';
 import 'package:order_processing/shared/DioHelper.dart';
 import '../Book.dart';
 import '../modules/orders/Orders.dart';
@@ -153,7 +154,13 @@ class _MainAppState extends State<MainApp> {
               backgroundColor: kPrimaryColor,
               centerTitle: true,
               title: Text("BookStore"),
-              leading: Container(),
+              leading: IconButton(
+                onPressed: () =>
+                  showModalBottomSheet(context: context,
+                      isScrollControlled: true,
+                      builder: (context)=> makeManagerButton()),
+                icon: Icon(Icons.people_rounded),
+                ),
               actions: [
                 IconButton(
                     onPressed: () {

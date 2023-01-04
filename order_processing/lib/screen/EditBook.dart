@@ -29,7 +29,7 @@ class _EditBookState extends State<EditBook> {
         centerTitle: true,
         title: Text("Edit Book"),
         leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
-          Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
+          Navigator.pop(context);
         },
         ),
         actions: [
@@ -78,7 +78,7 @@ class _EditBookState extends State<EditBook> {
                 children: [
                   OutlinedButton(onPressed:(){
                     EditBook.Text1.clear();
-                    Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
+                    Navigator.pop(context);
                   }, child: Text("Cancel",style: TextStyle(
                     fontSize: 15,
                     letterSpacing: 2,

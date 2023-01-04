@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:order_processing/Constants.dart';
 
-class makeOrderButton extends StatefulWidget {
-  makeOrderButton( {required isbn,super.key}){
-ISBN = isbn;
+class makeManagerButton extends StatefulWidget {
+  makeManagerButton( {super.key}){
 }
-static String ISBN="";
 @override
-State<StatefulWidget> createState() => _makeOrderButtonState();
+State<StatefulWidget> createState() => _makeManagerButtonState();
 }
 
-class _makeOrderButtonState extends State<makeOrderButton> {
+class _makeManagerButtonState extends State<makeManagerButton> {
   final GlobalKey<FormState> _key = GlobalKey();
   late List<dynamic> textFields = <String>[];
 
@@ -26,11 +24,11 @@ class _makeOrderButtonState extends State<makeOrderButton> {
                   vertical: 25.0, horizontal: 25.0),
               child: Column(
                 children: [
-                  Text("Make An Order",
+                  Text("Promotion",
                       style: TextStyle(
                         color: kPrimaryColor , fontSize: 32 , fontWeight: FontWeight.bold,)),
-                  _formField('Number of needed books', Icons.menu_book),
-                  _submitButton(makeOrderButton.ISBN)
+                  _formField('Username of the new manager', Icons.person_outlined),
+                  _submitButton()
                 ],
               ),
             ),
@@ -50,24 +48,23 @@ class _makeOrderButtonState extends State<makeOrderButton> {
       labelStyle: TextStyle(color: kPrimaryColor),
       border: const UnderlineInputBorder(),
     ),
-    keyboardType: TextInputType.number,
     validator: (input) =>
     (input!.isEmpty) ? "You can't leave this field empty" : null,
     onSaved: (value) => textFields.add(value!),
   );
 
-  _submitButton(id) => Container(
+  _submitButton() => Container(
     alignment: Alignment.bottomCenter,
     margin: const EdgeInsets.only(top: 15),
     child: ElevatedButton.icon(
-        label: const Text('Submit'),
+        label: const Text('Promote'),
         icon: const Icon(Icons.schedule_send),
         style: ElevatedButton.styleFrom(
             backgroundColor: kPrimaryColor,
             padding:
             const EdgeInsets.symmetric(vertical: 20, horizontal: 15)),
         onPressed: () async {
-          print("han7ot elrequestat hina");//TODO : han7ot elrequest hina elattributes hya el ISPN hyb2a id wel quantity hatib2a textFields[0];
+          print("han7ot elrequestat hina");//TODO : han7ot elrequest hina elattributes el username hatib2a textFields[0];
           Navigator.pop(context);
         }),
   );

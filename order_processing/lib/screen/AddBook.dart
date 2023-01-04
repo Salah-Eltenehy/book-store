@@ -115,7 +115,7 @@ class _AddBookState extends State<AddBook> {
                     AddBook.Text8.clear();
                     AddBook.Text9.clear();
                     AddBook.Text10.clear();
-                    Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
+                    Navigator.pop(context);
                   }, child: Text("Cancel",style: TextStyle(
                     fontSize: 15,
                     letterSpacing: 2,
