@@ -1,9 +1,12 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:order_processing/component/rounded_button.dart';
+import 'package:order_processing/httprequests/signuprequest.dart';
 import 'package:order_processing/screen/SearchScreen.dart';
-
+import 'package:http/http.dart' as http;
 import '../Constants.dart';
 import '../component/findlocation_Map.dart';
 import '../shared/DioHelper.dart';
@@ -17,6 +20,7 @@ class Account extends StatefulWidget {
   static TextEditingController Text5 = TextEditingController();
   static TextEditingController Text6 = TextEditingController();
   static TextEditingController Text7 = TextEditingController();
+  static late Map<String, dynamic> data;
   @override
   _AccountState  createState() => _AccountState ();
 }
@@ -62,13 +66,13 @@ class _AccountState extends State<Account> {
                   ),
                 ),
                SizedBox(height: 30),
-               buildtextfield("Email Address",RoundedButton.User.email,false),
-               buildtextfield2("Password","",true),
-               buildtextfield3("User name",RoundedButton.User.username,false),
-               buildtextfield4("First Name",RoundedButton.User.first_name,false),
-               buildtextfield5("Last Name",RoundedButton.User.last_name,false),
-               buildtextfield6("Phone Number",RoundedButton.User.phone_number,false),
-               buildtextfield7("shipping address", RoundedButton.User.shipping_address, false),
+               buildtextfield("Email Address",Account.data['email'],false),
+               buildtextfield2("Password",Account.data['password'],true),
+               buildtextfield3("User name",Account.data['username'],false),
+               buildtextfield4("First Name",Account.data['first_name'],false),
+               buildtextfield5("Last Name",Account.data['last_name'],false),
+               buildtextfield6("Phone Number",Account.data['phone_number'],false),
+               buildtextfield7("shipping address", Account.data['shipping_address'], false),
                // Container(
                //   height: 450,
                //   width: size.width * 0.8,
@@ -85,13 +89,12 @@ class _AccountState extends State<Account> {
                      Account.Text4.clear();
                      Account.Text5.clear();
                      Account.Text6.clear();
-                     FindLocation(x: 31.2160786,y:  29.9469253,);
+                     Account.Text7.clear();
                      Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                    }, child: Text("Cancel",style: TextStyle(
                      fontSize: 15,
                      letterSpacing: 2,
                      color: Colors.black,
-
                    ),),
                      style: OutlinedButton.styleFrom(
                        padding: EdgeInsets.symmetric(horizontal: 50),
@@ -99,25 +102,99 @@ class _AccountState extends State<Account> {
                      ),
                    ),
                    ElevatedButton(onPressed: ()async{
-                     await DioHelper.postData(url: "bookstore/customer/editProfile", data: {
-                       "email": Account.Text1,
-                       "password": Account.Text2,
-                       "username": Account.Text3,
-                       "first_name":Account.Text4,
-                       "last_name": Account.Text5,
-                       "phone_number":Account.Text6,
-                       "shipping_address":Account.Text7,
-                     }).catchError((Error){
-                       showAlertDialog( context,"Check your inputs" );
-                       Account.Text1.clear();
-                       Account.Text2.clear();
-                       Account.Text3.clear();
-                       Account.Text4.clear();
-                       Account.Text5.clear();
+                     var email = Account.Text1.text;
+                     var password = Account.Text2.text;
+                     var username = Account.Text3.text;
+                     var firstname = Account.Text4.text;
+                     var secondname = Account.Text5.text;
+                     var phonenumber = Account.Text6.text;
+                     var shippingaddress = Account.Text7.text;
+                     if(email.isEmpty)
+                       {
+                         email =Account.data['email'];
+                       }
+                     else if(password.isEmpty)
+                       {
+                         password = Account.data['password'];
+                       }
+                     else if(username.isEmpty)
+                       {
+                          username = Account.data['username'];
+                       }
+                     else if(firstname.isEmpty)
+                       {
+                         firstname = Account.data['first_name'];
+                       }
+                     else if(secondname.isEmpty)
+                       {
+                         secondname = Account.data['last_name'];
+                       }
+                     else if(phonenumber.isEmpty)
+                       {
+                         phonenumber = Account.data['phone_number'];
+                       }
+                     else if(shippingaddress.isEmpty)
+                       {
+                         shippingaddress = Account.data['shipping_address'];
+                       }
+                     if(Account.Text3.text.length <3)
+                       {
+                         showAlertDialog(context,"check your username");
+                         Account.Text3.clear();
+                       }
+                     if(Account.Text4.text.length< 3 )
+                       {
+                         showAlertDialog(context,"check your first_name");
+                         Account.Text4.clear();
+                       }
+                     if( Account.Text5.text.length<3)
+                       {
+                         showAlertDialog(context,"check your last_name");
+                         Account.Text5.clear();
+                       }
+                     if(Account.Text2.text.length<6 || Account.Text2.text.length>40 )
+                       {
+                         showAlertDialog(context,"Check your Password");
+                         Account.Text2.clear();
+                       }
+                     else if(Account.Text6.text.length != 11)
+                     {
+                       showAlertDialog(context,"Check your Phone Number");
                        Account.Text6.clear();
-                       Account.Text7.clear();
-                     });
-                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
+                     }
+                     else
+                       {
+                         String _url =
+                             "http://${ip}:8080/bookstore/customer/editProfile";
+                         var res = await http.post(Uri.parse(_url),
+                             headers: {"Content-Type": "application/json"},
+                             body: json.encode({
+                             "email" : email,
+                             "password"  : password,
+                             "username"  : username,
+                             "first_name" :firstname,
+                             "last_name"  :secondname,
+                              "phone_number":phonenumber,
+                             "shipping_address" :shippingaddress,
+                             }));
+                         if(res.statusCode!=200)
+                           {
+                             showAlertDialog(context,"check your inputs");
+                             Account.Text1.clear();
+                             Account.Text2.clear();
+                             Account.Text3.clear();
+                             Account.Text4.clear();
+                             Account.Text5.clear();
+                             Account.Text6.clear();
+                             Account.Text7.clear();
+                           }
+                         else
+                           {
+                             setState(() => Account.data = json.decode(res.body));
+                             MainApp.update();
+                             Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
+                           }
+                       }
                    }, child: Text("Save",style: TextStyle(
                      fontSize: 15,
                      letterSpacing: 2,
