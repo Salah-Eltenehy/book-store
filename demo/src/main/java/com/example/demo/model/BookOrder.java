@@ -3,6 +3,8 @@ package com.example.demo.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.concurrent.Flow;
 
@@ -21,5 +23,14 @@ public class BookOrder
         this.ISBN = ISBN;
         this.quantity = quantity;
         this.publisher = publisher;
+    }
+
+    public BookOrder(String json) throws JSONException {
+        JSONObject jsonObject = new JSONObject(json);
+        orderId = jsonObject.getInt("orderId") ;
+        ISBN = jsonObject.getString("ISBN") ;
+        quantity = jsonObject.getInt("quantity") ;
+        publisher = jsonObject.getString("publisher") ;
+
     }
 }

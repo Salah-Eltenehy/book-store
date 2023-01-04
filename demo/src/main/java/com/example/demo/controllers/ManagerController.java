@@ -38,10 +38,15 @@ public class ManagerController {
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body("Failed to Modify Book Quantity");
     }
     @PostMapping("/place/order/book")
-    public ResponseEntity<String> placeOrderOnBook(@RequestBody BookOrder bookOrder) {
-        boolean status = this.managerAgent.placeBookOrder(bookOrder);
-        if (status)
-            return ResponseEntity.status(HttpStatus.OK).body("Order is placed Successfully!");
+    public ResponseEntity<String> placeOrderOnBook(@RequestBody String bookOrder) {
+        try {
+            boolean status = this.managerAgent.placeBookOrder(new BookOrder(bookOrder));
+            if (status)
+                return ResponseEntity.status(HttpStatus.OK).body("Order is placed Successfully!");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(e.getMessage());
+        }
+
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body("Failed to place the order!!");
     }
 
