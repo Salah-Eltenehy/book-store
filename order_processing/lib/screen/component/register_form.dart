@@ -3,6 +3,7 @@ import 'package:order_processing/Constants.dart';
 import 'package:order_processing/component/Username.dart';
 import 'package:order_processing/component/firstname.dart';
 import 'package:order_processing/component/secondname.dart';
+import 'package:order_processing/httprequests/signuprequest.dart';
 import '../../component/findlocation_Map.dart';
 import '../../component/rounded_button.dart';
 import '../../component/rounded_input.dart';
@@ -66,9 +67,7 @@ class RegisterForm extends StatelessWidget {
                     child: FindLocation(x: 31.2160786,y:  29.9469253,),
                   ),
                   SizedBox(height: 10),
-
-                  RoundedButton(title: 'SIGN UP'),
-
+                  Signup(),
                   SizedBox(height: 10),
                 ],
               ),
