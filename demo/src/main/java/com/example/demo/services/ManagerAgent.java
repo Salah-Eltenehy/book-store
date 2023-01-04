@@ -117,7 +117,7 @@ public class ManagerAgent implements IManagerAgent {
     @Override
     public List<BookOrder> getAllOrders() throws Exception {
 //        String query = "Select * from book LIMIT 20 OFFSET " + ((offset - 1) * 20) + " ;";
-        String query = "SELECT * FROM BookOrder;";
+        String query = "SELECT * FROM Book_Order;";
 //        ResultSet resultSet = executeQuery(query);
 //        return resultSet;
         ArrayList<BookOrder> orders = new ArrayList<>();
