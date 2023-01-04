@@ -123,7 +123,12 @@ public class CustomerAgent {
             resultSet = dbAgent.getStatement().executeQuery(query);
             if(!resultSet.next())
                 throw new Exception(ISBN + " do not exist");
-            booksArray.add(resultSetToBook.convert(resultSet)) ;
+            Book book = resultSetToBook.convert(resultSet);
+            if(book.getStock()< books.get(ISBN)){
+                throw new Exception("for book " + ISBN + " Stock is " + book.getStock() + " and order is " +books.get(ISBN));
+            }
+            booksArray.add(book) ;
+
         }
 
 
