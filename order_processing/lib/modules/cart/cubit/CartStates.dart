@@ -21,3 +21,5 @@ class CalculateTotalPriceState extends CartStates {}
 class IncreaseOrdersState extends CartStates {}
 
 class DecreaseOrdersState extends CartStates {}
+
+class CreateBooksForBackEndState extends CartStates {}
