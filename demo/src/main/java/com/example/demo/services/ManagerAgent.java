@@ -68,7 +68,7 @@ public class ManagerAgent implements IManagerAgent {
                              newBook.getPrice() + ", " + toSQLString(newBook.getCategory()) + ", " +
                              newBook.getStock() + ", " + newBook.getThreshold() + ", " + toSQLString(newBook.getImage_url()) +");";
 
-        return insertAuthors(newBookRequest.getAuthors(), newBook.getISBN()) && executeQuery(insertQuery);
+        return executeQuery(insertQuery) && insertAuthors(newBookRequest.getAuthors(), newBook.getISBN());
     }
     private boolean insertAuthors(String authorString, String ISBN) throws Exception {
         String[] authors = authorString.split(", ");
