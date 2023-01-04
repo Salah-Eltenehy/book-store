@@ -48,7 +48,7 @@ public class SearchController {
     }
     @GetMapping("/all")
     ResponseEntity<String> getAllBooks(@RequestParam Integer offset) throws SQLException {
-//        System.out.println("all");
+        System.out.println("all");
         List<Book> books = searchAgent.getAllBooks(offset);
         System.out.println(books.toString());
         ResponseEntity<String> response = new ResponseEntity<>(new Gson().toJson(books), HttpStatus.OK);

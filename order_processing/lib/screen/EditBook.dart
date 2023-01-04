@@ -89,7 +89,10 @@ class _EditBookState extends State<EditBook> {
                     ),
                   ),
                   ElevatedButton(onPressed: ()async{
+                    // http://localhost:8080/bookstore/manager/modify/book/1234567890123/50
+
                     String _url = "http://${ip}:8080/bookstore/manager/modify/book/${EditBook.book['ISBN']}/${EditBook.Text1.text}";
+                    print(_url);
                     var response = await http.get(Uri.parse(_url));
                     if(response.statusCode!=200)
                       {
