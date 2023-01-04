@@ -20,7 +20,7 @@ public class ManagerAgent implements IManagerAgent {
         this.dbAgent = DBAgent.getInstance();
     }
 
-    private boolean executeQuery(String query){
+    private boolean executeQuery(String query) throws Exception {
         System.out.println(query);
         try {
             int result = this.dbAgent.getStatement().executeUpdate(query);
@@ -28,12 +28,12 @@ public class ManagerAgent implements IManagerAgent {
         }catch (Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
-            return false;
+            throw new Exception(e.getMessage()) ;
         }
     }
 
     @Override
-    public boolean addNewBook(BookRequest newBookRequest) {
+    public boolean addNewBook(BookRequest newBookRequest) throws Exception {
         System.out.println(newBookRequest.toString());
         Book newBook = new Book(newBookRequest.getISBN(), newBookRequest.getTitle(), newBookRequest.getPublisher(),
                                 Date.valueOf(LocalDate.of(Integer.parseInt(newBookRequest.getPublication_year()),1,1)) ,
@@ -47,7 +47,7 @@ public class ManagerAgent implements IManagerAgent {
                              newBook.getStock() + ", " + newBook.getThreshold() + ", " + toSQLString(newBook.getImage_url()) +");";
         return executeQuery(insertQuery) && insertAuthors(newBookRequest.getAuthors(), newBook.getISBN());
     }
-    private boolean insertAuthors(String authorString, String ISBN){
+    private boolean insertAuthors(String authorString, String ISBN) throws Exception {
         String[] authors = authorString.split(", ");
         String insertAuthorsQuery;
         boolean result = true;
@@ -59,7 +59,7 @@ public class ManagerAgent implements IManagerAgent {
         return result;
     }
     @Override
-    public boolean modifyBookQuantity(String iSBN, int quantityDifference) {
+    public boolean modifyBookQuantity(String iSBN, int quantityDifference) throws Exception {
         String updateQuery = "UPDATE BOOK " +
                              "SET STOCK = STOCK + " + quantityDifference +
                              " WHERE ISBN = "+ toSQLString(iSBN) + ";";
@@ -67,7 +67,7 @@ public class ManagerAgent implements IManagerAgent {
     }
 
     @Override
-    public boolean placeBookOrder(BookOrder bookOrder) {
+    public boolean placeBookOrder(BookOrder bookOrder) throws Exception {
         String query = "INSERT INTO BOOK_ORDER(ISBN, quantity, publisher) VALUES " +
                 "(" +
                 toSQLString(bookOrder.getISBN()) + ", " +
@@ -78,14 +78,14 @@ public class ManagerAgent implements IManagerAgent {
     }
 
     @Override
-    public boolean confirmBookOrder(String iSBN) {
+    public boolean confirmBookOrder(String iSBN) throws Exception {
         String deleteQuery = "DELETE FROM BOOK_ORDER " +
                              "WHERE ISBN = " + toSQLString(iSBN) + ";";
         return executeQuery(deleteQuery);
     }
 
     @Override
-    public boolean promoteUser(String userName) {
+    public boolean promoteUser(String userName) throws Exception {
         String promoteUserQuery = "UPDATE USER " +
                                   "SET IS_MANGER = 1 " +
                                   "WHERE USERNAME = " + toSQLString(userName) + ";";

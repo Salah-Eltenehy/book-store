@@ -33,9 +33,14 @@ public class ManagerController {
 
     @PutMapping("/modify/book/{iSBN}")
     public ResponseEntity<String> modifyBookQuantity(@PathVariable("iSBN") String iSBN, @RequestBody int quantityToAdd){
-        boolean status = this.managerAgent.modifyBookQuantity(iSBN, quantityToAdd);
-        if(status) return ResponseEntity.status(HttpStatus.OK).body("Book Quantity modified successfully");
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body("Failed to Modify Book Quantity");
+        try {
+            boolean status = this.managerAgent.modifyBookQuantity(iSBN, quantityToAdd);
+            if(status) return ResponseEntity.status(HttpStatus.OK).body("Book Quantity modified successfully");
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body("Failed to Modify Book Quantity");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(e.getMessage());
+        }
+
     }
     @PostMapping("/place/order/book")
     public ResponseEntity<String> placeOrderOnBook(@RequestBody String bookOrder) {
@@ -52,16 +57,27 @@ public class ManagerController {
 
     @DeleteMapping("/delete/order/{iSBN}")
     public ResponseEntity<String> confirmBookOrder(@PathVariable("iSBN") String iSBN){
-        boolean status = this.managerAgent.confirmBookOrder(iSBN);
-        if (status) return ResponseEntity.status(HttpStatus.OK).body("Book order Confirmed Successfully");
-        return ResponseEntity.status(422).body("Failed to Confirm the Order");
+        try {
+            boolean status = this.managerAgent.confirmBookOrder(iSBN);
+            if (status) return ResponseEntity.status(HttpStatus.OK).body("Book order Confirmed Successfully");
+            return ResponseEntity.status(422).body("Failed to Confirm the Order");
+        }catch (Exception e){
+            return ResponseEntity.status(422).body(e.getMessage());
+
+        }
+
     }
 
     @PutMapping("/promote/{userName}")
     public ResponseEntity<String> promoteUser(@PathVariable("userName") String userName){
-        boolean status = this.managerAgent.promoteUser(userName);
-        if (status) return ResponseEntity.status(HttpStatus.OK).body("User Promoted Successfully");
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body("Failed to Promote the User");
+        try {
+            boolean status = this.managerAgent.promoteUser(userName);
+            if (status) return ResponseEntity.status(HttpStatus.OK).body("User Promoted Successfully");
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body("Failed to Promote the User");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(e.getMessage());
+        }
+
     }
 
 
