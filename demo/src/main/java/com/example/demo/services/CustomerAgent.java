@@ -56,7 +56,7 @@ public class CustomerAgent {
             }else{
                 updateQuery = updateQuery + ", ";
             }
-            updateQuery = updateQuery + ", first_name = " + toSQLString(user.getFirst_name()) ;
+            updateQuery = updateQuery + "first_name = " + toSQLString(user.getFirst_name()) ;
         }
         if(!old.getLast_name().equals(user.getLast_name()) && !user.getLast_name().equals("")){
             if(!edit){
@@ -64,7 +64,7 @@ public class CustomerAgent {
             }else{
                 updateQuery = updateQuery + ", ";
             }
-            updateQuery = updateQuery + ", last_name = " + toSQLString(user.getLast_name()) ;
+            updateQuery = updateQuery + "last_name = " + toSQLString(user.getLast_name()) ;
         }
         if(!old.getEmail().equals(user.getEmail()) && !user.getEmail().equals("")){
             if(!edit){
@@ -72,7 +72,7 @@ public class CustomerAgent {
             }else{
                 updateQuery = updateQuery + ", ";
             }
-            updateQuery = updateQuery + ", email = " + toSQLString(user.getEmail()) ;
+            updateQuery = updateQuery + "email = " + toSQLString(user.getEmail()) ;
         }
         if(!old.getPhone_number().equals(user.getPhone_number()) && !user.getPhone_number().equals("")){
             if(!edit){
@@ -80,7 +80,7 @@ public class CustomerAgent {
             }else{
                 updateQuery = updateQuery + ", ";
             }
-            updateQuery = updateQuery + ", phone_number = " + toSQLString(user.getPhone_number()) ;
+            updateQuery = updateQuery + "phone_number = " + toSQLString(user.getPhone_number()) ;
         }
         if(!old.getShipping_address().equals(user.getShipping_address()) && !user.getShipping_address().equals("")){
             if(!edit){
@@ -88,7 +88,7 @@ public class CustomerAgent {
             }else{
                 updateQuery = updateQuery + ", ";
             }
-            updateQuery = updateQuery + ", shipping_address = " + toSQLString(user.getShipping_address()) ;
+            updateQuery = updateQuery + "shipping_address = " + toSQLString(user.getShipping_address()) ;
         }
         updateQuery = updateQuery + " WHERE username = "+ toSQLString(username) + ";";
 
