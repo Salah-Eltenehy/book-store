@@ -12,6 +12,8 @@ import '../CardUtils/CardMonthInputFormatter.dart';
 import '../CardUtils/CardNumberInputFormatter.dart';
 import '../CardUtils/CardUtils.dart';
 import 'package:order_processing/shared/DioHelper.dart';
+import 'package:http/http.dart' as http;
+import '../Constants.dart';
 
 class CartScreen extends StatelessWidget {
   int total = 5;
@@ -196,22 +198,34 @@ class CartScreen extends StatelessWidget {
                                           if (formKey.currentState!
                                               .validate()) {
                                             cartCubit.createBooksForBackEnd();
-                                            DioHelper.postData(
-                                              url:'bookstore/customer/addCart',
-                                              data: {
-                                                "username": cartCubit.nameController.text,
-                                                "total_cost": cartCubit.totalPrice,
-                                                "credit_cart_number": cartCubit.cardNumberController.text,
-                                                "cvv": cartCubit.ccvController.text,
-                                                "expiry_date": cartCubit.expDateController.text,
-                                                "books": cartCubit.booksForBackEnd
-                                              }
-                                            ).then((value) {
-                                              print("Response from backend when add card credit");
-                                              print(value.data);
-                                            }).catchError((error) {
+                                            String _url =
+                                                "http://${ip}:8080/bookstore/customer/addCart";
+                                            var res = await http.post(Uri.parse(_url),
+                                                headers: {"Content-Type": "application/json"},
+                                                body: json.encode({
+                                                  "username": cartCubit.nameController.text,
+                                                  "total_cost": cartCubit.totalPrice,
+                                                  "credit_cart_number": cartCubit.cardNumberController.text,
+                                                  "cvv": cartCubit.ccvController.text,
+                                                  "expiry_date": cartCubit.expDateController.text,
+                                                  "books": cartCubit.booksForBackEnd
+                                                }));
+                                            if (res.statusCode!=200) {
                                               print("Error ya sa7by fe el credit card");
-                                            });
+
+                                            } else {
+                                              print("Response from backend when add card credit");
+                                              print(res.body);
+                                            }
+                                            // DioHelper.postData(
+                                            //   url:'bookstore/customer/addCart',
+                                            //   data: {
+                                            //
+                                            //   }
+                                            // ).then((value) {
+                                            //   print(value.data);
+                                            // }).catchError((error) {
+                                            // });
                                             Navigator.pop(context);
                                           }
                                         },
