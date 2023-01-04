@@ -27,10 +27,7 @@ public class BookOrder
 
     public BookOrder(String json) throws JSONException {
         JSONObject jsonObject = new JSONObject(json);
-        orderId = jsonObject.getInt("orderId") ;
         ISBN = jsonObject.getString("ISBN") ;
         quantity = jsonObject.getInt("quantity") ;
-        publisher = jsonObject.getString("publisher") ;
-
     }
 }

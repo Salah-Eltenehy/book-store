@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.controllers.RequestModels.BookRequest;
+import com.example.demo.converters.ResultSetToBook;
 import com.example.demo.model.Book;
 import com.example.demo.model.BookOrder;
 import com.example.demo.services.interfaces.IManagerAgent;
@@ -17,9 +18,10 @@ import java.time.LocalDate;
 @Slf4j
 public class ManagerAgent implements IManagerAgent {
     private final DBAgent dbAgent;
-
+    ResultSetToBook resultSetToBook;
     public ManagerAgent() {
         this.dbAgent = DBAgent.getInstance();
+        resultSetToBook = new ResultSetToBook();
     }
 
     private boolean executeQuery(String query) throws Exception {
@@ -91,11 +93,18 @@ public class ManagerAgent implements IManagerAgent {
 
     @Override
     public boolean placeBookOrder(BookOrder bookOrder) throws Exception {
+        String getBook =  "SELECT * FROM BOOK WHERE ISBN = " + toSQLString(bookOrder.getISBN())  + " ;";
+        ResultSet book = select(getBook) ;
+        if (!book.next()){
+            throw new Exception("Book do not exist " + bookOrder.getISBN());
+        }
+        Book book1 = resultSetToBook.convert(book) ;
+
         String query = "INSERT INTO BOOK_ORDER(ISBN, quantity, publisher) VALUES " +
                 "(" +
                 toSQLString(bookOrder.getISBN()) + ", " +
                 bookOrder.getQuantity() + ", " +
-                toSQLString(bookOrder.getPublisher())
+                toSQLString(book1.getPublisher())
                 + ");";
         return executeQuery(query);
     }
