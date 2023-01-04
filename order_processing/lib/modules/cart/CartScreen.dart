@@ -100,6 +100,7 @@ class CartScreen extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 16),
                                       child: TextFormField(
+                                        controller: cartCubit.nameController,
                                         style: const TextStyle(
                                             color: Colors.black),
                                         cursorColor: const Color(0XFFBA68C8),
@@ -193,12 +194,28 @@ class CartScreen extends StatelessWidget {
                                         onPressed: () {
                                           if (formKey.currentState!
                                               .validate()) {
+                                            cartCubit.createBooksForBackEnd();
+                                            DioHelper.postData(
+                                              url:'customer/addCart',
+                                              data: {
+                                                "username": cartCubit.nameController.text,
+                                                "total_cost": cartCubit.totalPrice,
+                                                "credit_cart_number": cartCubit.cardNumberController.text,
+                                                "cvv": cartCubit.ccvController.text,
+                                                "expiry_date": cartCubit.expDateController.text,
+                                                "books": cartCubit.booksForBackEnd
+                                              }
+                                            ).then((value) {
+                                              print("Response from backend when add card credit");
+                                              print(value.data);
+                                            }).catchError((error) {
+                                              print("Error ya sa7by fe el credit card");
+                                            });
                                             Navigator.pop(context);
                                           }
                                         },
                                       ),
                                     ),
-                                    // const Spacer(),
                                   ],
                                 ),
                               ),

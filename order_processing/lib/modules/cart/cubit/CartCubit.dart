@@ -12,6 +12,7 @@ class CartCubit extends Cubit<CartStates> {
   TextEditingController cardNumberController = TextEditingController();
   TextEditingController ccvController = TextEditingController();
   TextEditingController expDateController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   double totalPrice  = 0;
   CartCubit() : super(InitialCartStates());
 
@@ -34,7 +35,20 @@ class CartCubit extends Cubit<CartStates> {
   // generate random data
   // List<Map<String, dynamic>> books = [];
   List<bool> isExpanded = [];
-
+  List<Map<String, dynamic>> booksForBackEnd = [];
+  void createBooksForBackEnd() {
+    for (int i=0; i<MainApp.cartBooks.length; i++) {
+      String ISBN = MainApp.cartBooks[i].ISPN;
+      int quantity = MainApp.cartBooks[i].quantity;
+      Map<String, dynamic> temp = {
+        "ISBN": ISBN,
+        "no_books": "$quantity",
+      };
+      booksForBackEnd.add(temp);
+    }
+    print("All done");
+    emit(CreateBooksForBackEndState());
+  }
   void calculatePrice() {
     for(Book book in MainApp.cartBooks) {
       double p = book.price ;
@@ -49,7 +63,6 @@ class CartCubit extends Cubit<CartStates> {
     }
     emit(GenerateRandomDataState());
   }
-
   void deleteBook(int index) {
     isExpanded[index] = !isExpanded[index];
     totalPrice =totalPrice- MainApp.cartBooks[index].price*MainApp.cartBooks[index].quantity;
@@ -58,7 +71,6 @@ class CartCubit extends Cubit<CartStates> {
     MainApp.update();
     emit(RemoveBookState());
   }
-
   void toggleExpansion
       ({
     required int index,
@@ -78,7 +90,6 @@ class CartCubit extends Cubit<CartStates> {
       }
     }
   }
-
   void increaseOrders
   ({
     required int index
@@ -93,7 +104,6 @@ class CartCubit extends Cubit<CartStates> {
     totalPrice = totalPrice + price;
     emit(IncreaseOrdersState());
   }
-
   void decreaseOrders
       ({
     required int index

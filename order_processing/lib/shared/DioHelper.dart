@@ -20,7 +20,6 @@ class DioHelper {
   {
     return await dio.get(
         url,
-
     );
   }
 
