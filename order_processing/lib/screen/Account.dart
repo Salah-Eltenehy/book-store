@@ -20,6 +20,8 @@ class Account extends StatefulWidget {
   static TextEditingController Text5 = TextEditingController();
   static TextEditingController Text6 = TextEditingController();
   static TextEditingController Text7 = TextEditingController();
+  static late String Oldusername;
+  static late String Oldpassword;
   static late Map<String, dynamic> data;
   @override
   _AccountState  createState() => _AccountState ();
@@ -90,7 +92,7 @@ class _AccountState extends State<Account> {
                      Account.Text5.clear();
                      Account.Text6.clear();
                      Account.Text7.clear();
-                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
+                     Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
                    }, child: Text("Cancel",style: TextStyle(
                      fontSize: 15,
                      letterSpacing: 2,
@@ -137,27 +139,27 @@ class _AccountState extends State<Account> {
                        {
                          shippingaddress = Account.data['shipping_address'];
                        }
-                     if(Account.Text3.text.length <3)
+                     if((Account.Text3.text.length <3)&& Account.Text3.text.isNotEmpty)
                        {
                          showAlertDialog(context,"check your username");
                          Account.Text3.clear();
                        }
-                     if(Account.Text4.text.length< 3 )
+                     if((Account.Text4.text.length< 3)&& Account.Text4.text.isNotEmpty )
                        {
                          showAlertDialog(context,"check your first_name");
                          Account.Text4.clear();
                        }
-                     if( Account.Text5.text.length<3)
+                     if( (Account.Text5.text.length<3) && Account.Text5.text.isNotEmpty )
                        {
                          showAlertDialog(context,"check your last_name");
                          Account.Text5.clear();
                        }
-                     if(Account.Text2.text.length<6 || Account.Text2.text.length>40 )
+                     if((Account.Text2.text.length<6 || Account.Text2.text.length>40 ) && Account.Text2.text.isNotEmpty)
                        {
                          showAlertDialog(context,"Check your Password");
                          Account.Text2.clear();
                        }
-                     else if(Account.Text6.text.length != 11)
+                     else if((Account.Text6.text.length != 11) && Account.Text6.text.isNotEmpty)
                      {
                        showAlertDialog(context,"Check your Phone Number");
                        Account.Text6.clear();
@@ -169,6 +171,8 @@ class _AccountState extends State<Account> {
                          var res = await http.post(Uri.parse(_url),
                              headers: {"Content-Type": "application/json"},
                              body: json.encode({
+                             "oldUsername":Account.Oldusername,
+                              "oldPassword":Account.Oldpassword,
                              "email" : email,
                              "password"  : password,
                              "username"  : username,
@@ -176,9 +180,11 @@ class _AccountState extends State<Account> {
                              "last_name"  :secondname,
                               "phone_number":phonenumber,
                              "shipping_address" :shippingaddress,
+                               "is_manager": MainApp.Manger,
                              }));
                          if(res.statusCode!=200)
                            {
+                             print(res.body);
                              showAlertDialog(context,"check your inputs");
                              Account.Text1.clear();
                              Account.Text2.clear();
@@ -192,7 +198,7 @@ class _AccountState extends State<Account> {
                            {
                              setState(() => Account.data = json.decode(res.body));
                              MainApp.update();
-                             Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
+                             Navigator.push(context,  MaterialPageRoute(builder: (context) =>  SearchScreen()));
                            }
                        }
                    }, child: Text("Save",style: TextStyle(

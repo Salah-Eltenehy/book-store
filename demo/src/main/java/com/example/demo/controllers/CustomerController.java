@@ -27,10 +27,13 @@ public class CustomerController {
     @PostMapping("/editProfile")
     public ResponseEntity<String> editProfile(@RequestBody String info){
         try {
+            System.out.println(info);
             EditProfileCommand command = new EditProfileCommand(info) ;
             User user = customerAgent.editProfile(command.oldUsername, command.oldPassword, command.user);
+            System.out.println(user.toString());
             return new ResponseEntity<>(new Gson().toJson(user), HttpStatus.OK) ;
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND) ;
         }
     }

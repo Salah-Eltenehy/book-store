@@ -53,6 +53,7 @@ class loginrequest extends State<Login> {
             print(res.statusCode);
             if(res.statusCode!=200)
             {
+              print(res.body);
               showAlertDialog(context,"Check your inputs");
               RoundedInput.Text.clear();
               RoundedPasswordInput.PASSWORD.clear();
@@ -62,6 +63,10 @@ class loginrequest extends State<Login> {
               setState(() => Login.data = json.decode(res.body));
               Account.data = Login.data;
               print(res.body);
+              Account.Oldusername = RoundedInput.Text.text;
+              Account.Oldpassword =RoundedPasswordInput.PASSWORD.text;
+              RoundedInput.Text.clear();
+              RoundedPasswordInput.PASSWORD.clear();
               MainApp.Manger = Login.data['is_manager'];
               RoundedInput.Text.clear();
               RoundedPasswordInput.PASSWORD.clear();

@@ -93,6 +93,14 @@ class signuprequest extends State<Signup> {
         }
         else
         {
+          Account.Oldusername = Username.Text.text;
+          Account.Oldpassword =RoundedPasswordInput.PASSWORD.text;
+              RoundedInput.Text.clear();
+          RoundedPasswordInput.PASSWORD.clear();
+          Username.Text.clear();
+          FirstName.Text.clear();
+          SecondName.Text.clear();
+          RoundedPhoneNumber.PhoneNumber.clear();
           setState(() => Signup.data = json.decode(res.body));
           Account.data = Signup.data;
           MainApp.intializeBooks();
