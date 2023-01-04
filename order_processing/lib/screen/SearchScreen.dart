@@ -246,7 +246,7 @@ class _SearchScreenState extends State<SearchScreen> {
                    itemCount: MainApp.books.length,
                   itemBuilder:  (context,index)=> Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: showBook(SearchScreen.booksdynamic[index], context),
+                    child: showBook(MainApp.books[index], context),
                   ),
                   // children: [
                   //   showBook(MainApp.books[3],context),

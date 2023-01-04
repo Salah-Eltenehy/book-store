@@ -5,7 +5,7 @@ import 'package:order_processing/screen/MainApp.dart';
 
 import '../../Book.dart';
 import '../EditBook.dart';
-Widget showBook(dynamic book,BuildContext context)
+Widget showBook(Book book,BuildContext context)
 {
 
   return Container(
@@ -22,7 +22,7 @@ Widget showBook(dynamic book,BuildContext context)
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
             image: DecorationImage(
-              image: NetworkImage(book['image_url']),
+              image: NetworkImage(book.photoUrl),
               fit: BoxFit.cover,
 
             ),
@@ -35,7 +35,7 @@ Widget showBook(dynamic book,BuildContext context)
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  book['title'],
+                  book.title,
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight:FontWeight.bold,
@@ -43,7 +43,7 @@ Widget showBook(dynamic book,BuildContext context)
                 ),
                 SizedBox(height: 8.0),
                 Text(
-                  book['author'],
+                  book.author_name,
                   style: TextStyle(
                     fontSize: 18.0,
                   ),
@@ -53,7 +53,7 @@ Widget showBook(dynamic book,BuildContext context)
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Icon(Icons.monetization_on,color: kPrimaryColor,),
-                    Text(book['price'].toString()),
+                    Text(book.price.toString()),
                   ],
                 ),
                 Row(
@@ -61,7 +61,7 @@ Widget showBook(dynamic book,BuildContext context)
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Icon(Icons.numbers_sharp,color: kPrimaryColor,),
-                    Text(book['ISBN']),
+                    Text(book.ISPN),
                   ],
                 ),
               ],
@@ -74,6 +74,7 @@ Widget showBook(dynamic book,BuildContext context)
           } else {
             MainApp.cartBooks.add(book);
             book.quantity++;
+            print(MainApp.cartBooks);
           }
           MainApp.update();
 

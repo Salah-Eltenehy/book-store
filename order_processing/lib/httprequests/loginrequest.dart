@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:order_processing/screen/Account.dart';
 import 'package:order_processing/screen/SearchScreen.dart';
+import '../Book.dart';
 import '../Constants.dart';
 import '../component/Username.dart';
 import '../component/firstname.dart';
@@ -19,13 +20,31 @@ import '../screen/MainApp.dart';
 class Login extends StatefulWidget {
   static late Map<String, dynamic> data;
   static late List<dynamic> booksdynamic;
+
+  static List<Book> convertIntoList(temp){
+    Book book;
+    List<Book> books = <Book>[];
+    for (Map<String, dynamic> map in temp) {
+      book = Book(map['ISBN']
+        ,map['title']
+        ,map['category']
+        ,map['publisher']
+        ,2019//TODO:2ib2o 3adilo elpublication year hina
+        ,map['price']
+        ,map['stock']
+        ,map['image_url'],);
+      books.add(book);
+    }
+    return books;
+  }
+
   static Future<void> sendsearchrequest()
   async {
     String _url = "http://${ip}:8080/search/all?offset=${1}";
     var response = await http.get(Uri.parse(_url));
       print(response.body);
      booksdynamic = json.decode(response.body) as List<dynamic>;
-     SearchScreen.booksdynamic =booksdynamic;
+     MainApp.books = convertIntoList(booksdynamic);
     }
   @override
   loginrequest createState() => loginrequest();
@@ -84,7 +103,7 @@ class loginrequest extends State<Login> {
               // MainApp.books= await DioHelper.getData(url: "search/all?offset=${1}") ;
               await Login.sendsearchrequest();
               RoundedPasswordInput.PASSWORD.clear();
-              MainApp.intializeBooks();
+              // MainApp.intializeBooks();
               MainApp.update();
               Navigator.popAndPushNamed(context, "/app");
             }

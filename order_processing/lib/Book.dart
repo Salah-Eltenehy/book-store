@@ -1,15 +1,14 @@
 class Book {
-  Book(ISPN,title,author_name,category,publisher,publication_year,price,stock,photoUrl){
+  Book(ISPN,title,category,publisher,publication_year,price,stock,photoUrl){
     this.ISPN=ISPN;
     this.title=title;
-    this.author_name=author_name;
     this.category=category;
     this.publisher=publisher;
     this.publication_year=publication_year;
     this.price=price;
     this.stock=stock;
     this.photoUrl=photoUrl;
-    this.quantity = quantity;
+    this.quantity = 0;
   }
   String ISPN = '';
   String title = '';
