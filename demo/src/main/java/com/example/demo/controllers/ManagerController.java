@@ -18,12 +18,16 @@ public class ManagerController {
     private IManagerAgent managerAgent;
 
     @PostMapping("/add/book")
-    public ResponseEntity<String> addNewBook(@RequestBody BookRequest newBookRequest){ //
+    public ResponseEntity<String> addNewBook(@RequestBody String newBookRequest){ //
 //        System.out.println(s);
 //        return ResponseEntity.status(HttpStatus.CREATED).body("Added Successfully");
-//
-        boolean status = this.managerAgent.addNewBook(newBookRequest);
-        if (status) return ResponseEntity.status(HttpStatus.CREATED).body("Added Successfully");
+        try {
+            BookRequest book = new BookRequest(newBookRequest);
+            boolean status = this.managerAgent.addNewBook(book);
+            if (status) return ResponseEntity.status(HttpStatus.CREATED).body("Added Successfully");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
+        }
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Failed to Add the Book");
     }
 
