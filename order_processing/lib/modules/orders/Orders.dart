@@ -7,6 +7,7 @@ import 'package:order_processing/shared/DioHelper.dart';
 import 'package:order_processing/shared/network/local/Cachhelper.dart';
 
 import '../../Book.dart';
+import 'package:order_processing/shared/DioHelper.dart';
 
 class OrdersScreen extends StatelessWidget {
   int total = 50;
@@ -16,7 +17,7 @@ class OrdersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (BuildContext context) => OrdersCubit(),
+        create: (BuildContext context) => OrdersCubit()..getOrdersFromBackEnd(),
         child: BlocConsumer<OrdersCubit, OrdersStates>(
           listener: (context, state) {},
           builder: (context, state) {
@@ -32,9 +33,21 @@ class OrdersScreen extends StatelessWidget {
                               book: MainApp.orderBooks[index],
                               decline: () {
                                 print("Decline function");
+                                DioHelper.deleteData(
+                                  '/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index]['ISPN']}'
+                                ).then((value) {
+                                  print("delete order successfully");
+                                  print(value.data);
+                                });
                               },
                               accept: () {
                                 print("Accept function");
+                                DioHelper.deleteData(
+                                    '/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index]['ISPN']}'
+                                ).then((value) {
+                                  print("Confirm order successfully");
+                                  print(value.data);
+                                });
                               }
                           );
                         },

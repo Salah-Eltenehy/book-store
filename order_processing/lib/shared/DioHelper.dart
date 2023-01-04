@@ -15,11 +15,18 @@ class DioHelper {
 
   static Future<Response> getData({
     required String url,
-
   }) async
   {
     return await dio.get(
         url,
+    );
+  }
+  static Future<Response> deleteData({
+    required String url,
+  }) async
+  {
+    return await dio.delete(
+      url,
     );
   }
 
