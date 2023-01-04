@@ -32,10 +32,10 @@ public class ManagerController {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Failed to Add the Book");
     }
 
-    @PutMapping("/modify/book/{iSBN}")
-    public ResponseEntity<String> modifyBookQuantity(@PathVariable("iSBN") String iSBN, @RequestBody int quantityToAdd){
+    @PutMapping("/modify/book/{ISBN}/{quantityToAdd}")
+    public ResponseEntity<String> modifyBookQuantity(@PathVariable("ISBN") String ISBN, @PathVariable int quantityToAdd){
         try {
-            boolean status = this.managerAgent.modifyBookQuantity(iSBN, quantityToAdd);
+            boolean status = this.managerAgent.modifyBookQuantity(ISBN, quantityToAdd);
             if(status) return ResponseEntity.status(HttpStatus.OK).body("Book Quantity modified successfully");
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body("Failed to Modify Book Quantity");
         }catch (Exception e){
