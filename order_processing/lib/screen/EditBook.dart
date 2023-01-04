@@ -8,8 +8,10 @@ import '../shared/DioHelper.dart';
 import 'MainApp.dart';
 import 'package:http/http.dart' as http;
 
+import 'MakeOrder.dart';
+
 class EditBook extends StatefulWidget {
-  static late dynamic book ;
+  static late Book book ;
   static TextEditingController Text1 = TextEditingController();
   @override
   _EditBookState  createState() => _EditBookState();
@@ -69,7 +71,7 @@ class _EditBookState extends State<EditBook> {
                 ),
               ),
               SizedBox(height: 30),
-              buildtextfield("Book Quantity",EditBook.book['stock'].toString(),false),
+              buildtextfield("Book Stock",EditBook.book.stock.toString(),false),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,7 +93,7 @@ class _EditBookState extends State<EditBook> {
                   ElevatedButton(onPressed: ()async{
                     // http://localhost:8080/bookstore/manager/modify/book/1234567890123/50
 
-                    String _url = "http://${ip}:8080/bookstore/manager/modify/book/${EditBook.book['ISBN']}/${EditBook.Text1.text}";
+                    String _url = "http://${ip}:8080/bookstore/manager/modify/book/${EditBook.book.ISPN}/${EditBook.Text1.text}";
                     print(_url);
                     var response = await http.get(Uri.parse(_url));
                     if(response.statusCode!=200)
@@ -125,7 +127,9 @@ class _EditBookState extends State<EditBook> {
       floatingActionButton: FloatingActionButton(
     backgroundColor: kPrimaryColor,
     child: const Icon(Icons.add, size: 35),
-    onPressed: () =>print("put the request of books here ")
+    onPressed: () =>showModalBottomSheet(context: context,
+        isScrollControlled: true,
+        builder: (context)=> makeOrderButton(isbn: EditBook.book.ISPN,))
       ),
     );
   }
