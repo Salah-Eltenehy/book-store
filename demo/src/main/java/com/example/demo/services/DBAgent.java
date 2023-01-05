@@ -43,7 +43,7 @@ public class DBAgent
     }
     public Statement getStatement() throws SQLException
     {
-        if (!connection.isValid(5000))
+        if (!connection.isValid(1500))
         {
             connect();
         }
