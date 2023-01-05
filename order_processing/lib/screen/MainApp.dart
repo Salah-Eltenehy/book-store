@@ -191,8 +191,9 @@ class _MainAppState extends State<MainApp> {
                 : (MainApp.currentPage == 2)
                 ? Account()
                 : (MainApp.currentPage == 3)
-                ? ReportPage()
-                : OrdersScreen(),
+                ? OrdersScreen()
+                :ReportPage(),
+
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: kPrimaryColor,
               unselectedItemColor: Colors.white,
