@@ -92,7 +92,15 @@ class _AccountState extends State<Account> {
                      Account.Text5.clear();
                      Account.Text6.clear();
                      Account.Text7.clear();
-                    Navigator.pop(context);
+                     // setState(() {
+                     //   MainApp.currentPage == 0;
+                     //   Navigator.popAndPushNamed(contex);
+                     // });
+
+                    // Navigator.pop(context);
+                     MainApp.currentPage=0;
+                     MainApp.update();
+
                    }, child: Text("Cancel",style: TextStyle(
                      fontSize: 15,
                      letterSpacing: 2,
