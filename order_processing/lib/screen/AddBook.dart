@@ -150,11 +150,32 @@ class _AddBookState extends State<AddBook> {
                         }));
                     if(res.statusCode!=200)
                       {
+                        AddBook.Text1.clear();
+                        AddBook.Text2.clear();
+                        AddBook.Text3.clear();
+                        AddBook.Text4.clear();
+                        AddBook.Text5.clear();
+                        AddBook.Text6.clear();
+                        AddBook.Text7.clear();
+                        AddBook.Text8.clear();
+                        AddBook.Text9.clear();
+                        AddBook.Text10.clear();
                         showAlertDialog( context,"Check your input of books" );
                         print(res.body);
                       }
                     else
                       {
+                        AddBook.Text1.clear();
+                        AddBook.Text2.clear();
+                        AddBook.Text3.clear();
+                        AddBook.Text4.clear();
+                        AddBook.Text5.clear();
+                        AddBook.Text6.clear();
+                        AddBook.Text7.clear();
+                        AddBook.Text8.clear();
+                        AddBook.Text9.clear();
+                        AddBook.Text10.clear();
+                        Navigator.pop(context);
                         print(res.body);
                       }
                     // await DioHelper.postData(url: "bookstore/manager/add/book", data: {
