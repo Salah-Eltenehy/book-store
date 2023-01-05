@@ -153,12 +153,17 @@ public class CustomerAgent {
 
         Cart cart = getCart(resultSet) ;
         for(String ISBN: books.keySet()){
+            String updateBookQuery = "UPDATE book SET stock = stock - " + books.get(ISBN)
+                    + " WHERE ISBN = " + toSQLString(ISBN) + " ; " ;
+
             insertQuery = "INSERT INTO cart_book(cart_id, ISBN, no_books) " +
                     "VALUES (" + cart.getCart_id() + ", " + toSQLString(ISBN) +  ", " + books.get(ISBN) + ");";
-            System.out.println(insertQuery);
-            if(this.dbAgent.getStatement().executeUpdate(insertQuery)== 0){
+            System.out.println(updateBookQuery + "\n" + insertQuery);
+            if(this.dbAgent.getStatement().executeUpdate(updateBookQuery + "\n" + insertQuery)== 0){
                 throw new Exception("could not add book");
             }
+
+
         }
         return booksArray;
 

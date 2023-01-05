@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @Service
 public class SearchAgent {
     private final ResultSetToBook resultSetToBook;
-    private DBAgent dbAgent;
+    private final DBAgent dbAgent;
     public SearchAgent(ResultSetToBook resultSetToBook) {
         this.resultSetToBook = resultSetToBook;
         this.dbAgent = DBAgent.getInstance();

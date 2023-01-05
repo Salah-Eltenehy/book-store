@@ -97,7 +97,10 @@ class _AccountState extends State<Account> {
                      //   Navigator.popAndPushNamed(contex);
                      // });
 
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
+                     MainApp.currentPage=0;
+                     MainApp.update();
+
                    }, child: Text("Cancel",style: TextStyle(
                      fontSize: 15,
                      letterSpacing: 2,
@@ -203,7 +206,7 @@ class _AccountState extends State<Account> {
                            {
                              setState(() => Account.data = json.decode(res.body));
                              MainApp.update();
-                             // Navigator.pop(context);
+                             Navigator.pop(context);
                            }
                        }
                    }, child: Text("Save",style: TextStyle(

@@ -97,7 +97,7 @@ public class ManagerAgent implements IManagerAgent {
     @Override
     public boolean modifyBookQuantity(String iSBN, int quantityDifference) throws Exception {
         String updateQuery = "UPDATE BOOK " +
-                             "SET STOCK = STOCK + " + quantityDifference +
+                             "SET STOCK = " + quantityDifference +
                              " WHERE ISBN = "+ toSQLString(iSBN) + ";";
         return executeQuery(updateQuery);
     }
