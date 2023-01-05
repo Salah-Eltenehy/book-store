@@ -138,7 +138,7 @@ public class CustomerAgent {
         }
 
 
-        String insertQuery = "INSERT INTO CART(username, total_price, purchased_date " +
+        String insertQuery = "INSERT INTO CART(username, total_price, purchased_date) " +
                 "VALUES (" + username + ", " + total_cost +  ", " + toSQLDate(Date.valueOf(LocalDate.now()))+  ");";
         System.out.println(insertQuery);
         if(this.dbAgent.getStatement().executeUpdate(insertQuery)== 0){
@@ -175,12 +175,6 @@ public class CustomerAgent {
         cart.setUsername(resultSet.getString("username"));
         cart.setCart_id(resultSet.getInt("cart_id"));
         cart.setTotal_price(resultSet.getInt("total_price"));
-        String state = resultSet.getString("state") ;
-        if(state.equals("not purchased"))
-            cart.setState(CartState.NOT_PURCHASED);
-        else
-            cart.setState(CartState.PURCHASED);
-
 
         return cart ;
 
