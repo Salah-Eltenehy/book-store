@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @Service
 public class SearchAgent {
     private final ResultSetToBook resultSetToBook;
-    private DBAgent dbAgent;
+    private final DBAgent dbAgent;
     public SearchAgent(ResultSetToBook resultSetToBook) {
         this.resultSetToBook = resultSetToBook;
         this.dbAgent = DBAgent.getInstance();
@@ -39,11 +39,21 @@ public class SearchAgent {
                 " LIMIT " + from + " , " + to +" ;";
         return getBooks(query);
     }
+    public Book findByISBN(String ISBN) throws SQLException
+    {
+        Integer offset=1;
+        Integer from = ((offset - 1) * 20);
+        Integer to = ((offset) * 20);
+        ISBN = "'".concat(ISBN.concat("'"));
+        String query = "SELECT * FROM BookStore.book WHERE ISBN = " + ISBN +
+                " LIMIT " + from + " , " + to +" ;";
+        return getBooks(query).get(0);
+    }
     public ArrayList<Book> searchByTitle(String title, Integer offset) throws SQLException
     {
         Integer from = ((offset - 1) * 20);
         Integer to = ((offset) * 20);
-        title = "\"%".concat(title.concat("%\""));
+        title = "\"".concat(title.concat("%\""));
         String query = "SELECT * FROM BookStore.book WHERE title like " + title +
                 " LIMIT " +  from + " , " + to +" ;";
         return getBooks(query);
@@ -61,7 +71,7 @@ public class SearchAgent {
     {
         Integer from = ((offset - 1) * 20);
         Integer to = ((offset) * 20);
-        publisher = "\"%".concat(publisher.concat("%\""));
+        publisher = "\"".concat(publisher.concat("%\""));
         String query = "SELECT * FROM BookStore.book WHERE publisher like " + publisher +
                 " LIMIT " + from + " , " + to +" ;";
         return getBooks(query);
@@ -70,21 +80,16 @@ public class SearchAgent {
     {
         Integer from = ((offset - 1) * 20);
         Integer to = ((offset) * 20);
-        author = "\"%".concat(author.concat("%\""));
+        author = "\"".concat(author.concat("%\""));
         String query = "Select * from BookStore.book as b join BookStore.author as a on a.ISBN = b.ISBN where a.author like " + author +
                 " LIMIT " + from + " , " + to +" ;";
         return getBooks(query);
     }
     public ArrayList<Book> getAllBooks(Integer offset) throws SQLException
     {
-//        System.out.println(offset);
         Integer from = ((offset - 1) * 20);
         Integer to = ((offset) * 20);
-//        String query = "Select * from book LIMIT 20 OFFSET " + ((offset - 1) * 20) + " ;";
         String query = "Select * from BookStore.book LIMIT "+ from + " , " + to +" ;";
-//        String query = "Select * from BookStore.book;";
-//        String query = "Select * from BookStore.book LIMIT 20, 20  ;";
-//        System.out.println("book");
         return getBooks(query);
     }
 }

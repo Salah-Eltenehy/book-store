@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Simple_Blue_1" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b13d07b8-bfda-415f-ba17-e04a0816c6fa">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="top5Customers" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="efc75d70-9c28-41e2-9f0f-b7f0506073c3">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BOOK_STORE"/>
 	<queryString language="SQL">
-		<![CDATA[{CALL TOP_FIVE_CUSTOMERS()}]]>
+		<![CDATA[SELECT username, SUM(price) AS PURCHASE_AMOUNT 
+	FROM SALE 
+	GROUP BY username
+	ORDER BY PURCHASE_AMOUNT DESC
+	LIMIT 5;]]>
 	</queryString>
-	<field name="username" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="username"/>
-		<property name="com.jaspersoft.studio.field.label" value="username"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="sale"/>
-	</field>
-	<field name="PURCHASE_AMOUNT" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.name" value="PURCHASE_AMOUNT"/>
-		<property name="com.jaspersoft.studio.field.label" value="PURCHASE_AMOUNT"/>
-	</field>
 	<background>
 		<band/>
 	</background>
 	<title>
 		<band height="72">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="f098bb74-7d1e-4b68-89b8-ec8a362cb81e"/>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="1678cf40-c26b-46e7-ad07-f60f9da9c203"/>
 				<staticText>
-					<reportElement x="20" y="20" width="360" height="43" forecolor="#FFFFFF" uuid="0480c5f2-3428-47d9-a153-50b77dbc9fea"/>
+					<reportElement x="20" y="20" width="260" height="43" forecolor="#FFFFFF" uuid="eb7eff53-e405-41db-8aa7-a2a96332e4f4"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[TOP_5_CUSTOMERS]]></text>
+					<text><![CDATA[Top5Customers
+]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -38,51 +34,15 @@
 	<columnHeader>
 		<band height="21">
 			<line>
-				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="1c477c48-db79-4a8f-8844-fbc7aa11fa02"/>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="c0f8f08a-7a66-4663-a4ef-50c0d885a945"/>
 			</line>
-			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="277" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="9a47cdd8-1ceb-491a-8618-e158b650032b">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf36bd80-aee0-42d7-acb4-48576e162ff5"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[username]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="277" y="0" width="277" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5f492048-0f9c-46b3-9c78-69d5c441a4a3">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="45866503-92fa-440c-996b-fea517e58a33"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[PURCHASE_AMOUNT]]></text>
-			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="f16af0b3-4293-4b20-a6dc-643aa910cab2"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="025a0fa2-2976-42a0-8595-f582db4190d1"/>
 			</line>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="0" y="0" width="277" height="20" uuid="e852d040-2563-4282-9360-79b3a5290c61">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf36bd80-aee0-42d7-acb4-48576e162ff5"/>
-				</reportElement>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight">
-				<reportElement x="277" y="0" width="277" height="20" uuid="9a582166-70c9-41da-be8d-db8bae8e84ec">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="45866503-92fa-440c-996b-fea517e58a33"/>
-				</reportElement>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PURCHASE_AMOUNT}]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 	<columnFooter>
@@ -91,16 +51,16 @@
 	<pageFooter>
 		<band height="17">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="7d3aa871-dc52-46f1-a24b-ff7a19ee1bc1"/>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="ec90a4ec-7c37-414c-a008-1f0b01117095"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="fdfd8e23-f140-4610-993d-820c4e852a11"/>
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="5aa21a21-ca0a-48ef-a3a0-90053755914d"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13" uuid="42c7ac83-cb3d-4980-913e-4ac0c389e869"/>
+				<reportElement x="0" y="4" width="100" height="13" uuid="ca1d8ba8-5d57-44de-9bb4-e6903cf16ff2"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>

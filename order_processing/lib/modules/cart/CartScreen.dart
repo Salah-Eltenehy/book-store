@@ -10,7 +10,7 @@ import 'package:order_processing/screen/MainApp.dart';
 import 'package:order_processing/shared/components/Components.dart';
 
 
-import 'dart:convert';
+
 import '../../Book.dart';
 import '../../Constants.dart';
 import '../../screen/Account.dart';
@@ -224,15 +224,6 @@ class CartScreen extends StatelessWidget {
                                               print("Response from backend when add card credit");
                                               print(res.body);
                                             }
-                                            // DioHelper.postData(
-                                            //   url:'bookstore/customer/addCart',
-                                            //   data: {
-                                            //
-                                            //   }
-                                            // ).then((value) {
-                                            //   print(value.data);
-                                            // }).catchError((error) {
-                                            // });
                                             Navigator.pop(context);
                                           }
                                         },

@@ -5,6 +5,7 @@ import com.example.demo.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.security.MessageDigest;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,7 +53,12 @@ public class CustomerAgent {
             }else{
                 updateQuery = updateQuery + ", ";
             }
-            updateQuery = updateQuery + "password = " + toSQLString(user.getPassword()) ;
+
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            messageDigest.update(user.getPassword().getBytes());
+            String hashedPassword = new String(messageDigest.digest());
+
+            updateQuery = updateQuery + "password = " + toSQLString(hashedPassword) ;
         }
         if(!old.getFirst_name().equals(user.getFirst_name()) && !user.getFirst_name().equals("")){
             if(!edit){
@@ -132,10 +138,8 @@ public class CustomerAgent {
         }
 
 
-
-        String insertQuery = "INSERT INTO CART(username, total_price, purchased_date, credit_cart_number, cvv, expiry_date) " +
-                "VALUES (" + toSQLString(username) + ", " + total_cost +  ", " + toSQLDate(Date.valueOf(LocalDate.now()))+ ", " +
-                toSQLString(credit_cart_number) + toSQLString(cvv) +  ", " + toSQLDate(expiry_date) + ");";
+        String insertQuery = "INSERT INTO CART(username, total_price, purchased_date) " +
+                "VALUES (" + username + ", " + total_cost +  ", " + toSQLDate(Date.valueOf(LocalDate.now()))+  ");";
         System.out.println(insertQuery);
         if(this.dbAgent.getStatement().executeUpdate(insertQuery)== 0){
             throw new Exception("could not add cart");
@@ -149,12 +153,17 @@ public class CustomerAgent {
 
         Cart cart = getCart(resultSet) ;
         for(String ISBN: books.keySet()){
+            String updateBookQuery = "UPDATE book SET stock = stock - " + books.get(ISBN)
+                    + " WHERE ISBN = " + toSQLString(ISBN) + " ; " ;
+
             insertQuery = "INSERT INTO cart_book(cart_id, ISBN, no_books) " +
                     "VALUES (" + cart.getCart_id() + ", " + toSQLString(ISBN) +  ", " + books.get(ISBN) + ");";
-            System.out.println(insertQuery);
-            if(this.dbAgent.getStatement().executeUpdate(insertQuery)== 0){
+            System.out.println(updateBookQuery + "\n" + insertQuery);
+            if(this.dbAgent.getStatement().executeUpdate(updateBookQuery + "\n" + insertQuery)== 0){
                 throw new Exception("could not add book");
             }
+
+
         }
         return booksArray;
 
@@ -166,12 +175,6 @@ public class CustomerAgent {
         cart.setUsername(resultSet.getString("username"));
         cart.setCart_id(resultSet.getInt("cart_id"));
         cart.setTotal_price(resultSet.getInt("total_price"));
-        String state = resultSet.getString("state") ;
-        if(state.equals("not purchased"))
-            cart.setState(CartState.NOT_PURCHASED);
-        else
-            cart.setState(CartState.PURCHASED);
-
 
         return cart ;
 

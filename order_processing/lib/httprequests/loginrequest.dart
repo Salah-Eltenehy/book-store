@@ -25,11 +25,12 @@ class Login extends StatefulWidget {
     Book book;
     List<Book> books = <Book>[];
     for (Map<String, dynamic> map in temp) {
+      // int year =int.parse(map['publication_year']);
       book = Book(map['ISBN']
         ,map['title']
         ,map['category']
         ,map['publisher']
-        ,2019//TODO:2ib2o 3adilo elpublication year hina
+        ,2019
         ,map['price']
         ,map['stock']
         ,map['image_url'],);
@@ -93,7 +94,6 @@ class loginrequest extends State<Login> {
             {
               setState(() => Login.data = json.decode(res.body));
               Account.data = Login.data;
-              print(res.body);
               Account.Oldusername = RoundedInput.Text.text;
               Account.Oldpassword =RoundedPasswordInput.PASSWORD.text;
               RoundedInput.Text.clear();
@@ -104,6 +104,7 @@ class loginrequest extends State<Login> {
               await Login.sendsearchrequest();
               RoundedPasswordInput.PASSWORD.clear();
               // MainApp.intializeBooks();
+              await MainApp.getOrdersFromBackEnd();
               MainApp.update();
               Navigator.popAndPushNamed(context, "/app");
             }

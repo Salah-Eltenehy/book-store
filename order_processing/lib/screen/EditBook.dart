@@ -62,7 +62,8 @@ class _EditBookState extends State<EditBook> {
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(
-                                  "https://cdn3.iconfinder.com/data/icons/ios-web-user-interface-flat-circle-vol-3/512/Book_books_education_library_reading_open_book_study-512.png"
+                                EditBook.book.photoUrl.toString()
+                                  // "https://cdn3.iconfinder.com/data/icons/ios-web-user-interface-flat-circle-vol-3/512/Book_books_education_library_reading_open_book_study-512.png"
                               )
                           )
                       ),
@@ -104,6 +105,8 @@ class _EditBookState extends State<EditBook> {
                       }
                     else
                       {
+                        EditBook.Text1.clear();
+                        Navigator.pop(context);
                         print(response.body);
                       }
                     // Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));

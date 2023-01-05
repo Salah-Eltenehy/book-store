@@ -1,12 +1,7 @@
-drop database BookStore;
-create database BookStore;
-use BookStore;
-/*
-CREATE TABLE category(
-    category VARCHAR(20),
-    PRIMARY KEY(category)
-);
-*/
+DROP DATABASE IF EXISTS BookStore;
+CREATE DATABASE BookStore;
+USE BookStore;
+
 CREATE TABLE publisher(
     name VARCHAR(30),
     address VARCHAR(500) NOT NULL,
@@ -21,7 +16,7 @@ CREATE TABLE book(
     publisher VARCHAR(30) NOT NULL,
     publication_year DATE,
     price DOUBLE NOT NULL,
-    category VARCHAR(20),
+    category enum("Art", "Science", "Religion", "History", "Geography"),
     stock INT NOT NULL,
     threshold INT NOT NULL,
     image_url varchar(250),
@@ -56,9 +51,6 @@ CREATE TABLE cart(
     username VARCHAR(40) NOT NULL,
     total_price INT,
     purchased_date date NOT NULL,
-    credit_cart_number CHAR(16) NOT NULL,
-    cvv CHAR(3) NOT NULL,
-	expiry_date date NOT NULL,
     PRIMARY KEY(cart_id),
     FOREIGN KEY(username) REFERENCES user (username) on update CASCADE
 );

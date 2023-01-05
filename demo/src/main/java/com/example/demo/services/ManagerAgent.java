@@ -5,6 +5,7 @@ import com.example.demo.converters.ResultSetToBook;
 import com.example.demo.converters.ResultSetToBookOrder;
 import com.example.demo.model.Book;
 import com.example.demo.model.BookOrder;
+import com.example.demo.model.BookOrderFront;
 import com.example.demo.services.interfaces.IManagerAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,11 @@ public class ManagerAgent implements IManagerAgent {
     ResultSetToBook resultSetToBook;
 
     ResultSetToBookOrder resultSetToBookOrder;
-    public ManagerAgent() {
+
+    private  final SearchAgent searchAgent;
+
+    public ManagerAgent(SearchAgent searchAgent) {
+        this.searchAgent = searchAgent;
         this.dbAgent = DBAgent.getInstance();
         resultSetToBook = new ResultSetToBook();
         resultSetToBookOrder = new ResultSetToBookOrder();
@@ -73,7 +78,7 @@ public class ManagerAgent implements IManagerAgent {
         String insertQuery = "INSERT INTO book(ISBN, title, publisher, publication_year, price, category, stock, threshold, image_url) " +
                              "VALUES (" + toSQLString(newBook.getISBN()) + ", " + toSQLString(newBook.getTitle()) +  ", " +
                              toSQLString(newBook.getPublisher()) + ", " + toSQLDate(newBook.getPublication_year()) + ", " +
-                             newBook.getPrice() + ", " + toSQLString(newBook.getCategory()) + ", " +
+                             newBook.getPrice() + ", " + toSQLString(newBook.getCategory().toString()) + ", " +
                              newBook.getStock() + ", " + newBook.getThreshold() + ", " + toSQLString(newBook.getImage_url()) +");";
 
         return executeQuery(insertQuery) && insertAuthors(newBookRequest.getAuthors(), newBook.getISBN());
@@ -92,7 +97,7 @@ public class ManagerAgent implements IManagerAgent {
     @Override
     public boolean modifyBookQuantity(String iSBN, int quantityDifference) throws Exception {
         String updateQuery = "UPDATE BOOK " +
-                             "SET STOCK = STOCK + " + quantityDifference +
+                             "SET STOCK = " + quantityDifference +
                              " WHERE ISBN = "+ toSQLString(iSBN) + ";";
         return executeQuery(updateQuery);
     }
@@ -116,13 +121,20 @@ public class ManagerAgent implements IManagerAgent {
     }
 
     @Override
-    public List<BookOrder> getAllOrders() throws Exception {
+    public List<BookOrderFront> getAllOrders() throws Exception {
         String query = "SELECT * FROM Book_Order;";
-        ArrayList<BookOrder> orders = new ArrayList<>();
+        ArrayList<BookOrderFront> orders = new ArrayList<>();
         ResultSet resultSet = dbAgent.getStatement().executeQuery(query);
         System.out.println(query);
         while (resultSet.next()) {
-            orders.add(resultSetToBookOrder.convert(resultSet));
+            BookOrder bookOrder=resultSetToBookOrder.convert(resultSet);
+            Book book=  searchAgent.findByISBN(bookOrder.getISBN());
+            BookOrderFront bookOrderFront= BookOrderFront.builder().orderId(bookOrder.getOrderId())
+                    .author(book.getAuthor()).image_url(book.getImage_url()).category(book.getCategory().toString())
+                    .ISBN(book.getISBN()).price(book.getPrice()).publication_year(book.getPublication_year())
+                    .quantity(bookOrder.getQuantity()).publisher(book.getPublisher()).threshold(book.getThreshold())
+                    .stock(book.getStock()).title(book.getTitle()).build();
+            orders.add(bookOrderFront);
         }
         resultSet.close();
         return orders;
@@ -138,7 +150,7 @@ public class ManagerAgent implements IManagerAgent {
     @Override
     public boolean promoteUser(String userName) throws Exception {
         String promoteUserQuery = "UPDATE USER " +
-                                  "SET IS_MANGER = 1 " +
+                                  "SET IS_MANAGER = 1 " +
                                   "WHERE USERNAME = " + toSQLString(userName) + ";";
         return executeQuery(promoteUserQuery);
     }

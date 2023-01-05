@@ -30,8 +30,9 @@ public class DBAgent
     {
         try
         {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookstore", "root", "csed2024");
 //            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookstore", "root", "csed2024");
+//            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookstore", "root", "csed2024");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookstore", "root", "csed2024");
 //            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "csed2024");
 //            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookstore", "root", "CSed2024!");
             System.out.println("db connected");
@@ -43,7 +44,7 @@ public class DBAgent
     }
     public Statement getStatement() throws SQLException
     {
-        if (!connection.isValid(5000))
+        if (!connection.isValid(1500))
         {
             connect();
         }

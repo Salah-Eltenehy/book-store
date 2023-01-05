@@ -22,7 +22,7 @@ class OrdersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (BuildContext context) => OrdersCubit()..getOrdersFromBackEnd(),
+        create: (BuildContext context) => OrdersCubit(),
         child: BlocConsumer<OrdersCubit, OrdersStates>(
           listener: (context, state) {},
           builder: (context, state) {
@@ -36,47 +36,19 @@ class OrdersScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return buildBook(
                               book: MainApp.orderBooks[index],
-                              decline: () async {
-                                print("Decline function");
-                                String _url = "http://${ip}:8080/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}";
-                                var res = await http.delete(Uri.parse(_url),
-                                    headers: {"Content-Type": "application/json"},
-                                    body: json.encode({})
-                                );
-                                if (res.statusCode!=200) {
-                                  print("Error ya sa7by fe el credit card");
-                                } else {
-                                  // TODO: confilct between front end and back end
-                                  print("Response from backend when add card credit");
-                                  print(res.body);
-                                }
-                                // DioHelper.deleteData(
-                                //   url:  '/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}'
-                                // ).then((value) {
-                                //   print("delete order successfully");
-                                //   print(value.data);
-                                // });
-                              },
                               accept: () async {
                                 print("Accept function");
-                                String _url = "http://${ip}:8080/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}";
+                                String _url = "http://${ip}:8080/bookstore/manager/delete/order/${MainApp.orderBooks[index].ISPN}";
                                 var res = await http.delete(Uri.parse(_url),
-                                    headers: {"Content-Type": "application/json"},
-                                    body: json.encode({})
                                 );
                                 if (res.statusCode!=200) {
-                                  print("Error ya sa7by fe el credit card");
+                                  print("Error ya sa7by fe el accept order");
+                                  print(res.body);
                                 } else {
-                                  // TODO: confilct between front end and back end
-                                  print("Response from backend when add card credit");
+                                  ordersCubit.deleteOrder(index);
+                                  print("Response from backend when accept order");
                                   print(res.body);
                                 }
-                                // DioHelper.deleteData(
-                                //     url:  '/bookstore/manager/delete/order?iSBN=${MainApp.orderBooks[index].ISPN}'
-                                // ).then((value) {
-                                //   print("Confirm order successfully");
-                                //   print(value.data);
-                                // });
                               }
                           );
                         },
@@ -95,7 +67,6 @@ class OrdersScreen extends StatelessWidget {
   Widget buildBook(
   {
     required Book book,
-    required Function decline,
     required Function accept
   }
       )
@@ -156,38 +127,7 @@ class OrdersScreen extends StatelessWidget {
                 ],
               ),
             ),
-            /*
-             Ink(
-                        decoration: const ShapeDecoration(
-                          color: Colors.red,
-                          shape: CircleBorder(),
-                        ),
-                        child: IconButton(
-                          icon: const Icon(Icons.report,),
-                          color: Colors.white,
-                          onPressed: () =>
-                              PenaltyHTTPsHandler.report(
-                                  KickoffApplication.playerId,
-                                  showPartyPlayers.partyPlayers[index].pid,
-                                  true),),
-            */
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Ink(
-                width: 40,
-                height: 40,
-                decoration: const ShapeDecoration(
-                  color: Colors.red,
-                  shape: CircleBorder(),
-                ),
-                child: IconButton(
-                  icon: const Icon(Icons.clear,),
-                  color: Colors.white,
-                  onPressed: () =>decline(),
-                ),
-              ),
-            ),
-            // delete order
+
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Ink(

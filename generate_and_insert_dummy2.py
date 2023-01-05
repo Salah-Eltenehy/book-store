@@ -138,7 +138,6 @@ images_URLs = ['https://s26162.pcdn.co/wp-content/uploads/2020/01/Sin-Eater-by-M
                'https://www.creativeparamita.com/wp-content/uploads/2021/01/The-Girl-Who-Never-1.jpg',
                'https://www.creativeparamita.com/wp-content/uploads/2021/01/The-Girl-Who-Never-1.jpg',
                'https://static-cse.canva.com/blob/921487/ColorfulIllustrationYoungAdultBookCover.jpg',
-               'https://www.theyoungfolks.com/wp-content/uploads/2017/08/six-of-crows-770x1156.jpg',
                'http://bukovero.com/wp-content/uploads/2016/07/Harry_Potter_and_the_Cursed_Child_Special_Rehearsal_Edition_Book_Cover.jpg',
                'https://www.creativindie.com/wp-content/uploads/2017/04/New-WOrld-299x449.jpg',
                'https://static01.nyt.com/images/2020/12/20/books/review/20BestBookCovers-11/20BestBookCovers-11-mobileMasterAt3x.jpg',

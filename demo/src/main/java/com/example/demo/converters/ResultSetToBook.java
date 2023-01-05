@@ -21,7 +21,6 @@ public class ResultSetToBook {
     private String getAuthors(String query) throws SQLException
     {
         String res = "";
-        ArrayList<Author> authors = new ArrayList<>();
         ResultSet resultSet = dbAgent.getStatement().executeQuery(query);
         while (resultSet.next())
         {
