@@ -1,9 +1,12 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
 import 'package:order_processing/Book.dart';
+import 'package:order_processing/httprequests/loginrequest.dart';
 import 'package:order_processing/screen/SearchScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../Constants.dart';
@@ -27,7 +30,7 @@ class _SearchScreenState extends State<SearchScreen> {
   int numberofpages = 50000;
   int currentpage = 1;
   int selectedValue = 1;
-  late String field;
+  late String field ="all";
   @override
   Widget build(BuildContext context) {
     print(MainApp.books[0].title);
@@ -113,6 +116,7 @@ class _SearchScreenState extends State<SearchScreen> {
                ],
               ),
               TextField(
+                controller: SearchScreen.Text1,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: kBackgroundColor,
@@ -126,13 +130,14 @@ class _SearchScreenState extends State<SearchScreen> {
               onChanged: (value) async {
                 if(field == "all")
                 {
-                  String _url = "http://${ip}:8080/search/all?offset=${1}";
+                  String _url = "http://${ip}:8080/search/all?offset=${currentpage}";
                   var response = await http.get(Uri.parse(_url));
                   print(response.body);
                 }
                 else
                 {
-                  String _url = "http://${ip}:8080/search/${field}? keyword=${SearchScreen.Text1.text} &offset=${currentpage}";
+                  String _url = "http://${ip}:8080/search/${field}?keyword=${SearchScreen.Text1.text}&offset=${currentpage}";
+                  print(_url);
                   var response = await http.get(Uri.parse(_url));
                   print(response.body);
                 }
@@ -178,25 +183,40 @@ class _SearchScreenState extends State<SearchScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                   ElevatedButton(onPressed: () async{
-                    setState(() async {
+                    if(field == "all")
+                    {
+                      if(currentpage ==1)
+                        {
+                          currentpage = 2;
+                        }
+                      String _url = "http://${ip}:8080/search/all?offset=${currentpage-1}";
+                      var response = await http.get(Uri.parse(_url));
+                      SearchScreen.booksdynamic = json.decode(response.body) as List<dynamic>;
+                      print(response.body);
+                    }
+                    else
+                    {
+                      if(currentpage ==1)
+                      {
+                        currentpage = 2;
+                      }
+                      String _url = "http://${ip}:8080/search/${field}? keyword=${SearchScreen.Text1.text} &offset=${currentpage-1}";
+                      var response = await http.get(Uri.parse(_url));
+                      SearchScreen.booksdynamic = json.decode(response.body) as List<dynamic>;
+                      print(response.body);
+                    }
+                    setState(() {
                       if(currentpage > 1 )
                         {
-                          currentpage = currentpage-1;
-                          if(field == "all")
+                          if(SearchScreen.booksdynamic.length!=0)
                           {
-                            String _url = "http://${ip}:8080/search/all?offset=${1}";
-                            var response = await http.get(Uri.parse(_url));
-                            print(response.body);
-                          }
-                          else
-                          {
-                            String _url = "http://${ip}:8080/search/${field}? keyword=${SearchScreen.Text1.text} &offset=${currentpage}";
-                            var response = await http.get(Uri.parse(_url));
-                            print(response.body);
+                            MainApp.books = Login.convertIntoList(SearchScreen.booksdynamic);
+                            currentpage = currentpage-1;
                           }
                         }
                       else
                         {
+                          MainApp.books = Login.convertIntoList(SearchScreen.booksdynamic);
                           currentpage = 1;
                         }
                     });
@@ -210,23 +230,27 @@ class _SearchScreenState extends State<SearchScreen> {
            fontSize: 20
          ) ,
          ),
-      ElevatedButton(onPressed: () {
-        setState(() async{
+      ElevatedButton(onPressed: () async {
+        if(field == "all")
+        {
+          String _url = "http://${ip}:8080/search/all?offset=${currentpage+1}";
+          var response = await http.get(Uri.parse(_url));
+          SearchScreen.booksdynamic = json.decode(response.body) as List<dynamic>;
+          print(response.body);
+        }
+        else
+        {
+          String _url = "http://${ip}:8080/search/all? keyword=${field} &offset=${currentpage+1}";
+          var response = await http.get(Uri.parse(_url));
+          SearchScreen.booksdynamic = json.decode(response.body) as List<dynamic>;
+          print(response.body);
+        }
+        setState(() {
+          print(SearchScreen.booksdynamic.length);
           if(currentpage < numberofpages && SearchScreen.booksdynamic.length!=0)
             {
               currentpage = currentpage+1;
-              if(field == "all")
-              {
-                String _url = "http://${ip}:8080/search/all?offset=${1}";
-                var response = await http.get(Uri.parse(_url));
-                print(response.body);
-              }
-              else
-              {
-                String _url = "http://${ip}:8080/search/all? keyword=${field} &offset=${currentpage}";
-                var response = await http.get(Uri.parse(_url));
-                print(response.body);
-              }
+              MainApp.books = Login.convertIntoList(SearchScreen.booksdynamic);
             }
          // MainApp.books = await DioHelper.getData(url: "search/${field}/${currentpage}") as List<Book>;
         }

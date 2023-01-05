@@ -29,7 +29,7 @@ class Login extends StatefulWidget {
         ,map['title']
         ,map['category']
         ,map['publisher']
-        ,2019//TODO:2ib2o 3adilo elpublication year hina
+        ,2019
         ,map['price']
         ,map['stock']
         ,map['image_url'],);

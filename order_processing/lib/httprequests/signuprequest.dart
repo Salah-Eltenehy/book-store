@@ -15,9 +15,19 @@ import '../component/rounded_phone.dart';
 import '../component/secondname.dart';
 import '../screen/Account.dart';
 import '../screen/MainApp.dart';
+import 'loginrequest.dart';
 
 class Signup extends StatefulWidget {
   static late Map<String, dynamic> data;
+  static late List<dynamic> booksdynamic;
+  static Future<void> sendsearchrequest()
+  async {
+    String _url = "http://${ip}:8080/search/all?offset=${1}";
+    var response = await http.get(Uri.parse(_url));
+    print(response.body);
+    booksdynamic = json.decode(response.body) as List<dynamic>;
+    MainApp.books = Login.convertIntoList(booksdynamic);
+  }
   @override
   signuprequest createState() => signuprequest();
 }
@@ -105,6 +115,7 @@ class signuprequest extends State<Signup> {
               RoundedPhoneNumber.PhoneNumber.clear();
               setState(() => Signup.data = json.decode(res.body));
               Account.data = Signup.data;
+              await Signup.sendsearchrequest();
               MainApp.intializeBooks();
               MainApp.Manger = Signup.data['is_manager'];
               MainApp.update();
