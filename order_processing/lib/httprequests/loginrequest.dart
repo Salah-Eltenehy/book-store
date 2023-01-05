@@ -30,8 +30,9 @@ class Login extends StatefulWidget {
         ,map['title']
         ,map['category']
         ,map['publisher']
+
         ,year
-        ,map['price']
+,map['price']
         ,map['stock']
         ,map['image_url'],);
       books.add(book);

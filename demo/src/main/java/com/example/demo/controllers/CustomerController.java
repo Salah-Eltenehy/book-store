@@ -49,6 +49,7 @@ public class CustomerController {
                     command.cvv, command.expiry_date, command.books);
             return new ResponseEntity<>(new Gson().toJson(books), HttpStatus.OK) ;
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND) ;
         }
 
