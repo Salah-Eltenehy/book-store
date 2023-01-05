@@ -105,6 +105,8 @@ class _EditBookState extends State<EditBook> {
                       }
                     else
                       {
+                        EditBook.Text1.clear();
+                        Navigator.pop(context);
                         print(response.body);
                       }
                     // Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
