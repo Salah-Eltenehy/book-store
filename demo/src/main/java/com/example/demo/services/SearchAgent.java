@@ -39,6 +39,16 @@ public class SearchAgent {
                 " LIMIT " + from + " , " + to +" ;";
         return getBooks(query);
     }
+    public Book findByISBN(String ISBN) throws SQLException
+    {
+        Integer offset=1;
+        Integer from = ((offset - 1) * 20);
+        Integer to = ((offset) * 20);
+        ISBN = "'".concat(ISBN.concat("'"));
+        String query = "SELECT * FROM BookStore.book WHERE ISBN = " + ISBN +
+                " LIMIT " + from + " , " + to +" ;";
+        return getBooks(query).get(0);
+    }
     public ArrayList<Book> searchByTitle(String title, Integer offset) throws SQLException
     {
         Integer from = ((offset - 1) * 20);

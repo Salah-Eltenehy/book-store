@@ -3,6 +3,7 @@ package com.example.demo.services.interfaces;
 import com.example.demo.controllers.RequestModels.BookRequest;
 import com.example.demo.model.Book;
 import com.example.demo.model.BookOrder;
+import com.example.demo.model.BookOrderFront;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ public interface IManagerAgent {
     // drops from above a given threshold to below the given threshold
     boolean placeBookOrder(BookOrder bookOrder) throws Exception;
 
-    List<BookOrder> getAllOrders() throws Exception;
+    List<BookOrderFront> getAllOrders() throws Exception;
 }

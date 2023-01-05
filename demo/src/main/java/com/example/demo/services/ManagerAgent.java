@@ -5,6 +5,7 @@ import com.example.demo.converters.ResultSetToBook;
 import com.example.demo.converters.ResultSetToBookOrder;
 import com.example.demo.model.Book;
 import com.example.demo.model.BookOrder;
+import com.example.demo.model.BookOrderFront;
 import com.example.demo.services.interfaces.IManagerAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,11 @@ public class ManagerAgent implements IManagerAgent {
     ResultSetToBook resultSetToBook;
 
     ResultSetToBookOrder resultSetToBookOrder;
-    public ManagerAgent() {
+
+    private  final SearchAgent searchAgent;
+
+    public ManagerAgent(SearchAgent searchAgent) {
+        this.searchAgent = searchAgent;
         this.dbAgent = DBAgent.getInstance();
         resultSetToBook = new ResultSetToBook();
         resultSetToBookOrder = new ResultSetToBookOrder();
@@ -116,13 +121,19 @@ public class ManagerAgent implements IManagerAgent {
     }
 
     @Override
-    public List<BookOrder> getAllOrders() throws Exception {
+    public List<BookOrderFront> getAllOrders() throws Exception {
         String query = "SELECT * FROM Book_Order;";
-        ArrayList<BookOrder> orders = new ArrayList<>();
+        ArrayList<BookOrderFront> orders = new ArrayList<>();
         ResultSet resultSet = dbAgent.getStatement().executeQuery(query);
         System.out.println(query);
         while (resultSet.next()) {
-            orders.add(resultSetToBookOrder.convert(resultSet));
+            BookOrder bookOrder=resultSetToBookOrder.convert(resultSet);
+            Book book=  searchAgent.findByISBN(bookOrder.getISBN());
+            BookOrderFront bookOrderFront= BookOrderFront.builder().orderId(bookOrder.getOrderId())
+                    .author(book.getAuthor()).image_url(book.getImage_url()).category(book.getCategory())
+                    .ISBN(book.getISBN()).price(book.getPrice()).publication_year(book.getPublication_year())
+                    .quantity(bookOrder.getQuantity()).publisher(book.getPublisher()).build();
+            orders.add(bookOrderFront);
         }
         resultSet.close();
         return orders;

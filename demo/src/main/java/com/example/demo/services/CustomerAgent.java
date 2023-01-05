@@ -133,9 +133,9 @@ public class CustomerAgent {
 
 
 
-        String insertQuery = "INSERT INTO CART(username, total_price, purchased_date, credit_cart_number, expiry_date) " +
+        String insertQuery = "INSERT INTO CART(username, total_price, purchased_date, credit_cart_number, cvv, expiry_date) " +
                 "VALUES (" + toSQLString(username) + ", " + total_cost +  ", " + toSQLDate(Date.valueOf(LocalDate.now()))+ ", " +
-                toSQLString(credit_cart_number) +  ", " + toSQLDate(expiry_date) + ");";
+                toSQLString(credit_cart_number) + ", "  + toSQLString(cvv) +  ", " + toSQLDate(expiry_date) + ");";
         System.out.println(insertQuery);
         if(this.dbAgent.getStatement().executeUpdate(insertQuery)== 0){
             throw new Exception("could not add cart");
