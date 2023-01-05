@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.controllers.RequestModels.BookRequest;
 import com.example.demo.model.BookOrder;
 import com.example.demo.model.BookOrderFront;
+import com.example.demo.reports.ReportService;
 import com.example.demo.services.interfaces.IManagerAgent;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -19,6 +21,11 @@ public class ManagerController {
     @Autowired
 //    @Resource(name = "ManagerAgent")
     private IManagerAgent managerAgent;
+    private final ReportService reportService;
+
+    public ManagerController() throws SQLException, ClassNotFoundException {
+        this.reportService = new ReportService();
+    }
 
     @PostMapping("/add/book")
     public ResponseEntity<String> addNewBook(@RequestBody String newBookRequest){ //
@@ -91,5 +98,47 @@ public class ManagerController {
 
         return new ResponseEntity<>(new Gson().toJson(bookOrders),
                 HttpStatus.OK);
+    }
+
+    @GetMapping("/report/viewTotalBookSales")
+    public ResponseEntity<String> viewTotalBookSales() {
+        try {
+            boolean status = this.reportService.viewTotalBookSales();
+            if (status)
+                return ResponseEntity.status(HttpStatus.OK).body("Report Added Successfully");
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Failed to Add the report");
+    }
+
+    @GetMapping("/report/viewTop10Books")
+    public ResponseEntity<String> viewTop10Books() {
+        try {
+            boolean status = this.reportService.viewTop10Books();
+            if (status)
+                return ResponseEntity.status(HttpStatus.OK).body("Report Added Successfully");
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Failed to Add the report");
+    }
+
+    @GetMapping("/report/viewTop5Customers")
+    public ResponseEntity<String> viewTop5Customers() {
+        try {
+            boolean status = this.reportService.viewTop5Customers();
+            if (status)
+                return ResponseEntity.status(HttpStatus.OK).body("Report Added Successfully");
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Failed to Add the report");
     }
 }
