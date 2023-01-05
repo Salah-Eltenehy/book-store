@@ -21,51 +21,7 @@ class MainApp extends StatefulWidget {
   static List<Book> orderBooks = [];
   static bool Manger = true;
   static List<Book> books = [];
-  static intializeBooks() async {
-    // int id = await CachHelper.getData(key: 'id');
-    // TODO : add url of the request and the form of the data
-    // await DioHelper.postData(url: '/place/order/book').then((value) {
-    // });
-    books=[
-      new Book(
-          "0123456789012",
-          "A Place Called Perfect ",
-          "Animals",
-          "Dar Elnahda",
-          2020,
-          132.0,
-          10,
-          "https://imgv2-2-f.scribdassets.com/img/word_document/353388341/original/f2e4b773a0/1567592883?v=1"),
-      new Book(
-          "0123456789012",
-          "To justifie the wayes of God To Men ",
-          "Animals",
-          "Dar Elnahda",
-          2021,
-          145.0,
-          11,
-          "https://mir-s3-cdn-cf.behance.net/project_modules/disp/9ff4c287132211.5daee6dfaf15a.jpg"),
-      new Book(
-          "0123456789012",
-          "The book of chaos ",
-          "Animals",
-          "Dar Elnahda",
-          2015,
-          186.0,
-          12,
-          "http://www.humanoids.com/assets/CatalogueArticle/761/341112604_BookOfChaos_Cover_Rough_8705_zoomed.jpg"),
-      new Book(
-          "0123456789012",
-          "Five feet apart ",
-          "Animals",
-          "Dar Elnahda",
-          2010,
-          208.0,
-          99,
-          "https://i0.wp.com/candidcover.net/wp-content/uploads/81eoHi7V9DL.jpg?fit=1400%2C2116&ssl=1"),
-    ];
-    orderBooks.add(books[0]);
-  }
+  static intializeBooks() async {}
   static final _MainAppState _currentState = _MainAppState();
 
   static update() => _currentState.setState(() {});
@@ -200,3 +156,45 @@ class _MainAppState extends State<MainApp> {
       );
   }
 }
+
+/*
+books=[
+      new Book(
+          "0123456789012",
+          "A Place Called Perfect ",
+          "Animals",
+          "Dar Elnahda",
+          2020,
+          132.0,
+          10,
+          "https://imgv2-2-f.scribdassets.com/img/word_document/353388341/original/f2e4b773a0/1567592883?v=1"),
+      new Book(
+          "0123456789012",
+          "To justifie the wayes of God To Men ",
+          "Animals",
+          "Dar Elnahda",
+          2021,
+          145.0,
+          11,
+          "https://mir-s3-cdn-cf.behance.net/project_modules/disp/9ff4c287132211.5daee6dfaf15a.jpg"),
+      new Book(
+          "0123456789012",
+          "The book of chaos ",
+          "Animals",
+          "Dar Elnahda",
+          2015,
+          186.0,
+          12,
+          "http://www.humanoids.com/assets/CatalogueArticle/761/341112604_BookOfChaos_Cover_Rough_8705_zoomed.jpg"),
+      new Book(
+          "0123456789012",
+          "Five feet apart ",
+          "Animals",
+          "Dar Elnahda",
+          2010,
+          208.0,
+          99,
+          "https://i0.wp.com/candidcover.net/wp-content/uploads/81eoHi7V9DL.jpg?fit=1400%2C2116&ssl=1"),
+    ];
+    orderBooks.add(books[0]);
+ */

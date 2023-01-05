@@ -18,10 +18,26 @@ class OrdersCubit extends Cubit<OrdersStates> {
     if (res.statusCode!=200) {
       print("Error ya sa7by fe el all orders");
       print(res.body);
+      emit(GetDataErrorState());
     } else {
-      // TODO: conflict between front end and back end
-      print("Response from backend when get all orders");
-      print(res.body);
+        // TODO: conflict between front end and back end
+        print("Response from backend when get all orders");
+        print(res.body);
+        for(int i=0; i<res.body.length; i++) {
+          Map<String, dynamic> temp = res.body[i];
+          Book book = new Book(
+              temp['ISBN'],
+              temp['title'],
+              temp['category'],
+              temp['publisher'],
+              temp['publication_year'],
+              temp['price'],
+              temp['stock'],
+              temp['image_url']
+          );
+          MainApp.ordersBook.add(book);
+      }
+      emit(GetDataSuccessState());
     }
   }
   void deleteOrder(int index) {
