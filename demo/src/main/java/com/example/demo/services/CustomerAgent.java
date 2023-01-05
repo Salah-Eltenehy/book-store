@@ -39,12 +39,14 @@ public class CustomerAgent {
             System.out.println("username or the password is incorrect for " + username);
             throw new Exception("username or the password is incorrect for " + username);
         }
+        old.setPassword(password);
         boolean edit = false ;
         String updateQuery = "UPDATE USER SET " ;
 
         if(!old.getUsername().equals(user.getUsername()) && !user.getUsername().equals("")){
             edit = true ;
             updateQuery = updateQuery + "username = " + toSQLString(user.getUsername()) ;
+            old.setUsername(user.getUsername());
         }
 
         if(!password.equals(user.getPassword()) && !user.getPassword().equals("")){
@@ -59,6 +61,8 @@ public class CustomerAgent {
             String hashedPassword = new String(messageDigest.digest());
 
             updateQuery = updateQuery + "password = " + toSQLString(hashedPassword) ;
+            old.setPassword(user.getPassword());
+
         }
         if(!old.getFirst_name().equals(user.getFirst_name()) && !user.getFirst_name().equals("")){
             if(!edit){
@@ -67,6 +71,7 @@ public class CustomerAgent {
                 updateQuery = updateQuery + ", ";
             }
             updateQuery = updateQuery + "first_name = " + toSQLString(user.getFirst_name()) ;
+            old.setFirst_name(user.getFirst_name());
         }
         if(!old.getLast_name().equals(user.getLast_name()) && !user.getLast_name().equals("")){
             if(!edit){
@@ -75,6 +80,7 @@ public class CustomerAgent {
                 updateQuery = updateQuery + ", ";
             }
             updateQuery = updateQuery + "last_name = " + toSQLString(user.getLast_name()) ;
+            old.setLast_name(user.getLast_name());
         }
         if(!old.getEmail().equals(user.getEmail()) && !user.getEmail().equals("")){
             if(!edit){
@@ -83,6 +89,7 @@ public class CustomerAgent {
                 updateQuery = updateQuery + ", ";
             }
             updateQuery = updateQuery + "email = " + toSQLString(user.getEmail()) ;
+            old.setEmail(user.getEmail());
         }
         if(!old.getPhone_number().equals(user.getPhone_number()) && !user.getPhone_number().equals("")){
             if(!edit){
@@ -91,6 +98,7 @@ public class CustomerAgent {
                 updateQuery = updateQuery + ", ";
             }
             updateQuery = updateQuery + "phone_number = " + toSQLString(user.getPhone_number()) ;
+            old.setPassword(user.getPhone_number());
         }
         if(!old.getShipping_address().equals(user.getShipping_address()) && !user.getShipping_address().equals("")){
             if(!edit){
@@ -99,6 +107,7 @@ public class CustomerAgent {
                 updateQuery = updateQuery + ", ";
             }
             updateQuery = updateQuery + "shipping_address = " + toSQLString(user.getShipping_address()) ;
+            old.setShipping_address(user.getShipping_address());
         }
         updateQuery = updateQuery + " WHERE username = "+ toSQLString(username) + ";";
 
