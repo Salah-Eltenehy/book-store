@@ -150,7 +150,7 @@ public class ManagerAgent implements IManagerAgent {
     @Override
     public boolean promoteUser(String userName) throws Exception {
         String promoteUserQuery = "UPDATE USER " +
-                                  "SET IS_MANGER = 1 " +
+                                  "SET IS_MANAGER = 1 " +
                                   "WHERE USERNAME = " + toSQLString(userName) + ";";
         return executeQuery(promoteUserQuery);
     }
