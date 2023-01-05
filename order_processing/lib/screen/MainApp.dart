@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:order_processing/Constants.dart';
 import 'package:badges/badges.dart';
 import 'package:order_processing/screen/MakeManager.dart';
+import 'package:order_processing/screen/report.dart';
 import 'package:order_processing/shared/DioHelper.dart';
 import '../Book.dart';
 import '../modules/orders/Orders.dart';
@@ -113,7 +114,22 @@ class _MainAppState extends State<MainApp> {
                   )
                 : const Icon(Icons.menu_book_sharp),
             label: "Orders"),
-      ];
+        BottomNavigationBarItem(
+            backgroundColor: kPrimaryColor,
+            icon: MainApp.orderBooks.isNotEmpty
+                ? Badge(
+                    showBadge: true,
+                    badgeContent: Text("${MainApp.orderBooks.length}",
+                        style: const TextStyle(color: Colors.white)),
+                    animationType: BadgeAnimationType.scale,
+                    shape: BadgeShape.circle,
+                    //position: BadgePosition.center(),
+                    child: const Icon(Icons.menu_book_sharp),
+                  )
+                : const Icon(Icons.report),
+            label: "Reports"),
+
+    ];
     } else {
       bottomBarButtons = [
         BottomNavigationBarItem(
@@ -174,6 +190,8 @@ class _MainAppState extends State<MainApp> {
                 ? CartScreen()
                 : (MainApp.currentPage == 2)
                 ? Account()
+                : (MainApp.currentPage == 3)
+                ? ReportPage()
                 : OrdersScreen(),
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: kPrimaryColor,
