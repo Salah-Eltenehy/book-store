@@ -40,8 +40,6 @@ class _makeOrderButtonState extends State<makeOrderButton> {
 
   }
   _formField(label, icon) => TextFormField(
-    // maxLength: (label == 'وصف الإعلان') ? 150 : 32,
-    // maxLines: (label == 'وصف الإعلان') ? 3 : 1,
     decoration: InputDecoration(
       focusColor: kPrimaryColor,
       floatingLabelAlignment: FloatingLabelAlignment.center,
@@ -67,7 +65,23 @@ class _makeOrderButtonState extends State<makeOrderButton> {
             padding:
             const EdgeInsets.symmetric(vertical: 20, horizontal: 15)),
         onPressed: () async {
-          print("han7ot elrequestat hina");//TODO : han7ot elrequest hina elattributes hya el ISPN hyb2a id wel quantity hatib2a textFields[0];
+          String _url =
+              "http://${ip}:8080/bookstore/manager/place/order/book";
+          var res = await http.post(Uri.parse(_url),
+              headers: {"Content-Type": "application/json"},
+              body: json.encode({
+                "ISBN": makeOrderButton.ISBN,
+                "quantity":  textFields[0],
+              }));
+          if (res.statusCode!=200) {
+            print("Error ya sa7by fe el place order\n MakeOrder.dart\nline:77");
+            print(res.body);
+          } else {
+            print("Response from backend when place order");
+            print(res.body);
+          }
+          //TODO : han7ot elrequest hina elattributes hya el ISPN hyb2a id wel quantity hatib2a textFields[0];
+          /// DONE ya MENTO
           Navigator.pop(context);
         }),
   );

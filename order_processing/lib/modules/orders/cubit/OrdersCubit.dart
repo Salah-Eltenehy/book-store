@@ -11,26 +11,21 @@ class OrdersCubit extends Cubit<OrdersStates> {
   static OrdersCubit get(context) => BlocProvider.of(context);
 
   Future<void> getOrdersFromBackEnd() async {
-    String _url =
-        "http://${ip}:8080/bookstore/manager/allOrders";
-    var res = await http.post(Uri.parse(_url),
+    String _url = "http://${ip}:8080/bookstore/manager/allOrders";
+    var res = await http.get(Uri.parse(_url),
         headers: {"Content-Type": "application/json"},
-        body: json.encode({})
     );
     if (res.statusCode!=200) {
-      print("Error ya sa7by fe el credit card");
+      print("Error ya sa7by fe el all orders");
       print(res.body);
     } else {
-      // TODO: confilct between front end and back end
-      print("Response from backend when add card credit");
+      // TODO: conflict between front end and back end
+      print("Response from backend when get all orders");
       print(res.body);
     }
-    // DioHelper.getData(
-    //   url: '/bookstore/manager/allOrders'
-    // ).then((value) {
-    //
-    // });
   }
-
-
+  void deleteOrder(int index) {
+    MainApp.orderBooks.removeAt(index);
+    emit(DeleteOrderSuccessState());
+  }
 }

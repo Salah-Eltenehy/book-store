@@ -64,7 +64,22 @@ class _makeManagerButtonState extends State<makeManagerButton> {
             padding:
             const EdgeInsets.symmetric(vertical: 20, horizontal: 15)),
         onPressed: () async {
-          print("han7ot elrequestat hina");//TODO : han7ot elrequest hina elattributes el username hatib2a textFields[0];
+          String _url =
+              "http://${ip}:8080/bookstore/manager/promote";
+          var res = await http.put(Uri.parse(_url),
+              headers: {"Content-Type": "application/json"},
+              body: json.encode({
+                "username": Account.Oldusername
+              }));
+          if (res.statusCode!=200) {
+            print("Error ya sa7by fe el promote manager\n MakeManager.dart\nline:75");
+            print(res.body);
+          } else {
+            print("Response from backend when promote manager");
+            print(res.body);
+          }
+          //TODO : han7ot elrequest hina elattributes el username hatib2a textFields[0];
+          ///_url DONE ya MENTO
           Navigator.pop(context);
         }),
   );

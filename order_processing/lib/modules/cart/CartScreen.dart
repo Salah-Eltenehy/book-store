@@ -224,15 +224,6 @@ class CartScreen extends StatelessWidget {
                                               print("Response from backend when add card credit");
                                               print(res.body);
                                             }
-                                            // DioHelper.postData(
-                                            //   url:'bookstore/customer/addCart',
-                                            //   data: {
-                                            //
-                                            //   }
-                                            // ).then((value) {
-                                            //   print(value.data);
-                                            // }).catchError((error) {
-                                            // });
                                             Navigator.pop(context);
                                           }
                                         },
