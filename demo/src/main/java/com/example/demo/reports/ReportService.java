@@ -18,7 +18,7 @@ public class ReportService {
         return DriverManager.getConnection(CNTION_URL, USER_NAME,USR_PASS);
     }
     String hostName = "localhost";
-    String dbName = "test";
+    String dbName = "bookstore";
     String userName = "root";
     String password = "root";
     String commonPath = "src/main/java/com/example/demo/reports/";
@@ -35,9 +35,10 @@ public class ReportService {
 
     private boolean viewReport(String fileName) throws JRException {
         JasperDesign design = JRXmlLoader.load(commonPath + fileName + ".jrxml");
+//        JasperDesign design = JRXmlLoader.load(commonPath + "patient" + ".jrxml");
         JasperReport report = JasperCompileManager.compileReport(design);
         JasperPrint jasperPrint = JasperFillManager.fillReport(report, null, this.connection);
-        JasperViewer.viewReport(jasperPrint, false);
+//        JasperViewer.viewReport(jasperPrint, false);
         JasperExportManager.exportReportToPdfFile(jasperPrint, commonPath + fileName +".pdf");
         return true;
     }
