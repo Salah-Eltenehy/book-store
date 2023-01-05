@@ -274,16 +274,57 @@ phones = [
     '5-456-723-6244'
 ]
 
+full_names = [
+        'Sabina Whinter', 'Maggie Wise', 'Julius Tanner', 'Elena Abbot',
+        'Hank Villiger', 'Noemi Nielson', 'Roger Hewitt',
+        'Cadence Hastings', 'Katelyn Tate', 'Oliver Downing',
+        'Danielle Holt', 'Brad Quinnell', 'Judith Burge',
+        'Katelyn Spencer', 'Ethan Wheeler', 'Chad Jenkin', 'Davina Little',
+        'Ramon King', 'Clint Burnley', 'Owen Rixon', 'Sadie Lloyd',
+        'Tara Kent', 'Wade Santos', 'Carissa Giles', 'Daniel May',
+        'Scarlett Rogers', 'Elijah Abbot', 'Elisabeth Snell', 'Abbey Lee',
+        'Carl Kennedy', 'Johnathan Martin', 'Rhea Samuel',
+        'Angelina Tyler', 'Chadwick Bullock', 'Johnny Walton',
+        'Rufus Latham', 'Elise Ward', 'Barney Hobbs', 'Daron Donovan',
+        'Hank Larsen', 'Nate Steer', 'Ramon Overson', 'Lara Booth',
+        'Doug Casey', 'Belinda Broomfield', 'Owen Foxley', 'Doug Jackson',
+        'Hayden Snell', 'Valerie Rossi', 'Harry Larkin', 'Christy Mcneill',
+        'Nancy Taylor', 'Brad Yoman', 'Alessia Rogan', 'Dalia Payne',
+        'Rosalyn Vinton', 'Leroy Wilde', 'Tiffany Bullock',
+        'Nicholas Weasley', 'Paige Irwin', 'Bob Slater', 'Nathan Richards',
+        'Roger Addis', 'Peter Richards', 'Domenic Allen', 'Noemi Leigh',
+        'Martin Thorne', 'Natalie Vince', 'Emery Morrison',
+        'Maddison Griffiths', 'Carol Hilton', 'Harry Foxley',
+        'Javier Stubbs', 'Daniel Penn', 'Joseph Gonzales', 'Fred Everett',
+        'Grace Jobson', 'Daron Roscoe', 'Melinda Janes', 'Anthony Spencer',
+        'Piper Grady', 'Jayden Casey', 'Estrella Casey', 'Analise Yard',
+        'Payton Thompson', 'Brooklyn Lynn', 'Alexander Mason',
+        'Benjamin Carter', 'Logan Rycroft', 'Shannon Campbell',
+        'Josh Durrant', 'Hanna Harris', 'Shay Ripley', 'Hayden Barclay',
+        'Britney Bingham', 'Freya Squire', 'Danny Mcneill',
+        'Liam Alldridge', 'Caydence Palmer', 'Benny Mooney'
+]
+
+names = []
+for i in full_names:
+    names += i.split()
 
 
-upper_letters = list(string.ascii_uppercase)
+
+
+letters = list(string.ascii_letters)
 
 data = {
+    'user'      : ('user_name' ,'pass', 'first_name' , 'last_name'  , 'email' , 'phone' , 'address' , 'is_manager' ),
                                                            #publication year
     'book'            : ('id' , "book_title" , "publisher" , "date" ,  "price" ,
                          "category" , "stock" , "threshold" , "image_url"), #id is char(13)
     'author'    : ('id' , 'author'),#id is book id
-    # 'publisher'       : ("publisher" , "address" , "phone")
+
+    'sale'      : ('id' , 'existed_username' , 'existed_ISBN' , 'sale_amount' , 'date' , 'price')
+
+
+    # 'publisher'       : ("publisher" , "address" , "phone"),
 }
 
 
@@ -299,7 +340,7 @@ min_price = 50
 max_price = 1000
 
 
-# instert into publisher
+# insert into publisher
 publishers_addresses = random.sample(addresses , len(publishers))
 publishers_phones = random.sample(phones , len(publishers))
 for publisher , address , phone in zip(publishers , publishers_addresses , publishers_phones):
@@ -317,11 +358,32 @@ for table,table_count in  zip(data.keys(),range(len(data.keys()))):
     table_start_time = time.time()
     if table == 'book':
         n = int(1*1e6)
-    else:
+    elif table == 'user':
+        n = 100
+    elif table == 'author':
         n = int(5*1e5)
+    elif table == 'sale':
+        n = 5000
+        mycursor.execute("SELECT ISBN FROM Book")
+        existed_ISBNs = mycursor.fetchall()
+        existed_ISBNs = [i[0] for i in existed_ISBNs]
+
+        mycursor.execute("SELECT username FROM user")
+        existed_usernames = mycursor.fetchall()
+        existed_usernames = [i[0] for i in existed_usernames]
+
+        print(existed_ISBNs)
+        print(existed_usernames)
+
+
+
     print(f"\n************** {table} ***************\n")
     cols_num = len(data[table])
     for id in range(n-1):
+        if table == 'user':
+            first_name = random.choice(names)
+            last_name = random.choice(names)
+            user_name = f"{first_name}_{last_name}-{id}"
         values = []
         sql = f"INSERT INTO {table} VALUES ("
         for v,i in zip(data[table],range(cols_num)):
@@ -345,6 +407,32 @@ for table,table_count in  zip(data.keys(),range(len(data.keys()))):
                 values.append(random.choice(images_URLs))
             elif v == 'category':
                 values.append(random.choice(book_categories))
+            elif v == 'user_name':
+                values.append(user_name)
+            elif v == "email":
+                values.append(f"user_name-{id}@gmail.com")
+            elif v == "first_name":
+                values.append(first_name)
+            elif v == "last_name":
+                values.append(last_name)
+            elif v == "phone":
+                values.append(random.choice(phones)[0:11])
+            elif v == "address" :
+                values.append(random.choice(addresses))
+            elif v == 'pass':
+                values.append("".join(random.choices(letters,k = 10) ))
+            elif v == 'existed_username':
+                values.append(random.choice(existed_usernames))
+            elif v == 'existed_ISBN':
+                values.append(random.choice(existed_ISBNs))
+            elif v == 'sale_amount':
+                values.append(random.randint(1 , 20))
+            elif v == "is_manager":
+                if random.random() > 0.9:
+                    b = 1
+                else:
+                    b = 0
+                values.append(str(b))
             else:
                 values.append(f"{v}-{id}")
             sql += '%s)' if i == cols_num-1 else '%s, '
@@ -352,6 +440,8 @@ for table,table_count in  zip(data.keys(),range(len(data.keys()))):
 
         # print(values)
         # print()
+        # print(sql)
+        # print(values)
         mycursor.execute(sql, values)
         if (id % (n/20)) ==0:
             secsPerN = time.time() -start
