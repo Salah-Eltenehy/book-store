@@ -25,12 +25,12 @@ class Login extends StatefulWidget {
     Book book;
     List<Book> books = <Book>[];
     for (Map<String, dynamic> map in temp) {
-      // int year =int.parse(map['publication_year']);
+      int year =int.parse(map['publication_year'].substring( (map['publication_year'].length)-4 , map['publication_year'].length));
       book = Book(map['ISBN']
         ,map['title']
         ,map['category']
         ,map['publisher']
-        ,2019
+        ,year
         ,map['price']
         ,map['stock']
         ,map['image_url'],);
