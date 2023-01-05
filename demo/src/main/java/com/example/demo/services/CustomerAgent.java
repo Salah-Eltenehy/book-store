@@ -117,7 +117,7 @@ public class CustomerAgent {
         }
 
         if(executeQuery(updateQuery)){
-            return user ;
+            return old ;
         }
         return null;
     }
