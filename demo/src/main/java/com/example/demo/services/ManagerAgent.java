@@ -78,7 +78,7 @@ public class ManagerAgent implements IManagerAgent {
         String insertQuery = "INSERT INTO book(ISBN, title, publisher, publication_year, price, category, stock, threshold, image_url) " +
                              "VALUES (" + toSQLString(newBook.getISBN()) + ", " + toSQLString(newBook.getTitle()) +  ", " +
                              toSQLString(newBook.getPublisher()) + ", " + toSQLDate(newBook.getPublication_year()) + ", " +
-                             newBook.getPrice() + ", " + toSQLString(newBook.getCategory()) + ", " +
+                             newBook.getPrice() + ", " + toSQLString(newBook.getCategory().toString()) + ", " +
                              newBook.getStock() + ", " + newBook.getThreshold() + ", " + toSQLString(newBook.getImage_url()) +");";
 
         return executeQuery(insertQuery) && insertAuthors(newBookRequest.getAuthors(), newBook.getISBN());
@@ -130,7 +130,7 @@ public class ManagerAgent implements IManagerAgent {
             BookOrder bookOrder=resultSetToBookOrder.convert(resultSet);
             Book book=  searchAgent.findByISBN(bookOrder.getISBN());
             BookOrderFront bookOrderFront= BookOrderFront.builder().orderId(bookOrder.getOrderId())
-                    .author(book.getAuthor()).image_url(book.getImage_url()).category(book.getCategory())
+                    .author(book.getAuthor()).image_url(book.getImage_url()).category(book.getCategory().toString())
                     .ISBN(book.getISBN()).price(book.getPrice()).publication_year(book.getPublication_year())
                     .quantity(bookOrder.getQuantity()).publisher(book.getPublisher()).threshold(book.getThreshold())
                     .stock(book.getStock()).title(book.getTitle()).build();
