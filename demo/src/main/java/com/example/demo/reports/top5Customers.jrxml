@@ -1,30 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="top5Customers" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="efc75d70-9c28-41e2-9f0f-b7f0506073c3">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="top5Customers" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="69d4fcda-3ed1-4183-84fc-bf28c9265e41">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BOOK_STORE"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT username, SUM(price) AS PURCHASE_AMOUNT 
+		<![CDATA[SELECT username, SUM(price) AS PURCHASE_AMOUNT
     FROM SALE
     WHERE sale_date >= NOW() - INTERVAL 3 YEAR
     GROUP BY username
     ORDER BY PURCHASE_AMOUNT DESC
     LIMIT 5;]]>
 	</queryString>
+	<field name="username" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="username"/>
+		<property name="com.jaspersoft.studio.field.label" value="username"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sale"/>
+	</field>
+	<field name="PURCHASE_AMOUNT" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="PURCHASE_AMOUNT"/>
+		<property name="com.jaspersoft.studio.field.label" value="PURCHASE_AMOUNT"/>
+	</field>
 	<background>
 		<band/>
 	</background>
 	<title>
 		<band height="72">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="1678cf40-c26b-46e7-ad07-f60f9da9c203"/>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="5b7ae2b4-e60f-41ed-a93b-4a18eec8a991"/>
 				<staticText>
-					<reportElement x="20" y="20" width="260" height="43" forecolor="#FFFFFF" uuid="eb7eff53-e405-41db-8aa7-a2a96332e4f4"/>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="e2456721-191f-4253-8131-cfb1575490ca"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Top5Customers
-]]></text>
+					<text><![CDATA[TITLE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="b51f6554-fa0b-4fe6-80ad-e703f62caea5"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Add a description here]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -35,15 +50,51 @@
 	<columnHeader>
 		<band height="21">
 			<line>
-				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="c0f8f08a-7a66-4663-a4ef-50c0d885a945"/>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="97e53c6c-1237-4ee9-a55d-f10f8e7fdaa5"/>
 			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="277" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="53a93ef8-1316-4fa7-b3b9-a6f4b5fa16ec">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f557e9e1-42ea-4413-8d32-6baff8161d30"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[username]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="277" y="0" width="277" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="9fa3d387-6a00-4190-9d0e-e34d9989a72d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ae3d8272-e16a-4522-8005-d533b99f91b7"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PURCHASE_AMOUNT]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="025a0fa2-2976-42a0-8595-f582db4190d1"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="0dda76a0-aa7d-4b84-996f-ea313e2d1187"/>
 			</line>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="0" width="277" height="20" uuid="d2a86fa0-6980-4939-80d2-7d6ae783d169">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f557e9e1-42ea-4413-8d32-6baff8161d30"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="277" y="0" width="277" height="20" uuid="8401fc08-5845-49f8-b5c1-f18781846aee">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ae3d8272-e16a-4522-8005-d533b99f91b7"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PURCHASE_AMOUNT}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
@@ -52,16 +103,16 @@
 	<pageFooter>
 		<band height="17">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="ec90a4ec-7c37-414c-a008-1f0b01117095"/>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="d5d2466b-1c29-4a4d-805f-590736daccfb"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="5aa21a21-ca0a-48ef-a3a0-90053755914d"/>
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="28cb48e3-bc20-402e-b868-f18e52cbac44"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13" uuid="ca1d8ba8-5d57-44de-9bb4-e6903cf16ff2"/>
+				<reportElement x="0" y="4" width="100" height="13" uuid="e2d81fd5-07c8-4d00-8b79-449b6be5deb1"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
