@@ -3,6 +3,8 @@ package com.example.demo.services;
 import com.example.demo.model.User;
 import org.springframework.stereotype.Service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
@@ -16,9 +18,13 @@ public class LoginSignupService {
     }
 
 
-    public User login(String username, String password) throws SQLException {
+    public User login(String username, String password) throws SQLException, NoSuchAlgorithmException {
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        messageDigest.update(password.getBytes());
+        String hashedPassword = new String(messageDigest.digest());
+
         username = "'".concat(username.concat("'")) ;
-        password = "'".concat(password.concat("'")) ;
+        password = "'".concat(hashedPassword.concat("'")) ;
         String query = "SELECT * FROM USER WHERE username = " + username + " AND password = " + password + " ;";
         System.out.println(query);
         ResultSet resultSet = dbAgent.getStatement().executeQuery(query);
@@ -29,13 +35,17 @@ public class LoginSignupService {
     }
 
     public User signup(User user) throws Exception {
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        messageDigest.update(user.getPassword().getBytes());
+        String hashedPassword = new String(messageDigest.digest());
+
         String regex = "^(.+)@(.+)$";
         boolean valid = Pattern.compile(regex).matcher(user.getEmail()).matches();
         if (!valid)
             throw new Exception("invalid");
-
+        
         String insertQuery = "INSERT INTO USER(username, password, first_name, last_name, email, phone_number, shipping_address) " +
-                "VALUES (" + toSQLString(user.getUsername()) + ", " + toSQLString(user.getPassword()) +  ", " +
+                "VALUES (" + toSQLString(user.getUsername()) + ", " + toSQLString(hashedPassword) +  ", " +
                 toSQLString(user.getFirst_name()) + ", " + toSQLString(user.getLast_name()) + ", " +
                 toSQLString(user.getEmail()) + ", " + toSQLString(user.getPhone_number()) + ", " +
                 toSQLString(user.getShipping_address()) +");";
