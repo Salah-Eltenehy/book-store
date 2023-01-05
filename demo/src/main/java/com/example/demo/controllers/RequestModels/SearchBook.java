@@ -30,7 +30,7 @@ public class SearchBook {
         this.publisher = book.getPublisher();
         this.publication_year = book.getPublication_year().toLocalDate().getYear() ;
         this.price = book.getPrice();
-        this.category = book.getCategory();
+        this.category = book.getCategory().toString();
         this.stock = book.getStock();
         this.threshold = book.getThreshold();
         this.image_url = book.getImage_url();

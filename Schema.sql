@@ -16,7 +16,7 @@ CREATE TABLE book(
     publisher VARCHAR(30) NOT NULL,
     publication_year DATE,
     price DOUBLE NOT NULL,
-    category VARCHAR(20),
+    category enum("Art", "Science", "Religion", "History", "Geography"),
     stock INT NOT NULL,
     threshold INT NOT NULL,
     image_url varchar(250),

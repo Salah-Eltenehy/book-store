@@ -17,7 +17,7 @@ public class Book {
     private String publisher;
     private Date publication_year;
     private double price;
-    private String category;
+    private Category category;
     private int stock;
     private int threshold;
     private String image_url;
@@ -31,9 +31,13 @@ public class Book {
         this.publisher = publisher;
         this.publication_year = publication_year;
         this.price = price;
-        this.category = category;
+        this.category = Category.valueOf(category);
         this.stock = stock;
         this.threshold = threshold;
         this.image_url = image_url;
+    }
+
+    public void setCategory(String category) {
+        this.category = Category.valueOf(category);
     }
 }
