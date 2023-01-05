@@ -218,11 +218,15 @@ class CartScreen extends StatelessWidget {
                                                   "books": cartCubit.booksForBackEnd
                                                 }));
                                             if (res.statusCode!=200) {
-                                              print("Error ya sa7by fe el credit card");
 
+                                              showAlertDialog(context,"out of order");
+                                              print(res.body);
                                             } else {
                                               print("Response from backend when add card credit");
                                               print(res.body);
+                                              MainApp.currentPage=0;
+                                              MainApp.cartBooks.clear();
+                                              MainApp.update();
                                             }
                                             Navigator.pop(context);
                                           }
@@ -423,4 +427,20 @@ class CartScreen extends StatelessWidget {
         ),
     );
   }
+}
+showAlertDialog(BuildContext context, text3) {
+  return showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Alert"),
+        content: Text(text3),
+        actions: [
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ));
 }

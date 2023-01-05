@@ -1,42 +1,43 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:order_processing/httprequests/loginrequest.dart';
+import 'package:order_processing/screen/MainApp.dart';
 import '../Book.dart';
 import '../Constants.dart';
 import '../shared/DioHelper.dart';
-import 'MainApp.dart';
 import 'package:http/http.dart' as http;
 
-import 'MakeOrder.dart';
 
-class EditBook extends StatefulWidget {
-  static late Book book ;
+class Placeorder extends StatefulWidget {
   static TextEditingController Text1 = TextEditingController();
+  static TextEditingController Text2 = TextEditingController();
   @override
-  _EditBookState  createState() => _EditBookState();
+  _PlaceorderState  createState() => _PlaceorderState();
 }
 
-class _EditBookState extends State<EditBook> {
+class _PlaceorderState extends State<Placeorder> {
   var obsescureText =true;
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar :AppBar(
-        backgroundColor: kPrimaryColor,
-        centerTitle: true,
-        title: Text("Edit Book"),
-        leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
-          Navigator.pop(context);
-        },
-        ),
-        actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.book))
-        ],
-      ),
+      // appBar :AppBar(
+      //   backgroundColor: kPrimaryColor,
+      //   centerTitle: true,
+      //   title: Text("Place order"),
+      //   leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
+      //     Navigator.pop(context);
+      //   },
+      //   ),
+      //   actions: [
+      //     IconButton(onPressed: (){}, icon: Icon(Icons.book))
+      //   ],
+      // ),
       body: Container(
         padding: EdgeInsets.only(left: 15,top: 20,right: 15),
         child: GestureDetector(
@@ -63,8 +64,8 @@ class _EditBookState extends State<EditBook> {
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(
-                                EditBook.book.photoUrl.toString()
-                                  // "https://cdn3.iconfinder.com/data/icons/ios-web-user-interface-flat-circle-vol-3/512/Book_books_education_library_reading_open_book_study-512.png"
+                                  'https://cdn3.iconfinder.com/data/icons/ios-web-user-interface-flat-circle-vol-3/512/Book_books_education_library_reading_open_book_study-512.png'
+                                // "https://cdn3.iconfinder.com/data/icons/ios-web-user-interface-flat-circle-vol-3/512/Book_books_education_library_reading_open_book_study-512.png"
                               )
                           )
                       ),
@@ -72,14 +73,14 @@ class _EditBookState extends State<EditBook> {
                   ],
                 ),
               ),
-              SizedBox(height: 30),
-              buildtextfield("Book Stock",EditBook.book.stock.toString(),false),
+              buildtextfield("Book ISBN","",false),
+              buildtextfield2("Book quantity","",false),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OutlinedButton(onPressed:(){
-                    EditBook.Text1.clear();
+                    Placeorder.Text1.clear();
                     Navigator.pop(context);
                   }, child: Text("Cancel",style: TextStyle(
                     fontSize: 15,
@@ -95,23 +96,30 @@ class _EditBookState extends State<EditBook> {
                   ElevatedButton(onPressed: ()async{
                     // http://localhost:8080/bookstore/manager/modify/book/1234567890123/50
 
-                    String _url = "http://${ip}:8080/bookstore/manager/modify/book/${EditBook.book.ISPN}/${EditBook.Text1.text}";
+                    String _url = "http://${ip}:8080/bookstore/manager/place/order/book";
                     print(_url);
-                    var response = await http.get(Uri.parse(_url));
+                    var response = await http.post(Uri.parse(_url),
+                        headers: {"Content-Type": "application/json"},
+                        body: json.encode({
+                          "ISBN" : Placeorder.Text1.text,
+                          "quantity": Placeorder.Text2.text,
+                        }));
                     if(response.statusCode!=200)
-                      {
-                        print(response.body);
-                        showAlertDialog( context,"Check your inputs" );
-                        EditBook.Text1.clear();
-                      }
+                    {
+                      print(response.body);
+                      showAlertDialog( context,"Check your inputs" );
+                      Placeorder.Text1.clear();
+                      Placeorder.Text2.clear();
+                    }
                     else
-                      {
-                        EditBook.Text1.clear();
-                        Navigator.pop(context);
-                        await Login.sendsearchrequest();
-                        MainApp.update();
-                        print(response.body);
-                      }
+                    {
+                      Placeorder.Text1.clear();
+                      Placeorder.Text2.clear();
+                      MainApp.currentPage=0;
+                      await Login.sendsearchrequest();
+                      MainApp.update();
+                      print(response.body);
+                    }
                     // Navigator.push(context,  MaterialPageRoute(builder: (context) =>  MainApp()));
                   }, child: Text("Save",style: TextStyle(
                     fontSize: 15,
@@ -129,13 +137,6 @@ class _EditBookState extends State<EditBook> {
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-    backgroundColor: kPrimaryColor,
-    child: const Icon(Icons.add, size: 35),
-    onPressed: () =>showModalBottomSheet(context: context,
-        isScrollControlled: true,
-        builder: (context)=> makeOrderButton(isbn: EditBook.book.ISPN,))
       ),
     );
   }
@@ -161,7 +162,40 @@ class _EditBookState extends State<EditBook> {
       padding: EdgeInsets.only(bottom: 30),
       child: TextField(
         obscureText: ispasswordTextField? obsescureText :false ,
-        controller: EditBook.Text1,
+        controller: Placeorder.Text1,
+        decoration: InputDecoration(
+            suffixIcon: ispasswordTextField?
+            IconButton(onPressed: (){
+              setState(() {
+                obsescureText =!obsescureText;
+              });
+            }, icon: Icon(Icons.remove_red_eye),
+            ):null,
+            contentPadding: EdgeInsets.only(bottom: 5),
+            labelText: label,
+            labelStyle: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            )
+        ),
+      ),
+    );
+  }
+  Widget buildtextfield2(String label ,String placeholder, bool ispasswordTextField)
+  {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 30),
+      child: TextField(
+        obscureText: ispasswordTextField? obsescureText :false ,
+        controller: Placeorder.Text2,
         decoration: InputDecoration(
             suffixIcon: ispasswordTextField?
             IconButton(onPressed: (){

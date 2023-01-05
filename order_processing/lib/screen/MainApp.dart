@@ -10,6 +10,7 @@ import 'package:order_processing/screen/report.dart';
 import 'package:order_processing/shared/DioHelper.dart';
 import '../Book.dart';
 import '../modules/orders/Orders.dart';
+import '../placeorderbymanger.dart';
 import 'Account.dart';
 import 'SearchScreen.dart';
 import 'package:order_processing/modules/cart/CartScreen.dart';
@@ -116,19 +117,12 @@ class _MainAppState extends State<MainApp> {
             label: "Orders"),
         BottomNavigationBarItem(
             backgroundColor: kPrimaryColor,
-            icon: MainApp.orderBooks.isNotEmpty
-                ? Badge(
-                    showBadge: true,
-                    badgeContent: Text("${MainApp.orderBooks.length}",
-                        style: const TextStyle(color: Colors.white)),
-                    animationType: BadgeAnimationType.scale,
-                    shape: BadgeShape.circle,
-                    //position: BadgePosition.center(),
-                    child: const Icon(Icons.menu_book_sharp),
-                  )
-                : const Icon(Icons.report),
+            icon: const Icon(Icons.report),
             label: "Reports"),
-
+        BottomNavigationBarItem(
+            backgroundColor: kPrimaryColor,
+            icon: const Icon(Icons.shop),
+            label: "Place order"),
     ];
     } else {
       bottomBarButtons = [
@@ -192,7 +186,9 @@ class _MainAppState extends State<MainApp> {
                 ? Account()
                 : (MainApp.currentPage == 3)
                 ? OrdersScreen()
-                :ReportPage(),
+                : (MainApp.currentPage == 4)
+                ? ReportPage()
+                :Placeorder(),
 
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: kPrimaryColor,

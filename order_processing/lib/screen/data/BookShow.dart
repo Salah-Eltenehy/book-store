@@ -43,7 +43,7 @@ Widget showBook(Book book,BuildContext context)
                 ),
                 SizedBox(height: 8.0),
                 Text(
-                  book.author_name,
+                  book.stock.toString(),
                   style: TextStyle(
                     fontSize: 18.0,
                   ),

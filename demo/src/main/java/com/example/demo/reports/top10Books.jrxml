@@ -6,11 +6,12 @@
 	<queryString language="SQL">
 		<![CDATA[SELECT B.ISBN,B.TITLE,S.TOTAL_SALES
     FROM BOOK AS B JOIN(
-					SELECT ISBN,SUM(amount) AS TOTAL_SALES
-                    FROM SALE 
+                    SELECT ISBN,SUM(amount) AS TOTAL_SALES
+                    FROM SALE
+                    WHERE sale_date >= NOW() - INTERVAL 3 YEAR
                     GROUP BY ISBN) AS S
-					ON B.ISBN=S.ISBN
-	ORDER BY S.TOTAL_SALES DESC
+                    ON B.ISBN=S.ISBN
+    ORDER BY S.TOTAL_SALES DESC
     LIMIT 10;]]>
 	</queryString>
 	<field name="ISBN" class="java.lang.String">
