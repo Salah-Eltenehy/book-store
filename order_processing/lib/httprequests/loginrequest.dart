@@ -30,7 +30,7 @@ class Login extends StatefulWidget {
         ,map['title']
         ,map['category']
         ,map['publisher']
-        ,2019
+        ,int.parse(map['publication_year'].substring( (map['publication_year'].length)-4 , map['publication_year'].length)),
         ,map['price']
         ,map['stock']
         ,map['image_url'],);
