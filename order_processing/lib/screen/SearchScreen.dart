@@ -83,7 +83,7 @@ class _SearchScreenState extends State<SearchScreen> {
                            value: 6
                        ),
                      ],
-                     onChanged: (value) {
+                     onChanged: (value) async {
                        setState(()  {
                          selectedValue = value!;
                          if(value ==1)
@@ -112,6 +112,20 @@ class _SearchScreenState extends State<SearchScreen> {
                            }
 
                        });
+                       if(field == "all")
+                       {
+                         String _url = "http://${ip}:8080/search/all?offset=${1}";
+                         var response = await http.get(Uri.parse(_url));
+                         SearchScreen.booksdynamic = json.decode(response.body) as List<dynamic>;
+                         setState(() {
+                           if(SearchScreen.booksdynamic.length!=0)
+                           {
+                             MainApp.books = Login.convertIntoList(SearchScreen.booksdynamic);
+                             currentpage =1;
+                           }
+                         });
+                         print(response.body);
+                       }
                      }),
                ],
               ),
@@ -130,15 +144,34 @@ class _SearchScreenState extends State<SearchScreen> {
               onChanged: (value) async {
                 if(field == "all")
                 {
-                  String _url = "http://${ip}:8080/search/all?offset=${currentpage}";
+                  String _url = "http://${ip}:8080/search/all?offset=${1}";
                   var response = await http.get(Uri.parse(_url));
+                  SearchScreen.booksdynamic = json.decode(response.body) as List<dynamic>;
+                  setState(() {
+                    if(SearchScreen.booksdynamic.length!=0)
+                    {
+                      MainApp.books = Login.convertIntoList(SearchScreen.booksdynamic);
+                      currentpage =1;
+                    }
+                  });
                   print(response.body);
                 }
                 else
                 {
-                  String _url = "http://${ip}:8080/search/${field}?keyword=${SearchScreen.Text1.text}&offset=${currentpage}";
+                  String _url = "http://${ip}:8080/search/${field}?keyword=${SearchScreen.Text1.text}&offset=${1}";
                   print(_url);
                   var response = await http.get(Uri.parse(_url));
+                  SearchScreen.booksdynamic = json.decode(response.body) as List<dynamic>;
+                  setState(() {
+                    if(SearchScreen.booksdynamic.length!=0)
+                      {
+                        MainApp.books = Login.convertIntoList(SearchScreen.booksdynamic);
+                        currentpage =1;
+                      }
+
+                  });
+
+
                   print(response.body);
                 }
               },
@@ -147,7 +180,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 height: 20.0,
               ),
 
-              Text("Top Selling",style: TextStyle(
+              Text("Our Recommendation",style: TextStyle(
                 fontSize: 20.0,
               ),
               ),
@@ -190,6 +223,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           currentpage = 2;
                         }
                       String _url = "http://${ip}:8080/search/all?offset=${currentpage-1}";
+                      print(_url);
                       var response = await http.get(Uri.parse(_url));
                       SearchScreen.booksdynamic = json.decode(response.body) as List<dynamic>;
                       print(response.body);
@@ -200,7 +234,9 @@ class _SearchScreenState extends State<SearchScreen> {
                       {
                         currentpage = 2;
                       }
-                      String _url = "http://${ip}:8080/search/${field}? keyword=${SearchScreen.Text1.text} &offset=${currentpage-1}";
+                      print(SearchScreen.Text1.text);
+                      String _url = "http://${ip}:8080/search/${field}?keyword=${SearchScreen.Text1.text}&offset=${currentpage-1}";
+                      print(_url);
                       var response = await http.get(Uri.parse(_url));
                       SearchScreen.booksdynamic = json.decode(response.body) as List<dynamic>;
                       print(response.body);
@@ -234,13 +270,15 @@ class _SearchScreenState extends State<SearchScreen> {
         if(field == "all")
         {
           String _url = "http://${ip}:8080/search/all?offset=${currentpage+1}";
+          print(_url);
           var response = await http.get(Uri.parse(_url));
           SearchScreen.booksdynamic = json.decode(response.body) as List<dynamic>;
           print(response.body);
         }
         else
         {
-          String _url = "http://${ip}:8080/search/all? keyword=${field} &offset=${currentpage+1}";
+          String _url = "http://${ip}:8080/search/${field}?keyword=${SearchScreen.Text1.text}&offset=${currentpage+1}";
+          print(_url);
           var response = await http.get(Uri.parse(_url));
           SearchScreen.booksdynamic = json.decode(response.body) as List<dynamic>;
           print(response.body);
