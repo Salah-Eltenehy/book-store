@@ -68,46 +68,50 @@ class signuprequest extends State<Signup> {
           {
             showAlertDialog(context,"Choose Shipping Location");
           }
-        String _url =
-               "http://${ip}:8080/bookstore/signup";
-           var res = await http.post(Uri.parse(_url),
-               headers: {"Content-Type": "application/json"},
-               body: json.encode({
-                 "email" : RoundedInput.Text.text,
-                    "password": RoundedPasswordInput.PASSWORD.text,
-                 "username": Username.Text.text,
-                    "first_name":FirstName.Text.text,
-                    "last_name":SecondName.Text.text,
-                    "phone_number": RoundedPhoneNumber.PhoneNumber.text,
-                  "shipping_address": FindLocation.Locationaddress,
-             }));
-        if(res.statusCode!=200)
-        {
-          showAlertDialog(context,"Check your inputs");
-          RoundedInput.Text.clear();
-          RoundedPasswordInput.PASSWORD.clear();
-          Username.Text.clear();
-          FirstName.Text.clear();
-          SecondName.Text.clear();
-          RoundedPhoneNumber.PhoneNumber.clear();
-        }
         else
-        {
-          Account.Oldusername = Username.Text.text;
-          Account.Oldpassword =RoundedPasswordInput.PASSWORD.text;
+          {
+            String _url =
+                "http://${ip}:8080/bookstore/signup";
+            var res = await http.post(Uri.parse(_url),
+                headers: {"Content-Type": "application/json"},
+                body: json.encode({
+                  "email" : RoundedInput.Text.text,
+                  "password": RoundedPasswordInput.PASSWORD.text,
+                  "username": Username.Text.text,
+                  "first_name":FirstName.Text.text,
+                  "last_name":SecondName.Text.text,
+                  "phone_number": RoundedPhoneNumber.PhoneNumber.text,
+                  "shipping_address": FindLocation.Locationaddress,
+                }));
+            if(res.statusCode!=200)
+            {
+              showAlertDialog(context,"Check your inputs");
               RoundedInput.Text.clear();
-          RoundedPasswordInput.PASSWORD.clear();
-          Username.Text.clear();
-          FirstName.Text.clear();
-          SecondName.Text.clear();
-          RoundedPhoneNumber.PhoneNumber.clear();
-          setState(() => Signup.data = json.decode(res.body));
-          Account.data = Signup.data;
-          MainApp.intializeBooks();
-          MainApp.Manger = Signup.data['is_manager'];
-          MainApp.update();
-          Navigator.popAndPushNamed(context, "/app");
-        }
+              RoundedPasswordInput.PASSWORD.clear();
+              Username.Text.clear();
+              FirstName.Text.clear();
+              SecondName.Text.clear();
+              RoundedPhoneNumber.PhoneNumber.clear();
+            }
+            else
+            {
+              Account.Oldusername = Username.Text.text;
+              Account.Oldpassword =RoundedPasswordInput.PASSWORD.text;
+              RoundedInput.Text.clear();
+              RoundedPasswordInput.PASSWORD.clear();
+              Username.Text.clear();
+              FirstName.Text.clear();
+              SecondName.Text.clear();
+              RoundedPhoneNumber.PhoneNumber.clear();
+              setState(() => Signup.data = json.decode(res.body));
+              Account.data = Signup.data;
+              MainApp.intializeBooks();
+              MainApp.Manger = Signup.data['is_manager'];
+              MainApp.update();
+              Navigator.popAndPushNamed(context, "/app");
+            }
+          }
+
       },
       borderRadius: BorderRadius.circular(30),
       child: Container(
