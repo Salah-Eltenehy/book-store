@@ -399,7 +399,7 @@ for table,table_count in  zip(data.keys(),range(len(data.keys()))):
             elif v == 'price':
                 values.append(f"{random.randint(min_price , max_price)}")
             elif v == 'date' :
-                values.append(f"{random.randint(1900 , 2022)}-{random.randint(1 , 2)}-{random.randint(1 , 28)}")
+                values.append(f"{2022}-{random.randint(1 , 12)}-{random.randint(1 , 28)}")
             elif v == 'stock' :
                 values.append(f"{random.randint(min_stock , max_stock)}")
             elif v == 'image_url' :
