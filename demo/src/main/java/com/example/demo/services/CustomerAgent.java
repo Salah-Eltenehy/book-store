@@ -5,6 +5,7 @@ import com.example.demo.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.security.MessageDigest;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,7 +53,12 @@ public class CustomerAgent {
             }else{
                 updateQuery = updateQuery + ", ";
             }
-            updateQuery = updateQuery + "password = " + toSQLString(user.getPassword()) ;
+
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            messageDigest.update(user.getPassword().getBytes());
+            String hashedPassword = new String(messageDigest.digest());
+
+            updateQuery = updateQuery + "password = " + toSQLString(hashedPassword) ;
         }
         if(!old.getFirst_name().equals(user.getFirst_name()) && !user.getFirst_name().equals("")){
             if(!edit){
