@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,8 +14,9 @@ import 'SearchScreen.dart';
 import 'package:order_processing/modules/cart/CartScreen.dart';
 import 'package:order_processing/shared/network/local/Cachhelper.dart';
 import 'package:order_processing/shared/DioHelper.dart';
-
+import 'package:http/http.dart' as http;
 import 'login.dart';
+
 
 class MainApp extends StatefulWidget {
   static int currentPage = 0;
@@ -25,6 +28,44 @@ class MainApp extends StatefulWidget {
   static final _MainAppState _currentState = _MainAppState();
 
   static update() => _currentState.setState(() {});
+
+  static late List<dynamic> booksdynamic;
+  static List<Book> convertIntoList(temp) {
+    Book book;
+    List<Book> books = <Book>[];
+    for (Map<String, dynamic> map in temp) {
+      book = Book(
+        map['ISBN'],
+        map['title'],
+        map['category'],
+        map['publisher'],
+        int.parse(map['publication_year'].substring( (map['publication_year'].length)-4 , map['publication_year'].length)),
+        map['price'],
+        map['stock'],
+        map['image_url'],);
+      book.orderedquantity = map['quantity'];
+      book.author_name = map['author'];
+
+      books.add(book);
+    }
+    return books;
+  }
+  static  Future<void> getOrdersFromBackEnd() async {
+    String _url = "http://${ip}:8080/bookstore/manager/allOrders";
+    var res = await http.get(Uri.parse(_url),
+      headers: {"Content-Type": "application/json"},
+    );
+    if (res.statusCode!=200) {
+      print("Error ya sa7by fe el all orders");
+      print(res.body);
+    } else {
+      print("Response from backend when get all orders");
+      print(res.body);
+      booksdynamic = json.decode(res.body) as List<dynamic>;
+      print(booksdynamic);
+      MainApp.orderBooks = convertIntoList(booksdynamic);
+    }
+  }
 
   @override
   _MainAppState createState() => _currentState;

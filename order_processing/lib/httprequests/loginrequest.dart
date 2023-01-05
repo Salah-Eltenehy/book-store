@@ -93,7 +93,6 @@ class loginrequest extends State<Login> {
             {
               setState(() => Login.data = json.decode(res.body));
               Account.data = Login.data;
-              print(res.body);
               Account.Oldusername = RoundedInput.Text.text;
               Account.Oldpassword =RoundedPasswordInput.PASSWORD.text;
               RoundedInput.Text.clear();
@@ -104,6 +103,7 @@ class loginrequest extends State<Login> {
               await Login.sendsearchrequest();
               RoundedPasswordInput.PASSWORD.clear();
               // MainApp.intializeBooks();
+              await MainApp.getOrdersFromBackEnd();
               MainApp.update();
               Navigator.popAndPushNamed(context, "/app");
             }

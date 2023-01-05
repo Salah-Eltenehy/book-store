@@ -132,7 +132,8 @@ public class ManagerAgent implements IManagerAgent {
             BookOrderFront bookOrderFront= BookOrderFront.builder().orderId(bookOrder.getOrderId())
                     .author(book.getAuthor()).image_url(book.getImage_url()).category(book.getCategory())
                     .ISBN(book.getISBN()).price(book.getPrice()).publication_year(book.getPublication_year())
-                    .quantity(bookOrder.getQuantity()).publisher(book.getPublisher()).build();
+                    .quantity(bookOrder.getQuantity()).publisher(book.getPublisher()).threshold(book.getThreshold())
+                    .stock(book.getStock()).title(book.getTitle()).build();
             orders.add(bookOrderFront);
         }
         resultSet.close();
