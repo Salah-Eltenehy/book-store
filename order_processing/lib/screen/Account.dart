@@ -98,6 +98,7 @@ class _AccountState extends State<Account> {
                      // });
 
                     // Navigator.pop(context);
+
                      MainApp.currentPage=0;
                      MainApp.update();
 
@@ -194,19 +195,15 @@ class _AccountState extends State<Account> {
                            {
                              print(res.body);
                              showAlertDialog(context,"check your inputs");
-                             Account.Text1.clear();
-                             Account.Text2.clear();
-                             Account.Text3.clear();
-                             Account.Text4.clear();
-                             Account.Text5.clear();
-                             Account.Text6.clear();
-                             Account.Text7.clear();
+
                            }
                          else
                            {
+                             print(res.body);
                              setState(() => Account.data = json.decode(res.body));
+                             MainApp.currentPage=0;
                              MainApp.update();
-                             Navigator.pop(context);
+                             // Navigator.pop(context);
                            }
                        }
                    }, child: Text("Save",style: TextStyle(

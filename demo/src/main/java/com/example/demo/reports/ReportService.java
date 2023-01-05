@@ -20,7 +20,7 @@ public class ReportService {
     String hostName = "localhost";
     String dbName = "bookstore";
     String userName = "root";
-    String password = "root";
+    String password = "csed2024";
     String commonPath = "src/main/java/com/example/demo/reports/";
     Connection connection = getDbaseConnection(hostName,dbName,userName,password);
     public boolean viewTop5Customers() throws JRException {

@@ -5,10 +5,11 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BOOK_STORE"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT username, SUM(price) AS PURCHASE_AMOUNT 
-	FROM SALE 
-	GROUP BY username
-	ORDER BY PURCHASE_AMOUNT DESC
-	LIMIT 5;]]>
+    FROM SALE
+    WHERE sale_date >= NOW() - INTERVAL 3 YEAR
+    GROUP BY username
+    ORDER BY PURCHASE_AMOUNT DESC
+    LIMIT 5;]]>
 	</queryString>
 	<background>
 		<band/>

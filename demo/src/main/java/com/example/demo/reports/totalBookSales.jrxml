@@ -5,12 +5,12 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BOOK_STORE"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT B.ISBN,B.TITLE,S.TOTAL_SALES 
-	FROM BOOK AS B  JOIN (
-							SELECT ISBN,SUM(AMOUNT) AS TOTAL_SALES
-							FROM SALE 
-                            WHERE sale_date > NOW() - INTERVAL 1 MONTH
-							GROUP BY ISBN) AS S
-							ON B.ISBN=S.ISBN;]]>
+    FROM BOOK AS B  JOIN (
+                            SELECT ISBN,SUM(AMOUNT) AS TOTAL_SALES
+                            FROM SALE
+                            WHERE sale_date >= NOW() - INTERVAL 1 YEAR
+                            GROUP BY ISBN) AS S
+                            ON B.ISBN=S.ISBN;]]>
 	</queryString>
 	<field name="name" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="name"/>
